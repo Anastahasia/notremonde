@@ -1,9 +1,9 @@
 <?php
-    require_once("./components/connexion.php");
+require_once("./components/connexion.php");
 
-    $CurrentCircuitID = isset($_GET['circuit']) ? $_GET['circuit'] : 0;
-    $SelectedCircuit = $NewConnection->select("circuit", "*", "id_circuit = $CurrentCircuitID");
-
+$CurrentCircuitID = isset($_GET['circuit']) ? $_GET['circuit'] : 0;
+$SelectedCircuit = $NewConnection->select("circuit", "*", "id_circuit = $CurrentCircuitID");
+$SelectedEtapes = $NewConnection->select_etape_circuit("etape_circuit", "hebergement", "id_hebergement", $CurrentCircuitID);
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -15,19 +15,19 @@
     <meta name="author" content="" />
     <title>
         <?php
-            $CircuitsName = "";
-            foreach ($SelectedCircuit as $Key => $Value) {
-                $CircuitsName = $Value['titre'];
-            }
-            echo $CircuitsName;
+        $CircuitsName = "";
+        foreach ($SelectedCircuit as $Key => $Value) {
+            $CircuitsName = $Value['titre'];
+        }
+        echo $CircuitsName;
         ?> | Notre Monde</title>
     <!-- Bootstrap icons-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet" />
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 
-    <link rel="icon" href="./images/favicon.png" type="image/x-icon" >
-    
+    <link rel="icon" href="./images/favicon.png" type="image/x-icon">
+
     <link href="styles.css" rel="stylesheet" />
 </head>
 
@@ -44,24 +44,62 @@
             </ol>
         </nav>
 
-        <header class="presentation"> 
-            <div class="img-presentation">
-                <img src="" alt="">
-            </div>
+        <header class="presentation">
+            <?php foreach ($SelectedCircuit as $Value) {
+
+                echo '
+        <div class="img-presentation">
+                <img src="' . $Value['photo'] . '" alt="">
+            </div>';
+            }  ?>
             <div class="txt-presentation">
                 <h1 class="titre1">Émilie-Romagne : Une Aventure Italienne</h1>
                 <p>Explorez les ruelles pavées de Bologne, découvrez les secrets de fabrication du vinaigre balsamique à Modène, et goûtez les délices du Parmesan dans les fromageries locales. Vous serez enchanté par la beauté des villes médiévales, les trésors artistiques et les traditions gastronomiques uniques de cette région. Une expérience gustative et culturelle qui éveillera tous vos sens.</p>
-                <p class="soutitre">Catégorie :</p>
+                <p class="soutitre">Catégorie: </p>
                 <div class="flex-text">
-                    <p class="soutitre">Destination :</p>
-                    <p class="soutitre">Durée :</p>
+                    <p class="soutitre">Destination: </p>
+                    <p class="soutitre">Durée: </p>
                 </div>
-                <p class="titre2">À partir de 
-                    
-                </p>
+                <p class="titre2">À partir de: </p>
                 <button type="button" class="btn btn-success">Demandez un devis</button>
             </div>
         </header>
+        <h2 class="titre1">Circuit</h2>
+        <hr>
+        <h3 class="titre2">étape</h3>
+        <hr>
+        <section class="etape-display presentation">
+            <div class="txt-etape">
+                <p class="accent">jour 1 à jour 4</p>
+                <p>description de l'étape</p>
+                <p class="accent">Nom de l'hébergement</p>
+                <p>type</p>
+                <p>description de l'hébergement</p>
+            </div>
+            <div class="img-presentation">
+                <div id="carouselExample" class="carousel slide">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <img src="..." class="d-block w-100" alt="...">
+                        </div>
+                        <div class="carousel-item">
+                            <img src="..." class="d-block w-100" alt="...">
+                        </div>
+                        <div class="carousel-item">
+                            <img src="..." class="d-block w-100" alt="...">
+                        </div>
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+            </div>
+        </section>
     </main>
 
     <?php include_once('footer.php') ?>

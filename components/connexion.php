@@ -50,14 +50,15 @@
             }
         }
 
-        public function select_random($Table, $Column, $ConditionField = 1)
+    // selects random data from the table
+        public function select_random($Table, $Column, $LimitNumber, $ConditionField = 1)
         {
             // $SQLQueryString = 'SELECT * FROM `users` WHERE (`mail` = "superuser@local" AND `password` = "pass")';
             // $SQLQueryString = "SELECT $Column FROM $Table WHERE 1";
             try {
                 // NOTE: we cannot wrap Column in `` because it could be a regex like '*'
                 // $SQLQueryString = "SELECT `$Column` FROM `$Table` WHERE $ConditionField";
-                $SQLQueryString = "SELECT $Column FROM `$Table` ORDER BY rand() LIMIT $ConditionField";
+                $SQLQueryString = "SELECT $Column FROM `$Table` WHERE $ConditionField ORDER BY rand() LIMIT $LimitNumber";
 
                 $Result = $this->Connection->query($SQLQueryString);
 
@@ -70,57 +71,31 @@
             }
         }
 
-        public function select_distinct($Column, $Table, $Condition = 1)
-        {
-            try {
-                $SQLQueryString = "SELECT DISTINCT $Column FROM $Table WHERE $Condition";
+        // public function select_distinct($Column, $Table, $Condition = 1)
+        // {
+        //     try {
+        //         $SQLQueryString = "SELECT DISTINCT $Column FROM $Table WHERE $Condition";
 
-                // var_dump($SQLQueryString);
+        //         // var_dump($SQLQueryString);
 
-                $Result = $this->Connection->query($SQLQueryString);
+        //         $Result = $this->Connection->query($SQLQueryString);
 
-                return $Result->fetchAll(PDO::FETCH_ASSOC);
+        //         return $Result->fetchAll(PDO::FETCH_ASSOC);
 
-            } catch (PDOException $e) {
-                echo "Erreur: " . $e->getMessage();
+        //     } catch (PDOException $e) {
+        //         echo "Erreur: " . $e->getMessage();
 
-                return false;
-            }
-        }
+        //         return false;
+        //     }
+        // }
 
-        public function select_full_article($ArticleID)
+        public function select_etape_circuit($Intermediate, $Table1, $Key1, $CircuitID)
         {
             try {
                 $SQLQueryString = "SELECT *
-                FROM `article`
-                INNER JOIN `categorie` ON `article`.`categorie` = `categorie`.`id_categorie`
-                WHERE `article`.`id_article` = '$ArticleID' ;
-                ";
-
-                // var_dump($SQLQueryString);
-
-                $Result = $this->Connection->query($SQLQueryString);
-
-                return $Result->fetchAll(PDO::FETCH_ASSOC);
-
-            } catch (PDOException $e) {
-                echo "Erreur: " . $e->getMessage();
-
-                return false;
-            }
-        }
-
-        //TODO: update the name on database, so we can include more of categorie's fields without conflict
-        /**Returns an associative array of the results, or false on error */
-        public function select_article($ConditionField)
-        {
-            try {
-                $SQLQueryString = "SELECT `article`.`id_article`,`article`.`categorie`,`article`.`sous_categorie`, `article`.`date`, `article`.`titre`, `article`.`resume`, `article`.`photo_principale`, `categorie`.`nom`
-                FROM `article`
-                INNER JOIN `categorie` ON `categorie`.`id_categorie` = `article`.`categorie`
-                WHERE `article`.`categorie` = $ConditionField ;
-                ";
-
+                FROM $Intermediate
+                INNER JOIN $Table1 ON $Intermediate.$Table1 = $Table1.$Key1
+                WHERE $Intermediate.circuit = '$CircuitID'";
 
                 // var_dump($SQLQueryString);
 
@@ -141,9 +116,9 @@
             try {
                 $SQLQueryString = "SELECT `commentaire`.`id_commentaire`, `commentaire`.`date`, `commentaire`.`contenu`, `utilisateur`.`nom`
                 FROM `commentaire`
-                INNER JOIN `article` ON `article`.`id_article` = `commentaire`.`id_article`
+                INNER JOIN `etape_circuit` ON `etape_circuit`.`id_etape_circuit` = `commentaire`.`id_etape_circuit`
                 INNER JOIN `utilisateur` ON `utilisateur`.`id_utilisateur` = `commentaire`.`id_utilisateur`
-                WHERE `commentaire`.`id_article` = $ConditionField ;
+                WHERE `commentaire`.`id_etape_circuit` = $ConditionField ;
                 ";
 
                 // var_dump($SQLQueryString);

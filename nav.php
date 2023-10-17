@@ -1,16 +1,39 @@
-    <!-- Responsive navbar-->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container px-5">
-            <a class="navbar-brand" href="#!">Start Bootstrap</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
-            <div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
-                <ul class="navbar-nav mb-2 mb-lg-0">
-                    <li class="nav-item"><a class="nav-link active" aria-current="page" href="#!">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="destination.php">Accueil</a></li>
-                    <li class="nav-item"><a class="nav-link" href="circuit.php">Circuits</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#!">Thématiques</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#!">Contact</a></li>
-                </ul>
-            </div>
+<?php
+require_once("./components/connexion.php");
+
+if (session_id() == "") {
+    session_start();
+}
+
+$IsUserLoggedIn = isset($_SESSION['CurrentUser']);
+// $CanEditArticles = (isset($_SESSION['UserRole']) && CanEditArticles($_SESSION['UserRole']));
+var_dump($_SESSION);
+var_dump($NewConnection)
+?>
+<!-- Responsive navbar-->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container px-5">
+        <a class="navbar-brand" href="#!">Start Bootstrap</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+        <div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
+            <ul class="navbar-nav mb-2 mb-lg-0">
+                <li class="nav-item"><a class="nav-link active" aria-current="page" href="index.php">Accueil</a></li>
+                <li class="nav-item"><a class="nav-link" href="destination.php">Destination</a></li>
+                <li class="nav-item"><a class="nav-link" href="circuit.php">Circuits</a></li>
+                <li class="nav-item"><a class="nav-link" href="gestion.php">Gestion</a></li>
+                <li class="nav-item"><a class="nav-link" href="#!">Contact</a></li>
+            </ul>
         </div>
-    </nav>
+        <div z-index="2" class="float-login">
+        <i class="fa-solid fa-magnifying-glass" style="color: #000000;"></i>
+            <a href="" class="btn btn-success">Devis</a>
+            <?php if ($IsUserLoggedIn) : $UserIcon = './images/icons_user_role_' . $_SESSION['UserRole'] . '.png';
+            ?>
+                <a href="./profile.php"><img src=<?php echo '"' . $UserIcon . '"'; ?> alt="User Role Image" style="width: 32px; height: 32px;"></a>
+                <form method="POST" action="./interaction/signin.php"><button type="submit" name="Intention" value="Logout" class="ConnexionButtons red-button">Deconnexion</button></form>
+            <?php else : ?>
+                <button class="ConnexionButtons green-button" onclick="window.location='./login.php'">Login</button>
+            <?php endif ?>
+        </div>
+    </div>
+</nav>

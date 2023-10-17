@@ -3,7 +3,7 @@
 require_once('./components/connexion.php');
 
 $destinations = $NewConnection->select("continent", "*");
-var_dump($circuits = $NewConnection->select_random("circuit", "*", "3"));
+$circuits = $NewConnection->select_random("circuit", "*", "3", "visible=1");
 
 ?>
 <!DOCTYPE html>
@@ -49,7 +49,7 @@ var_dump($circuits = $NewConnection->select_random("circuit", "*", "3"));
                         <div class="carousel-item card-carousel-item">
                             <div class="card">
                                 <div class="img-wrapper">
-                                    <img src="' . $Value['photo'] .'" class="card-img-top" alt="...">
+                                    <img src="' . $Value['illustration'] .'" class="card-img-top" alt="...">
                                 </div>
                                 <div class="card-body carousel-card-body">
                                     <h3 class="card-title soustitre">'. $Value['nom'] .'</h3>
