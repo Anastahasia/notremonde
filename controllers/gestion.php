@@ -41,5 +41,40 @@
                 die();
             }
             break;
+
+            case 'AddItineraire':
+            $Condition = '(`nom` = "brouillon")';
+            // var_dump($CategoryID);
+
+            $ItineraireID = $NewConnection->insert( 'itineraire', array(
+                'titre' => 'Sans titre',
+                'description' => 'Ajouter une description',
+                'photo' => '',
+                'alt' => 'Ajouter une description de la photo',
+                'arrivee' => date('Y-m-d', time()),
+                'depart' => date('Y-m-d', time()),
+                'voyageurs_adultes' => '1',
+                'voyageurs_enfants' => '1',
+                'prix_total' => '500',
+            ));
+    
+            if ($ItineraireID)
+            {
+                header("Location: " . "../circuit.php?edit=true&id_itineraire=$ItineraireID");
+                die();
+            }
+
+            break;
+
+        case 'DeleteItineraire':
+            $UpdateFieldCondition = array('id_itineraire' => $_POST['id_itineraire']);
+
+            $Success = $NewConnection->delete('itineraire', $UpdateFieldCondition);
+
+            if ($Success) {
+                header("Location: " . '../gestion.php');
+                die();
+            }
+            break;
         }
         }

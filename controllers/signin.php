@@ -3,6 +3,13 @@
 include("../components/connexion.php");
 
 if (isset($_POST['Intention'])){
+    
+    function valid_data($data){
+        $data = trim($data);
+        $data = stripslashes($data);
+        $data = htmlspecialchars($data);
+        return $data;
+    }
 
     extract($_POST);
     switch ($_POST['Intention']) {
@@ -12,11 +19,11 @@ if (isset($_POST['Intention'])){
             $HashedPassword = password_hash($mot_de_passe, PASSWORD_ARGON2ID, ['memory_cost' => 1<<17, 'time_cost' => 4, 'threads' => 2]);
 
             $Values = array(
-                'nom' => $nom,
-                'prenom' => $prenom,
-                'num' => $num,
-                'email' => $email,
-                'mot_de_passe' => $HashedPassword,
+                'nom' => valid_data($nom),
+                'prenom' => valid_data($prenom),
+                'num' => valid_data($num),
+                'email' => valid_data($email),
+                'mot_de_passe' => valid_data($HashedPassword),
                 'role' => 'guest'
             );
             // var_dump($Values);
@@ -47,7 +54,7 @@ if (isset($_POST['Intention'])){
 
             $_SESSION['crsf_token'] = bin2hex(random_bytes(32));
 
-            if ($UniqueUser && password_verify($_POST['mot_de_passe'], $UniqueUser[0]['mot_de_passe'])) {
+            if ($UniqueUser && password_verify($_mot_de_passe, $UniqueUser[0]['mot_de_passe'])) {
 
                 $_SESSION['CurrentUser'] = $UniqueUser[0]['email'];
                 $_SESSION['CurrentUserName'] = $UniqueUser[0]['nom'];

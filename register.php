@@ -19,7 +19,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title> Gestion | Notre Monde </title>
+    <title> Inscription | Notre Monde </title>
     <!-- Bootstrap icons-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet" />
     <!-- Core theme CSS (includes Bootstrap)-->
@@ -32,7 +32,7 @@
 </head>
 
 <body>
-    <?php include_once('nav.php'); ?>
+    <?php include_once('./components/nav.php'); ?>
     <section>
         <h1>Inscription</h1>
         <?php
@@ -42,7 +42,7 @@
             unset($_SESSION['HasFailedSignedUp']);
         }
         ?>
-        <form action="./interaction/signin.php" method="POST">
+        <form action="./controllers/signin.php" method="POST">
             <div class="input-group">
                 <label for="nom">Nom </label>
                 <input type="text" name="nom" required>
@@ -74,7 +74,7 @@
             </div>
         </form>
     </section>
-    <?php include_once('footer.php'); ?>
+    <?php include_once('./components/footer.php'); ?>
 </body>
 
 </html>

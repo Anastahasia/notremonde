@@ -13,6 +13,8 @@ require_once("./components/connexion.php");
 // require_once('./components/commons.php');
 
 $AllCircuits = $NewConnection->select("circuit", "*");
+$AllItineraires = $NewConnection->select("itineraire", "*");
+$AllUsers = $NewConnection->select("utilisateur", "*");
 // var_dump($AllCircuits);
 ?>
 <!DOCTYPE html>
@@ -37,55 +39,164 @@ $AllCircuits = $NewConnection->select("circuit", "*");
 <body>
     <?php include_once('./components/nav.php'); ?>
     <main>
-        <section class="entete">
-            <h1 class="titre">Tous les circuits</h1>
-        </section>
+        <section id="Circuits">
+            <div class="entete">
+                <h1 class="titre">Tous les circuits</h1>
+            </div>
 
-        <section id="CircuitsViewerBox" class="card-container">
-            <form action="./interaction/gestion.php" method="post" class="card gestion">
-                <input type="hidden" name="id_circuit" value="' . $Value['id_circuit'] . '">
-                <div class="card-image-container">
-                    <img id="AddNewIcon" src="./images/icons_plus.png" alt="New Circuit picture">
-                </div>
-                <div class="card-text">
-                    <h5>Pour créer un nouveeu circuit:</h5>
-                    <button name="Intention" value="AddCircuit" type="submit">Cliquer ici</button>
-                </div>
-                <!-- href="./Circuit.php?edit=true&id_Circuit=0" -->
-            </form>
+            <div id="CircuitsViewerBox" class="card-container">
+                <form action="./controllers/gestion.php" method="post" class="card gestion">
+                    <input type="hidden" name="id_circuit" value="' . $Value['id_circuit'] . '">
+                    <div class="card-image-container">
+                        <img id="AddNewIcon" src="./images/icons_plus.png" alt="New Circuit picture">
+                    </div>
+                    <div class="card-text">
+                        <h5>Pour créer un nouveeu circuit:</h5>
+                        <button name="Intention" value="AddCircuit" type="submit">Cliquer ici</button>
+                    </div>
+                    <!-- href="./Circuit.php?edit=true&id_Circuit=0" -->
+                </form>
 
-            <?php
-            foreach ($AllCircuits as $Key => $Value) {
-                $CircuitPageRedirectionWithParameters = './circuit.php?edit=true&id_Circuit=' . $Value['id_circuit'];
+                <?php
+                foreach ($AllCircuits as $Key => $Value) {
+                    $CircuitPageRedirectionWithParameters = './circuit.php?edit=true&id_Circuit=' . $Value['id_circuit'];
 
-                echo '<form action="./interaction/gestion.php" method="post" class="card gestion">';
-                echo '<input type="hidden" name="id_circuit" value="' . $Value['id_circuit'] . '">';
-                echo '<button name="Intention" value="DeleteCircuit" data-bs-toggle="modal" data-bs-target="#DeleteModal" type="button" class="floating"></button>';
-                echo '<div class="card-image-container"><img src="' . $Value['photo'] . '" alt="Circuit picture"></div>';
-                echo '<div class="card-text"><h3>' . $Value['titre'] . '</h3>';
-                // echo '<button name="Intention" value="UpdateCircuit" type="button">Modifier</button>';
-                echo '<a href="' . $CircuitPageRedirectionWithParameters . '" >Modifier</a></div>';
-                echo '</form>';
-            }
-            ?>
-            <div class="modal" id="DeleteModal" tabindex="-1">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title">Modal title</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <p>Modal body text goes here.</p>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="button" id="DeleteModalSubmitButton" class="btn btn-primary">Save changes</button>
-                            <?php var_dump($Value)?>
+                    echo '<form action="./controllers/gestion.php" method="post" class="card gestion">';
+                    echo '<input type="hidden" name="id_circuit" value="' . $Value['id_circuit'] . '">';
+                    echo '<button name="Intention" value="DeleteCircuit" data-bs-toggle="modal" data-bs-target="#DeleteModal" type="button" class="floating"></button>';
+                    echo '<div class="card-image-container"><img src="' . $Value['photo'] . '" alt="Circuit picture"></div>';
+                    echo '<div class="card-text"><h3>' . $Value['titre'] . '</h3>';
+                    // echo '<button name="Intention" value="UpdateCircuit" type="button">Modifier</button>';
+                    echo '<a href="' . $CircuitPageRedirectionWithParameters . '" >Modifier</a></div>';
+                    echo '</form>';
+                }
+                ?>
+                <div class="modal" id="DeleteModal" tabindex="-1">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Modal title</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <p>Modal body text goes here.</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="button" id="DeleteModalSubmitButton" class="btn btn-primary">Save changes</button>
+                                <?php var_dump($Value) ?>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+        </section>
+
+        <section id="Intineraires">
+            <div class="entete">
+                <h1 class="titre">Tous les itinéraires</h1>
+            </div>
+
+            <div id="ItinerairesViewerBox" class="card-container">
+                <form action="./controllers/gestion.php" method="post" class="card gestion">
+                    <input type="hidden" name="id_itineraire" value="' . $Value['id_itineraire'] . '">
+                    <div class="card-image-container">
+                        <img id="AddNewIcon" src="./images/icons_plus.png" alt="New Circuit picture">
+                    </div>
+                    <div class="card-text">
+                        <h5>Pour créer un nouveeu circuit:</h5>
+                        <button name="Intention" value="AddItineraire" type="submit">Cliquer ici</button>
+                    </div>
+                    <!-- href="./Circuit.php?edit=true&id_Circuit=0" -->
+                </form>
+
+                <?php
+                foreach ($AllItineraires as $Key => $Value) {
+                    $ItinerairePageRedirectionWithParameters = './circuit.php?edit=true&id_itineraire=' . $Value['id_itineraire'];
+
+                    echo '<form action="./controllers/gestion.php" method="post" class="card gestion">';
+                    echo '<input type="hidden" name="id_itineraire" value="' . $Value['id_itineraire'] . '">';
+                    echo '<button name="Intention" value="DeleteItineraire" data-bs-toggle="modal" data-bs-target="#DeleteItineraireModal" type="button" class="floating"></button>';
+                    echo '<div class="card-image-container"><img src="' . $Value['photo'] . '" alt="Circuit picture"></div>';
+                    echo '<div class="card-text"><h3>' . $Value['titre'] . '</h3>';
+                    // echo '<button name="Intention" value="UpdateCircuit" type="button">Modifier</button>';
+                    echo '<a href="' . $ItinerairePageRedirectionWithParameters . '" >Modifier</a></div>';
+                    echo '</form>';
+                }
+                ?>
+                <div class="modal" id="DeleteItineraireModal" tabindex="-1">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Modal title</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <p>Modal body text goes here.</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="button" id="DeleteModalSubmitButton" class="btn btn-primary">Save changes</button>
+                                <?php var_dump($Value) ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="Users">
+            <div class="entete">
+                <h1 class="titre">Tous les comptes</h1>
+            </div>
+
+            <div id="ItinerairesViewerBox" class="card-container">
+                <form action="./controllers/gestion.php" method="post" class="card gestion">
+                    <input type="hidden" name="id_utilisateur" value="' . $Value['id_utilisateur'] . '">
+                    <div class="card-image-container">
+                        <img id="AddNewIcon" src="./images/icons_plus.png" alt="New Circuit picture">
+                    </div>
+                    <div class="card-text">
+                        <h5>Pour créer un nouveeu circuit:</h5>
+                        <button name="Intention" value="AddUser" type="submit">Cliquer ici</button>
+                    </div>
+                    <!-- href="./Circuit.php?edit=true&id_Circuit=0" -->
+                </form>
+
+                <?php
+                foreach ($AllUsers as $Key => $Value) {
+                    $ItinerairePageRedirectionWithParameters = './circuit.php?edit=true&id_itineraire=' . $Value['id_utilisateur'];
+
+                    echo '<form action="./controllers/gestion.php" method="post" class="card gestion">';
+                    echo '<input type="hidden" name="id_utilisateur" value="' . $Value['id_utilisateur'] . '">';
+                    echo '<button name="Intention" value="DeleteUser" data-bs-toggle="modal" data-bs-target="#DeleteUserModal" type="button" class="floating"></button>';
+                    echo '<div class="card-image-container"><img src="' . $Value['nom'] . '" alt="Circuit picture"></div>';
+                    echo '<div class="card-text"><h3>' . $Value['titre'] . '</h3>';
+                    // echo '<button name="Intention" value="UpdateCircuit" type="button">Modifier</button>';
+                    echo '<a href="' . $ItinerairePageRedirectionWithParameters . '" >Modifier</a></div>';
+                    echo '</form>';
+                }
+                ?>
+                <div class="modal" id="DeleteUserModal" tabindex="-1">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Modal title</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <p>Modal body text goes here.</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="button" id="DeleteModalSubmitButton" class="btn btn-primary">Save changes</button>
+                                <?php var_dump($Value) ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
     </main>
     <?php include_once('./components/footer.php') ?>
     <script>

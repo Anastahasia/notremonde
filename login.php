@@ -17,7 +17,7 @@ require_once("./components/connexion.php");
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title> Gestion | Notre Monde </title>
+    <title> Connexion | Notre Monde </title>
     <!-- Bootstrap icons-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet" />
     <!-- Core theme CSS (includes Bootstrap)-->
@@ -41,7 +41,7 @@ require_once("./components/connexion.php");
         }
         ?>
 
-        <form action="./interaction/signin.php" method="POST">
+        <form action="./controllers/signin.php" method="POST">
             <div class="input-group">
                 <label for="email">Adresse e-mail :</label>
                 <input type="email" name="email" required>
