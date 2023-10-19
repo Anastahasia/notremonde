@@ -1,14 +1,13 @@
 <?php
-    session_start();
-    // var_dump($_SESSION);
+session_start();
+// var_dump($_SESSION);
 
-    if (isset($_SESSION['CurrentUser']))
-    {
-        header("Location: " . 'index.php');
-        die();
-    }
+if (isset($_SESSION['CurrentUser'])) {
+    header("Location: " . 'index.php');
+    die();
+}
 
-    require_once("./components/connexion.php");
+require_once("./components/connexion.php");
 
 ?>
 <!DOCTYPE html>
@@ -31,22 +30,21 @@
 </head>
 
 <body>
-    <?php include_once('nav.php'); ?>
-    <section> 
+    <?php include_once('./components/nav.php'); ?>
+    <section>
         <h1>Connexion</h1>
         <?php
-            if (isset($_SESSION['HasFailedLogin']) && $_SESSION['HasFailedLogin'])
-            {
-                echo '<h4 class="animate__animated animate__shakeX" >Impossible de vous connecter.</h4>';
-                
-                unset($_SESSION['HasFailedLogin']);
-            }
+        if (isset($_SESSION['HasFailedLogin']) && $_SESSION['HasFailedLogin']) {
+            echo '<h4 class="animate__animated animate__shakeX" >Impossible de vous connecter.</h4>';
+
+            unset($_SESSION['HasFailedLogin']);
+        }
         ?>
 
-<form action="./interaction/signin.php" method="POST">
+        <form action="./interaction/signin.php" method="POST">
             <div class="input-group">
                 <label for="email">Adresse e-mail :</label>
-                <input type="text" name="email" required>
+                <input type="email" name="email" required>
             </div>
 
             <div class="input-group">
@@ -60,7 +58,7 @@
             </div>
         </form>
     </section>
-    <?php include_once('footer.php'); ?>
+    <?php include_once('./components/footer.php'); ?>
 </body>
 
 </html>

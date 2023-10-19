@@ -110,30 +110,6 @@
             }
         }
 
-        /**Returns an associative array of the results, or false on error */
-        public function select_comments($ConditionField)
-        {
-            try {
-                $SQLQueryString = "SELECT `commentaire`.`id_commentaire`, `commentaire`.`date`, `commentaire`.`contenu`, `utilisateur`.`nom`
-                FROM `commentaire`
-                INNER JOIN `etape_circuit` ON `etape_circuit`.`id_etape_circuit` = `commentaire`.`id_etape_circuit`
-                INNER JOIN `utilisateur` ON `utilisateur`.`id_utilisateur` = `commentaire`.`id_utilisateur`
-                WHERE `commentaire`.`id_etape_circuit` = $ConditionField ;
-                ";
-
-                // var_dump($SQLQueryString);
-
-                $Result = $this->Connection->query($SQLQueryString);
-
-                return $Result->fetchAll(PDO::FETCH_ASSOC);
-
-            } catch (PDOException $e) {
-                echo "Erreur: " . $e->getMessage();
-
-                return false;
-            }
-        }
-
         /**Returns the id of inserted row on sucessful insert, false on failure */
         public function insert($Table, $Values)
         {

@@ -1,5 +1,5 @@
 <?php
-require_once("./components/connexion.php");
+require_once("connexion.php");
 
 if (session_id() == "") {
     session_start();
@@ -7,8 +7,7 @@ if (session_id() == "") {
 
 $IsUserLoggedIn = isset($_SESSION['CurrentUser']);
 // $CanEditArticles = (isset($_SESSION['UserRole']) && CanEditArticles($_SESSION['UserRole']));
-var_dump($_SESSION);
-var_dump($NewConnection)
+
 ?>
 <!-- Responsive navbar-->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -18,19 +17,19 @@ var_dump($NewConnection)
         <div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
             <ul class="navbar-nav mb-2 mb-lg-0">
                 <li class="nav-item"><a class="nav-link active" aria-current="page" href="index.php">Accueil</a></li>
-                <li class="nav-item"><a class="nav-link" href="destination.php">Destination</a></li>
-                <li class="nav-item"><a class="nav-link" href="circuit.php">Circuits</a></li>
-                <li class="nav-item"><a class="nav-link" href="gestion.php">Gestion</a></li>
+                <li class="nav-item"><a class="nav-link" href="../destination.php">Destination</a></li>
+                <li class="nav-item"><a class="nav-link" href="../circuit.php">Circuits</a></li>
+                <li class="nav-item"><a class="nav-link" href="../gestion.php">Gestion</a></li>
                 <li class="nav-item"><a class="nav-link" href="#!">Contact</a></li>
             </ul>
         </div>
         <div z-index="2" class="float-login">
         <i class="fa-solid fa-magnifying-glass" style="color: #000000;"></i>
             <a href="" class="btn btn-success">Devis</a>
-            <?php if ($IsUserLoggedIn) : $UserIcon = './images/icons_user_role_' . $_SESSION['UserRole'] . '.png';
+            <?php if ($IsUserLoggedIn) : $UserIcon = './images/icons_user.png';
             ?>
                 <a href="./profile.php"><img src=<?php echo '"' . $UserIcon . '"'; ?> alt="User Role Image" style="width: 32px; height: 32px;"></a>
-                <form method="POST" action="./interaction/signin.php"><button type="submit" name="Intention" value="Logout" class="ConnexionButtons red-button">Deconnexion</button></form>
+                <form method="POST" action="../controllers/signin.php"><button style="border-style: none;" type="submit" name="Intention" value="Logout" class="ConnexionButtons red-button">Deconnexion</button></form>
             <?php else : ?>
                 <button class="ConnexionButtons green-button" onclick="window.location='./login.php'">Login</button>
             <?php endif ?>

@@ -27,9 +27,9 @@ $circuits = $NewConnection->select_random("circuit", "*", "3", "visible=1");
 
 <body>
     <?php
-    include_once('nav.php');
+    include_once('./components/nav.php');
 
-    include_once('HeaderFiltre.php')
+    include_once('./components/HeaderFiltre.php')
 
     ?>
     <main>
@@ -47,13 +47,13 @@ $circuits = $NewConnection->select_random("circuit", "*", "3", "visible=1");
                     echo 
                     '
                         <div class="carousel-item card-carousel-item">
-                            <div class="card">
+                            <div class="card card-carousel">
                                 <div class="img-wrapper">
                                     <img src="' . $Value['illustration'] .'" class="card-img-top" alt="...">
                                 </div>
                                 <div class="card-body carousel-card-body">
                                     <h3 class="card-title soustitre">'. $Value['nom'] .'</h3>
-                                    <a href="./destinations.php?destination='. $Value['id_continent'] .'" class="btn btn-success">Explorer</a>
+                                    <a href="./destination.php?destination='. $Value['id_continent'] .'" class="btn btn-success">Explorer</a>
                                 </div>
                             </div>
                         </div>';
@@ -141,6 +141,7 @@ $circuits = $NewConnection->select_random("circuit", "*", "3", "visible=1");
         </section>
     </main>
 
-    <?php include_once('footer.php') ?>
+    <?php include_once('./components/footer.php') ?>
 
 </body>
+</html>

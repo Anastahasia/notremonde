@@ -35,7 +35,7 @@ $AllCircuits = $NewConnection->select("circuit", "*");
 </head>
 
 <body>
-    <?php include_once('nav.php'); ?>
+    <?php include_once('./components/nav.php'); ?>
     <main>
         <section class="entete">
             <h1 class="titre">Tous les circuits</h1>
@@ -87,7 +87,7 @@ $AllCircuits = $NewConnection->select("circuit", "*");
                 </div>
             </div>
     </main>
-    <?php include_once('footer.php') ?>
+    <?php include_once('./components/footer.php') ?>
     <script>
         let myModal = document.getElementById('DeleteModal');
 

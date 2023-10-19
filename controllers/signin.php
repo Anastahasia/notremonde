@@ -37,18 +37,14 @@ if (isset($_POST['Intention'])){
             // break;
             
         case 'Login':
-            $Condition = '(`email` = "' . $_POST['email'] . '")';
-            $UniqueUser = $NewConnection->select($UsersTableName, "*", $Condition);
+            $Condition = '(`email` = "' . $email . '")';
+            $UniqueUser = $NewConnection->select('utilisateur', "*", $Condition);
             // var_dump($UniqueUser[0]);
 
             session_start([
                 'cookie_lifetime' => (30 * 60) //lifetime of session in seconds
             ]);
 
-            // I truly don't see the point of that:
-            // 1. we can't react dynamically to it (best we can do it inefficient polling)
-            // 2. we have other field (like UserName or UserRole to secure the app)
-            // 3. as soon as the session expires, everything is meant to adapt to a guest experience
             $_SESSION['crsf_token'] = bin2hex(random_bytes(32));
 
             if ($UniqueUser && password_verify($_POST['mot_de_passe'], $UniqueUser[0]['mot_de_passe'])) {
@@ -64,7 +60,7 @@ if (isset($_POST['Intention'])){
                 // if (isset($_SESSION['HasFailedLogin']))
                 //     unset($_SESSION['HasFailedLogin']);
 
-                header("Location: " . 'index.php');
+                header("Location: " . '../index.php');
                 die();
             }
             else {

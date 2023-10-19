@@ -33,7 +33,7 @@ $SelectedEtapes = $NewConnection->select_etape_circuit("etape_circuit", "heberge
 
 <body>
     <?php
-    include_once('nav.php');
+    include_once('./components/nav.php');
     ?>
 
     <main>
@@ -102,6 +102,6 @@ $SelectedEtapes = $NewConnection->select_etape_circuit("etape_circuit", "heberge
         </section>
     </main>
 
-    <?php include_once('footer.php') ?>
+    <?php include_once('./components/footer.php') ?>
 
 </body>

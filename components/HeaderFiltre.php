@@ -1,6 +1,6 @@
 <?php 
 
-require_once('./components/connexion.php');
+require_once('connexion.php');
 // if (isset($_GET['inputVente'])) {
 //     $ville = $_GET['inputVente'];
 //     $contrat = $_GET['contrat'];
@@ -18,7 +18,7 @@ $categories = $NewConnection->select("categorie", "*");
             <div class="">
                 <div class="text-center my-5">
                     <h1 class="display-5 fw-bolder text-white mb-2 header">LE VOYAGE QUI VOUS RESSEMBLE</h1>
-                    <form method="get" action="destination.php">
+                    <form method="get" action="../destination.php">
                         <div class="d-grid gap-3 d-sm-flex justify-content-sm-center">
                             <div class="label-container">
                                 <select name="destination" class="form-select btn-light px-4" aria-label="Default select example">
