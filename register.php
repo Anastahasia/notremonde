@@ -55,7 +55,7 @@
 
             <div class="input-group">
                 <label for="num">Numéro de téléphone </label>
-                <input type="num" name="num" required>
+                <input type="number" name="num">
             </div>
 
             <div class="input-group">

@@ -46,7 +46,6 @@ $AllUsers = $NewConnection->select("utilisateur", "*");
 
             <div id="CircuitsViewerBox" class="card-container">
                 <form action="./controllers/gestion.php" method="post" class="card gestion">
-                    <input type="hidden" name="id_circuit" value="' . $Value['id_circuit'] . '">
                     <div class="card-image-container">
                         <img id="AddNewIcon" src="./images/icons_plus.png" alt="New Circuit picture">
                     </div>
@@ -67,7 +66,7 @@ $AllUsers = $NewConnection->select("utilisateur", "*");
                     echo '<div class="card-image-container"><img src="' . $Value['photo'] . '" alt="Circuit picture"></div>';
                     echo '<div class="card-text"><h3>' . $Value['titre'] . '</h3>';
                     // echo '<button name="Intention" value="UpdateCircuit" type="button">Modifier</button>';
-                    echo '<a href="' . $CircuitPageRedirectionWithParameters . '" >Modifier</a></div>';
+                    echo '<a href="' . $CircuitPageRedirectionWithParameters . '" class="btn" >Modifier</a></div>';
                     echo '</form>';
                 }
                 ?>
@@ -99,7 +98,6 @@ $AllUsers = $NewConnection->select("utilisateur", "*");
 
             <div id="ItinerairesViewerBox" class="card-container">
                 <form action="./controllers/gestion.php" method="post" class="card gestion">
-                    <input type="hidden" name="id_itineraire" value="' . $Value['id_itineraire'] . '">
                     <div class="card-image-container">
                         <img id="AddNewIcon" src="./images/icons_plus.png" alt="New Circuit picture">
                     </div>
@@ -120,7 +118,7 @@ $AllUsers = $NewConnection->select("utilisateur", "*");
                     echo '<div class="card-image-container"><img src="' . $Value['photo'] . '" alt="Circuit picture"></div>';
                     echo '<div class="card-text"><h3>' . $Value['titre'] . '</h3>';
                     // echo '<button name="Intention" value="UpdateCircuit" type="button">Modifier</button>';
-                    echo '<a href="' . $ItinerairePageRedirectionWithParameters . '" >Modifier</a></div>';
+                    echo '<a href="' . $ItinerairePageRedirectionWithParameters . '" class="btn">Modifier</a></div>';
                     echo '</form>';
                 }
                 ?>
@@ -136,7 +134,7 @@ $AllUsers = $NewConnection->select("utilisateur", "*");
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="button" id="DeleteModalSubmitButton" class="btn btn-primary">Save changes</button>
+                                <button type="button" id="DeleteItineraireSubmitButton" class="btn btn-primary">Save changes</button>
                                 <?php var_dump($Value) ?>
                             </div>
                         </div>
@@ -149,52 +147,119 @@ $AllUsers = $NewConnection->select("utilisateur", "*");
             <div class="entete">
                 <h1 class="titre">Tous les comptes</h1>
             </div>
+            <div id="UserInsert">
+                <input type="hidden" name="id_utilisateur" value="' . $Value['id_utilisateur'] . '">
+                <div class="card-text">
+                    <h5>Pour créer un nouveau compte:</h5>
+                    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#InsertModal">Cliquer ici</button>
+                </div>
+                <!-- Modal d'insertion -->
+                <form action="./controllers/gestion.php" method="POST">
+                    <div class="modal fade" id="InsertModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Créer un compte</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <!-- formulaire d'insertion -->
+                                    <div class="card-group">
+                                        <div class="card" style="width: 30rem;">
+                                            <div class="card-body">
+                                                <div class="mb-3">
+                                                    <label for="nom" class="form-label">Nom</label>
+                                                    <input type="text" class="form-control" id="nom" name="nom" required>
+                                                </div>
 
-            <div id="ItinerairesViewerBox" class="card-container">
-                <form action="./controllers/gestion.php" method="post" class="card gestion">
-                    <input type="hidden" name="id_utilisateur" value="' . $Value['id_utilisateur'] . '">
-                    <div class="card-image-container">
-                        <img id="AddNewIcon" src="./images/icons_plus.png" alt="New Circuit picture">
-                    </div>
-                    <div class="card-text">
-                        <h5>Pour créer un nouveeu circuit:</h5>
-                        <button name="Intention" value="AddUser" type="submit">Cliquer ici</button>
-                    </div>
-                    <!-- href="./Circuit.php?edit=true&id_Circuit=0" -->
-                </form>
+                                                <div class="mb-3">
+                                                    <label for="prenom" class="form-label">Prénom</label>
+                                                    <input type="text" class="form-control" id="prenom" name="prenom" required>
+                                                </div>
 
-                <?php
-                foreach ($AllUsers as $Key => $Value) {
-                    $ItinerairePageRedirectionWithParameters = './circuit.php?edit=true&id_itineraire=' . $Value['id_utilisateur'];
+                                                <div class="mb-3">
+                                                    <label for="num" class="form-label">Numéro de téléphone</label>
+                                                    <input type="number" class="form-control" id="num" name="num">
+                                                </div>
 
-                    echo '<form action="./controllers/gestion.php" method="post" class="card gestion">';
-                    echo '<input type="hidden" name="id_utilisateur" value="' . $Value['id_utilisateur'] . '">';
-                    echo '<button name="Intention" value="DeleteUser" data-bs-toggle="modal" data-bs-target="#DeleteUserModal" type="button" class="floating"></button>';
-                    echo '<div class="card-image-container"><img src="' . $Value['nom'] . '" alt="Circuit picture"></div>';
-                    echo '<div class="card-text"><h3>' . $Value['titre'] . '</h3>';
-                    // echo '<button name="Intention" value="UpdateCircuit" type="button">Modifier</button>';
-                    echo '<a href="' . $ItinerairePageRedirectionWithParameters . '" >Modifier</a></div>';
-                    echo '</form>';
-                }
-                ?>
-                <div class="modal" id="DeleteUserModal" tabindex="-1">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title">Modal title</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <p>Modal body text goes here.</p>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="button" id="DeleteModalSubmitButton" class="btn btn-primary">Save changes</button>
-                                <?php var_dump($Value) ?>
+                                                <div class="mb-3">
+                                                    <label for="email">Adresse e-mail </label>
+                                                    <input type="email" class="form-control" name="email" required>
+                                                </div>
+
+                                                <div class="mb-3">
+                                                    <label for="role">Role </label>
+                                                    <select name="roles" class="form-select">
+                                                        <option selected>Choisir</option>
+                                                        <option value="user">Utilisateur</option>
+                                                        <option value="client">Client</option>
+                                                        <option value="admin">Administration</option>
+                                                    </select>
+                                                </div>
+
+                                                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                                    <button name="Intention" value="AddUser" type="submit" class="btn btn-success">Envoyer</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                </form>
+            </div>
+
+            <div id="UsersViewerBox">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col">Nom</th>
+                            <th scope="col">Prénom</th>
+                            <th scope="col">Numéro de téléphone</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Rôle</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        <?php
+                        foreach ($AllUsers as $Key => $Value) {
+
+                            echo '<tr><form action="./controllers/gestion.php" method="post" >';
+                            echo '<input type="hidden" name="id_utilisateur" value="' . $Value['id_utilisateur'] . '">';
+                            echo '<td><input type="text" name="surname" value="' . $Value['nom'] . '"></td>';
+                            echo '<td><input type="text" name="name" value="' . $Value['prenom'] . '"></td>';
+                            echo '<td><input type="text" name="phone" value="' . $Value['num'] . '"></td>';
+                            echo '<td><input type="text" name="mail" value="' . $Value['email'] . '"></td>';
+                            echo '<td><input type="text" name="role" value="' . $Value['role'] . '"></td>';
+                            echo '<td><button name="Intention" value="UpdateUser" type="submit" class="btn btn-success">Modifier</button>';
+                            echo '<button name="Intention" value="DeleteUser" data-bs-toggle="modal" data-bs-target="#DeleteUserModal" type="button" class="btn btn-success">Supprimer</button></td>';
+                            echo '</form></tr>';
+                        }
+                        ?>
+                        <div class="modal" id="DeleteUserModal" tabindex="-1">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Modal title</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>Modal body text goes here.</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                        <button type="button" id="DeleteUserSubmitButton" class="btn btn-primary">Save changes</button>
+                                        <?php var_dump($Value) ?>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </tbody>
+                </table>
             </div>
         </section>
     </main>
@@ -206,7 +271,7 @@ $AllUsers = $NewConnection->select("utilisateur", "*");
         myModal.addEventListener('shown.bs.modal', function(event) {
             let SubmitButton = document.getElementById('DeleteModalSubmitButton');
 
-            // C'est seulement quand le boutton est clické, que le type change (et la page changera)
+            // C'est seulement quand le boutton est cliqué, que le type change (et la page changera)
             // donc pas besoin de nettoyage
             SubmitButton.onclick = function() {
                 // change le type du button original, puis simule un click:

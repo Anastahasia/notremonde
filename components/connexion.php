@@ -142,45 +142,6 @@
             }
         }
 
-        /** INSERT ON DUPLICATE UPDATE version */
-        public function insert_update($Table, $Values, $UpdateField)
-        {
-            try {
-                $UpdateKey = $UpdateField['Key'];
-                $UpdateValue = $UpdateField['Value'];
-
-
-                $ValueAsString = "";
-                $KeyAsString = "";
-
-                foreach ($Values as $EachColumn => $EachValue) {
-                    // echo "$EachColumn => $EachValue";
-                    $KeyAsString .= "`$EachColumn`, ";
-                    $ValueAsString .= ($this->Connection->quote($EachValue) . ", ");
-                }
-                $KeyAsString = rtrim($KeyAsString, ', ');
-                $ValueAsString = rtrim($ValueAsString, ', ');
-
-                /* $SQLQueryString = "INSERT IGNORE INTO $Table (<?>) VALUES (<!>)"; */
-                $SQLQueryString = "INSERT INTO $Table (<?>) VALUES (<!>) ON DUPLICATE KEY UPDATE `id_utilisateur` = LAST_INSERT_ID(`id_utilisateur`), `$UpdateKey` = '$UpdateValue'";
-                $SQLQueryString = str_replace("<!>", $ValueAsString, str_replace("<?>", $KeyAsString, $SQLQueryString));
-
-                var_dump($SQLQueryString);
-
-                $Result = $this->Connection->query($SQLQueryString);
-                // var_dump($Result);
-                // return true;
-
-                // TODO: We need to find a way to return the id in case of a failed update:
-                return $this->Connection->lastInsertId();
-
-            } catch (PDOException $e) {
-                echo "Erreur: " . $e->getMessage();
-
-                return false;
-            }
-        }
-
         /**Returns true on sucessful update */                
         public function update($Table, $ConditionField, $Values)
         {

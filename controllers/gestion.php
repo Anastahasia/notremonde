@@ -1,17 +1,17 @@
 <?php
-        
-    include("../components/connexion.php");
-    if (isset($_POST['Intention'])){
 
-        switch ($_POST['Intention']) {
-                
-            case 'AddCircuit':
+include("../components/connexion.php");
+if (isset($_POST['Intention'])) {
+
+    switch ($_POST['Intention']) {
+
+        case 'AddCircuit':
             $Condition = '(`nom` = "brouillon")';
             $CategoryID = $NewConnection->select('categorie', "id_categorie", $Condition);
             $CategoryID = $CategoryID ? $CategoryID[0]['id_categorie'] : '1';
             // var_dump($CategoryID);
 
-            $CircuitID = $NewConnection->insert( 'circuit', array(
+            $CircuitID = $NewConnection->insert('circuit', array(
                 'titre' => 'Sans titre',
                 'description' => 'Ajouter une description',
                 'duree' => '10',
@@ -22,9 +22,8 @@
                 'enfants' => '1',
                 'categorie' => $CategoryID,
             ));
-    
-            if ($CircuitID)
-            {
+
+            if ($CircuitID) {
                 header("Location: " . "../circuit.php?edit=true&id_circuit=$CircuitID");
                 die();
             }
@@ -42,11 +41,11 @@
             }
             break;
 
-            case 'AddItineraire':
+        case 'AddItineraire':
             $Condition = '(`nom` = "brouillon")';
             // var_dump($CategoryID);
 
-            $ItineraireID = $NewConnection->insert( 'itineraire', array(
+            $ItineraireID = $NewConnection->insert('itineraire', array(
                 'titre' => 'Sans titre',
                 'description' => 'Ajouter une description',
                 'photo' => '',
@@ -57,9 +56,8 @@
                 'voyageurs_enfants' => '1',
                 'prix_total' => '500',
             ));
-    
-            if ($ItineraireID)
-            {
+
+            if ($ItineraireID) {
                 header("Location: " . "../circuit.php?edit=true&id_itineraire=$ItineraireID");
                 die();
             }
@@ -76,5 +74,57 @@
                 die();
             }
             break;
-        }
-        }
+
+
+        case 'AddUser':
+            extract($_POST);
+            $UserID = $NewConnection->insert('utilisateur', array(
+                'nom' => $nom,
+                'prenom' => $prenom,
+                'num' => $num,
+                'email' => $email,
+                'mot_de_passe' => 'test',
+                'role' => $roles,
+            ));
+
+            if ($UserID) {
+                header("Location: " . "../gestion.php");
+                die();
+            }
+
+            break;
+
+        case 'UpdateUser':
+            extract($_POST);
+
+            $Condition= array('id_utilisateur' => $_POST['id_utilisateur']);
+
+            $Values= array(
+                'nom' => $surname,
+                'prenom' => $name,
+                'num' => $phone,
+                'email' => $mail,
+                'role' => $role,
+            );
+
+            $UserID = $NewConnection->update('utilisateur', $Condition, $Values);
+
+            // if ($UserID) {
+            //     header("Location: " . "../gestion.php");
+            //     die();
+            // }
+
+            break;
+
+        case 'DeleteUser':
+            $UpdateFieldCondition = array('id_utilisateur' => $_POST['id_utilisateur']);
+
+            $Success = $NewConnection->delete('utilisateur', $UpdateFieldCondition);
+
+            if ($Success) {
+                header("Location: " . '../gestion.php');
+                die();
+            }
+            break;
+    }
+}
