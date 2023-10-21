@@ -54,7 +54,7 @@ if (isset($_POST['Intention'])){
 
             $_SESSION['crsf_token'] = bin2hex(random_bytes(32));
 
-            if ($UniqueUser && password_verify($_mot_de_passe, $UniqueUser[0]['mot_de_passe'])) {
+            if ($UniqueUser && password_verify($mot_de_passe, $UniqueUser[0]['mot_de_passe'])) {
 
                 $_SESSION['CurrentUser'] = $UniqueUser[0]['email'];
                 $_SESSION['CurrentUserName'] = $UniqueUser[0]['nom'];
@@ -71,10 +71,10 @@ if (isset($_POST['Intention'])){
                 die();
             }
             else {
-                $_SESSION['HasFailedLogin'] = true;
+                // $_SESSION['HasFailedLogin'] = true;
 
-                header("Location: " . '../login.php');
-                die();
+                // header("Location: " . '../login.php');
+                // die();
             }
 
             // var_dump($_SESSION);

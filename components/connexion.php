@@ -89,12 +89,13 @@
         //     }
         // }
 
-        public function select_etape_circuit($Intermediate, $Table1, $Key1, $CircuitID)
+        public function select_etape($Intermediate, $Table1, $Key1, $Table2, $Key2, $CircuitID)
         {
             try {
                 $SQLQueryString = "SELECT *
                 FROM $Intermediate
                 INNER JOIN $Table1 ON $Intermediate.$Table1 = $Table1.$Key1
+                LEFT JOIN $Table2 ON $Table1.$Table2 = $Table2.$Key2
                 WHERE $Intermediate.circuit = '$CircuitID'";
 
                 // var_dump($SQLQueryString);

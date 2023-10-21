@@ -45,7 +45,6 @@ footer {
     }
 
     .carousel-card-body {
-
         position: absolute;
         bottom: 0;
         padding-left: 0;
@@ -102,13 +101,20 @@ footer {
 
     .txt-presentation{
         text-align: justify;
-        position: relative;
+    }
+
+    .flex-bouton{
+        text-align: center;
     }
     
-    .txt-presentation button{
-        align-self: center;
+
+/* END CIRCUIT DISPLAY */
+/* CIRCUIT CARDS */
+    .circuit-card{
+        flex: 0 0 30%;
     }
-    /*gestion cards  */
+
+    /*GESTION CARDS */
 
     .card-container {
         display: flex;

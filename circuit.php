@@ -3,7 +3,14 @@ require_once("./components/connexion.php");
 
 $CurrentCircuitID = isset($_GET['circuit']) ? $_GET['circuit'] : 0;
 $SelectedCircuit = $NewConnection->select("circuit", "*", "id_circuit = $CurrentCircuitID");
-$SelectedEtapes = $NewConnection->select_etape_circuit("etape_circuit", "hebergement", "id_hebergement", $CurrentCircuitID);
+$SelectedSteps = $NewConnection->select_etape("etape_circuit", "hebergement", "id_hebergement", "ville", "id_ville", $CurrentCircuitID);
+
+// foreach ($SelectedCircuit as $Key => $Value)
+// {
+//     $SelectedCategorie = $Value['categorie'];
+// var_dump($SelectedCategorie);
+// }
+$circuits = $NewConnection->select_random("circuit", "*", "3", "visible=0 AND NOT id_circuit= $CurrentCircuitID");
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -16,8 +23,8 @@ $SelectedEtapes = $NewConnection->select_etape_circuit("etape_circuit", "heberge
     <title>
         <?php
         $CircuitsName = "";
-        foreach ($SelectedCircuit as $Key => $Value) {
-            $CircuitsName = $Value['titre'];
+        foreach ($SelectedCircuit as $Key => $Circuit) {
+            $CircuitsName = $Circuit['titre'];
         }
         echo $CircuitsName;
         ?> | Notre Monde</title>
@@ -45,48 +52,51 @@ $SelectedEtapes = $NewConnection->select_etape_circuit("etape_circuit", "heberge
         </nav>
 
         <header class="presentation">
-            <?php foreach ($SelectedCircuit as $Value) {
+            <?php foreach ($SelectedCircuit as $Circuit) {
 
                 echo '
-        <div class="img-presentation">
-                <img src="' . $Value['photo'] . '" alt="">
-            </div>';
-            }  ?>
-            <div class="txt-presentation">
-                <h1 class="titre1">Émilie-Romagne : Une Aventure Italienne</h1>
-                <p>Explorez les ruelles pavées de Bologne, découvrez les secrets de fabrication du vinaigre balsamique à Modène, et goûtez les délices du Parmesan dans les fromageries locales. Vous serez enchanté par la beauté des villes médiévales, les trésors artistiques et les traditions gastronomiques uniques de cette région. Une expérience gustative et culturelle qui éveillera tous vos sens.</p>
-                <p class="soutitre">Catégorie: </p>
-                <div class="flex-text">
-                    <p class="soutitre">Destination: </p>
-                    <p class="soutitre">Durée: </p>
-                </div>
-                <p class="titre2">À partir de: </p>
-                <button type="button" class="btn btn-success">Demandez un devis</button>
+            <div class="img-presentation">
+                <img src="' . $Circuit['photo'] . '" alt="' . $Circuit['alt'] . '">
             </div>
+            <div class="txt-presentation">
+                <h1 class="titre1">' . $Circuit['titre'] . '</h1>
+                <p>' . $Circuit['description'] . '</p>
+                <p class="soutitre">Catégorie: ' . $Circuit['categorie'] . '</p>
+                <p class="soutitre">Durée: ' . $Circuit['duree'] . ' </p>
+                <p class="titre2">À partir de: ' . $Circuit['prix_estimatif'] . '€</p>
+                <div class="flex-bouton">
+                    <a href="" class="btn btn-success">Demandez un devis</a>
+                </div>
+            </div>';
+            } ?>
         </header>
         <h2 class="titre1">Circuit</h2>
-        <hr>
-        <h3 class="titre2">étape</h3>
-        <hr>
+        <?php foreach ($SelectedSteps as $Step) {
+            echo '
+        <div class="flex-etape">
+            <hr>
+            <h3 class="titre2 etape">étape ' . $Step['ordre'] . '</h3>
+            <hr>
+        </div>
         <section class="etape-display presentation">
             <div class="txt-etape">
-                <p class="accent">jour 1 à jour 4</p>
-                <p>description de l'étape</p>
-                <p class="accent">Nom de l'hébergement</p>
-                <p>type</p>
-                <p>description de l'hébergement</p>
+                <p class="accent">jour ' . $Step['jourArrivee'] . ' à jour ' . $Step['jourDepart'] . '</p>
+                <p>' . $Step['descriptionEtape'] . '</p>
+                <p class="accent">' . $Step['nom'] . '</p>
+                <p>' . $Step['type'] . '</p>
+                <p>' . $Step['descriptionHebergement'] . '</p>
             </div>
             <div class="img-presentation">
                 <div id="carouselExample" class="carousel slide">
                     <div class="carousel-inner">
                         <div class="carousel-item active">
-                            <img src="..." class="d-block w-100" alt="...">
+                            <img src="' . $Step['photoVille'] . '" class="d-block w-100" alt="...">
                         </div>
                         <div class="carousel-item">
-                            <img src="..." class="d-block w-100" alt="...">
+                            <img src="' . $Step['photo1'] . '" class="d-block w-100" alt="photo de ' . $Step['nom'] . '">
                         </div>
                         <div class="carousel-item">
-                            <img src="..." class="d-block w-100" alt="...">
+                            <img src="' . $Step['photo2'] . '" class="d-block w-100" alt="' . $Step['nom'] . '">
                         </div>
                     </div>
                     <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
@@ -98,6 +108,34 @@ $SelectedEtapes = $NewConnection->select_etape_circuit("etape_circuit", "heberge
                         <span class="visually-hidden">Next</span>
                     </button>
                 </div>
+            </div>
+        </section>';
+        } ?>
+        <section>
+            <div class="flex-bouton">
+                <a href="" class="btn btn-success">Demandez un devis</a>
+            </div>
+            <div class="flex-text">
+                <h2 class="titre1">ça pourrait vous plaire...</h2>
+                <a href="destination.php" class="soustitre2">Tous les circuits</a>
+            </div>
+            <div class="card-container">
+                <?php foreach ($circuits as $Value) {
+                    echo '
+                <div class="card circuit-card">
+                    <div class="img-wrapper">
+                        <img src="' . $Value['photo'] . '" class="card-img-top" alt="' . $Value['alt'] . '">
+                    </div>
+                    <div class="card-body">
+                        <div class="card-text">
+                            <h3 class="card-title soustitre">' . $Value['titre'] . '</h3>
+                            <p class="paragraphe">' . $Value['duree'] . ' jours | ' . $Value['prix_estimatif'] . '€</p>
+                        </div>
+                        <a href="./destination.php?destination=' . $Value['id_circuit'] . '" class="btn btn-success">Explorer</a>
+                    </div>
+                </div>';
+                }
+                ?>
             </div>
         </section>
     </main>
