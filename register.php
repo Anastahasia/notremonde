@@ -37,7 +37,8 @@
         <h1>Inscription</h1>
         <?php
         if (isset($_SESSION['HasFailedSignedUp']) && $_SESSION['HasFailedSignedUp']) {
-            echo '<h4 class="animate__animated animate__shakeX" >Impossible de vous inscrire.</h4>';
+            echo '<h4 class="animate__animated animate__shakeX" >Un compte existe déjà avec cette adresse email. </h4>
+                    <a href="login.php"> Essayez de vous connecter ! <a>';
 
             unset($_SESSION['HasFailedSignedUp']);
         }

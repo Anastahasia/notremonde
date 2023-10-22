@@ -5,6 +5,18 @@ require_once('./components/connexion.php');
 $CurrentDestinationID = isset($_GET['destination']) ? $_GET['destination'] : 0;
 $SelectedDestination = $NewConnection->select("continent", "*", "id_continent = $CurrentDestinationID");
 
+$CurrentCategorieID = isset($_GET['categorie']) ? $_GET['categorie'] : 0;
+$SelectedCategorie = $NewConnection->select("categorie", "*", "id_categorie = $CurrentCategorieID");
+
+if ($CurrentDestinationID) {
+    $circuits = $NewConnection->select("circuit", "*", "continent = $CurrentDestinationID AND visible=1");
+} elseif ($CurrentCategorieID) {
+    $circuits = $NewConnection->select("circuit", "*", "categorie = $CurrentCategorieID AND visible=1");
+} else {
+    $circuits = $NewConnection->select("circuit", "*", "visible=1");
+}
+
+
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -15,12 +27,17 @@ $SelectedDestination = $NewConnection->select("continent", "*", "id_continent = 
     <meta name="description" content="" />
     <meta name="author" content="" />
     <title> <?php
-            $DestinationsName = "";
-            foreach ($SelectedDestination as $Key => $Value) {
-                $DestinationsName = $Value['titre'];
-            }
-            echo $DestinationsName;
-            ?> | Notre Monde</title>
+            if ($CurrentDestinationID) {
+                $DestinationsName = "";
+                foreach ($SelectedDestination as $Key => $Value) {
+                    $DestinationsName = $Value['nom'];
+                }
+                echo $DestinationsName;
+            } else {
+                echo 'Tous les circuits';
+            } //mettre un else if incluant un for each pour catégories 
+            ?>
+        | Notre Monde</title>
     <!-- Bootstrap icons-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet" />
     <!-- Core theme CSS (includes Bootstrap)-->
@@ -40,41 +57,32 @@ $SelectedDestination = $NewConnection->select("continent", "*", "id_continent = 
     ?>
     <main>
         <section>
-            <h2 class="titre1">Description</h2>
+            <div class="flex-text">
+                <h2 class="titre1">ça pourrait vous plaire...</h2>
+                <a href="destination.php" class="soustitre2">Tous les circuits</a>
+            </div>
             <div class="card-container">
-                <div class="card" style="width:33%">
-                    <img src="..." class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h3 class="card-title soustitre">Thailande</h3>
-                        <div class="flex-text">
-                            <p>jours </p>
-                            <p>| prix</p>
-                        </div>
-                        <button type="button" class="btn btn-success">Explorer</button>
+                <?php
+                    foreach ($circuits as $Value) {
+                        echo '
+                <div class="card circuit-card">
+                    <div class="img-wrapper">
+                        <img src="' . $Value['photo'] . '" class="card-img-top" alt="' . $Value['alt'] . '">
                     </div>
-                </div>
-                <div class="card" style="width:33%">
-                    <img src="..." class="card-img-top" alt="...">
                     <div class="card-body">
-                        <h3 class="card-title soustitre">Thailande</h3>
-                        <div class="flex-text">
-                            <p>jours </p>
-                            <p>| prix</p>
+                        <div class="card-text">
+                            <h3 class="card-title soustitre">' . $Value['titre'] . '</h3>
+                            <p class="paragraphe">' . $Value['duree'] . ' jours | ' . $Value['prix_estimatif'] . '€</p>
                         </div>
-                        <button type="button" class="btn btn-success">Explorer</button>
+                        <a href="./circuit.php?circuit=' . $Value['id_circuit'] . '" class="btn btn-success">Explorer</a>
                     </div>
-                </div>
-                <div class="card" style="width:30%">
-                    <img src="..." class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h3 class="card-title soustitre">Thailande</h3>
-                        <div class="flex-text">
-                            <p>jours </p>
-                            <p>| prix</p>
-                        </div>
-                        <button type="button" class="btn btn-success">Explorer</button>
-                    </div>
-                </div>
+                </div>';
+                    }
+                ?>
+            </div>
+            <div class="flex-bouton">
+                <a href="" class="btn btn-success">Demandez un devis</a>
+                <a href="">fleche</a>
             </div>
         </section>
     </main>
