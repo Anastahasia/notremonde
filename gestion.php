@@ -70,24 +70,6 @@ $AllUsers = $NewConnection->select("utilisateur", "*");
                     echo '</form>';
                 }
                 ?>
-                <div class="modal" id="DeleteModal" tabindex="-1">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title">Modal title</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <p>Modal body text goes here.</p>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="button" id="DeleteModalSubmitButton" class="btn btn-primary">Save changes</button>
-                                <?php var_dump($Value) ?>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
         </section>
 
@@ -114,7 +96,7 @@ $AllUsers = $NewConnection->select("utilisateur", "*");
 
                     echo '<form action="./controllers/gestion.php" method="post" class="card gestion">';
                     echo '<input type="hidden" name="id_itineraire" value="' . $Value['id_itineraire'] . '">';
-                    echo '<button name="Intention" value="DeleteItineraire" data-bs-toggle="modal" data-bs-target="#DeleteItineraireModal" type="button" class="floating"></button>';
+                    echo '<button name="Intention" value="DeleteItineraire" data-bs-toggle="modal" data-bs-target="#DeleteModal" type="button" class="floating"></button>';
                     echo '<div class="card-image-container"><img src="' . $Value['photo'] . '" alt="Circuit picture"></div>';
                     echo '<div class="card-text"><h3>' . $Value['titre'] . '</h3>';
                     // echo '<button name="Intention" value="UpdateCircuit" type="button">Modifier</button>';
@@ -122,24 +104,6 @@ $AllUsers = $NewConnection->select("utilisateur", "*");
                     echo '</form>';
                 }
                 ?>
-                <div class="modal" id="DeleteItineraireModal" tabindex="-1">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title">Modal title</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <p>Modal body text goes here.</p>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="button" id="DeleteItineraireSubmitButton" class="btn btn-primary">Save changes</button>
-                                <?php var_dump($Value) ?>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
         </section>
 
@@ -236,32 +200,32 @@ $AllUsers = $NewConnection->select("utilisateur", "*");
                             echo '<td><input type="text" name="mail" value="' . $Value['email'] . '"></td>';
                             echo '<td><input type="text" name="role" value="' . $Value['role'] . '"></td>';
                             echo '<td><button name="Intention" value="UpdateUser" type="submit" class="btn btn-success">Modifier</button>';
-                            echo '<button name="Intention" value="DeleteUser" data-bs-toggle="modal" data-bs-target="#DeleteUserModal" type="button" class="btn btn-success">Supprimer</button></td>';
+                            echo '<button name="Intention" value="DeleteUser" data-bs-toggle="modal" data-bs-target="#DeleteModal" type="button" class="btn btn-success">Supprimer</button></td>';
                             echo '</form></tr>';
                         }
                         ?>
-                        <div class="modal" id="DeleteUserModal" tabindex="-1">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title">Modal title</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <p>Modal body text goes here.</p>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                        <button type="button" id="DeleteUserSubmitButton" class="btn btn-primary">Save changes</button>
-                                        <?php var_dump($Value) ?>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                     </tbody>
                 </table>
             </div>
         </section>
+        <div class="modal" id="DeleteModal" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Supprimer</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Êtes vous sûr de vouloir supprimer ?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" id="DeleteModalSubmitButton" class="btn btn-primary">Save changes</button>
+                        <?php var_dump($Value) ?>
+                    </div>
+                </div>
+            </div>
+        </div>
     </main>
     <?php include_once('./components/footer.php') ?>
     <script>

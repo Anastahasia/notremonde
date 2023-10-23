@@ -71,10 +71,10 @@ if (isset($_POST['Intention'])) {
                 header("Location: " . '../index.php');
                 die();
             } else {
-                // $_SESSION['HasFailedLogin'] = true;
+                $_SESSION['HasFailedLogin'] = true;
 
-                // header("Location: " . '../login.php');
-                // die();
+                header("Location: " . '../login.php');
+                die();
             }
 
             // var_dump($_SESSION);

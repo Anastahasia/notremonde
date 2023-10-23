@@ -83,7 +83,7 @@ if (isset($_POST['Intention'])) {
                 'prenom' => $prenom,
                 'num' => $num,
                 'email' => $email,
-                'mot_de_passe' => 'test',
+                'mot_de_passe' => password_hash('test', PASSWORD_DEFAULT),
                 'role' => $roles,
             ));
 
