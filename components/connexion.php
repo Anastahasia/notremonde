@@ -210,14 +210,13 @@
         public function delete($Table, $ConditionField)
         {
             try {
-                //DELETE FROM `utilisateur` WHERE `utilisateur`.`idUser` = 36
-                // $SQLQueryString = "DELETE FROM `$Table` WHERE `$Table`.`idUser` = 36";
                 $SQLQueryString = "DELETE FROM `$Table` WHERE <?>";
 
                 $ConditionAsString = "";
                 foreach ($ConditionField as $EachColumn => $EachValue) {
-                    $ConditionAsString .= ("`$EachColumn` = " . $this->Connection->quote($EachValue));
+                    $ConditionAsString .= ("`$EachColumn` = " . $this->Connection->quote($EachValue) ." AND ");
                 }
+                $ConditionAsString = rtrim($ConditionAsString, ' AND');
 
                 $SQLQueryString = str_replace("<?>", $ConditionAsString, $SQLQueryString);
 

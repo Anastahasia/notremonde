@@ -113,7 +113,14 @@ footer {
     .circuit-card{
         flex: 0 0 30%;
     }
-
+    .fa-heart{
+        font-size: 150%;
+    }
+    .fa-heart.active{
+        font-size: 180%;
+        color: #ff0000;
+    }
+/* END CIRCUIT CARDS*/
     /*GESTION CARDS */
 
     .card-container {

@@ -5,6 +5,7 @@ if (session_id() == "") {
     session_start();
 }
 
+//var_dump($_SESSION);
 $IsUserLoggedIn = isset($_SESSION['CurrentUser']);
 // $CanEditArticles = (isset($_SESSION['UserRole']) && CanEditArticles($_SESSION['UserRole']));
 

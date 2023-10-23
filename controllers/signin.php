@@ -26,8 +26,7 @@ if (isset($_POST['Intention'])) {
 
             if (empty($EmailVerify)) {
                 $Success = $NewConnection->insert_user($surname, $name, $num, $email, $HashedPassword); #inserts a new user if the email adress doesn't exist in the DB
-            }
-             else {
+            } else {
                 session_start();
 
                 $_SESSION['HasFailedSignedUp'] = true;
@@ -88,5 +87,29 @@ if (isset($_POST['Intention'])) {
             die();
 
             break;
+    }
+}
+if (isset($_GET['Intention'])) {
+    session_start();
+
+    $circuit = $_GET['voyage'];
+    $user = $_SESSION['UserID'];
+
+    $Condition = '(`circuit`=' . $circuit . ' AND `utilisateur`=' . $user . ')';
+    if (isset($user)) {
+        $Select = $NewConnection->select('favoris', '*', $Condition);
+        if (empty($Select)) {
+            $Values = array(
+                'circuit' => $circuit,
+                'utilisateur' => $user,
+            );
+            $Favorite = $NewConnection->insert('favoris', $Values);
+        }else{
+            $Values = array(
+                'circuit' => $circuit,
+                'utilisateur' => $user,
+            );
+            $Favorite = $NewConnection->delete('favoris', $Values);
+        }
     }
 }

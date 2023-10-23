@@ -43,9 +43,11 @@ if ($CurrentDestinationID) {
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
     <link rel="icon" href="./images/favicon.png" type="image/x-icon">
 
-    <link href="styles.css" rel="stylesheet" />
+    <link href="./styles.css" rel="stylesheet" />
 </head>
 
 <body>
@@ -70,9 +72,15 @@ if ($CurrentDestinationID) {
                         <img src="' . $Value['photo'] . '" class="card-img-top" alt="' . $Value['alt'] . '">
                     </div>
                     <div class="card-body">
-                        <div class="card-text">
-                            <h3 class="card-title soustitre">' . $Value['titre'] . '</h3>
-                            <p class="paragraphe">' . $Value['duree'] . ' jours | ' . $Value['prix_estimatif'] . '€</p>
+                        <div>
+                            <div class="card-text">
+                                <h3 class="card-title soustitre">' . $Value['titre'] . '</h3>
+                                <p class="paragraphe">' . $Value['duree'] . ' jours | ' . $Value['prix_estimatif'] . '€</p>
+                            </div>
+
+                            <input type="hidden" name="voyage" value="'.$Value['id_circuit'].'">
+                            <button type="submit" id="favoris" name="Intention" value="AddFavorite" style="border-style: none;"><i class="fa-solid fa-heart" style="color: #8a817c;"></i></button>
+
                         </div>
                         <a href="./circuit.php?circuit=' . $Value['id_circuit'] . '" class="btn btn-success">Explorer</a>
                     </div>
@@ -88,7 +96,21 @@ if ($CurrentDestinationID) {
     </main>
 
     <?php include_once('./components/footer.php') ?>
+<script>
+    const like = document.querySelector("#favoris")
 
+    like.onclick = ()=>{
+        let xhr = new XMLHttpRequest();
+        xhr.open("GET", "./controllers/signin.php",true);
+        xhr.onload = () =>{
+            if(xhr.readyState === XMLHttpRequest.DONE){
+                if (xhr.status === 200) {
+                    like.classList.toggle("active");
+                }
+            }
+        }
+    }
+</script>
 </body>
 
 </html>
