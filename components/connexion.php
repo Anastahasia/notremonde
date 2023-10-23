@@ -130,8 +130,35 @@
                 /* $SQLQueryString = "INSERT IGNORE INTO $Table (<?>) VALUES (<!>)"; */
                 $SQLQueryString = "INSERT INTO $Table (<?>) VALUES (<!>)";
                 $SQLQueryString = str_replace("<!>", $ValueAsString, str_replace("<?>", $KeyAsString, $SQLQueryString));
+                
+                $query = $this->Connection->prepare($SQLQueryString);
+                $query->execute();
 
-                $Result = $this->Connection->query($SQLQueryString);
+                // return true;
+
+                return $this->Connection->lastInsertId();
+
+            } catch (PDOException $e) {
+                echo "Erreur: " . $e->getMessage();
+
+                return false;
+            }
+        }
+
+        public function insert_user($surname, $name, $num, $email, $mdp)
+        {
+            try {
+                $SQLQueryString = "INSERT INTO utilisateur (nom, prenom, num, email, mot_de_passe, role) VALUES (:nom, :prenom, :num, :email, :mot_de_passe, 'guest')";
+                $query = $this->Connection->prepare($SQLQueryString);
+
+                $query->bindParam(':nom', $surname,PDO::PARAM_STR, 40);
+                $query->bindParam(':prenom', $name,PDO::PARAM_STR, 40);
+                $query->bindParam(':num', $num,PDO::PARAM_STR);
+                $query->bindParam(':email', $email,PDO::PARAM_STR, 60);
+                $query->bindParam(':mot_de_passe', $mdp,PDO::PARAM_STR);
+
+                $query->execute();
+
                 // return true;
 
                 return $this->Connection->lastInsertId();

@@ -109,10 +109,10 @@ if (isset($_POST['Intention'])) {
 
             $UserID = $NewConnection->update('utilisateur', $Condition, $Values);
 
-            // if ($UserID) {
-            //     header("Location: " . "../gestion.php");
-            //     die();
-            // }
+            if ($UserID) {
+                header("Location: " . "../gestion.php");
+                die();
+            }
 
             break;
 

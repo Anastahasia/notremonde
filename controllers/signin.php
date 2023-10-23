@@ -6,8 +6,6 @@ if (isset($_POST['Intention'])) {
 
     function valid_data($data)
     {
-        $data = trim($data);
-        $data = stripslashes($data);
         $data = htmlspecialchars($data);
         return $data;
     }
@@ -15,24 +13,21 @@ if (isset($_POST['Intention'])) {
     extract($_POST);
     switch ($_POST['Intention']) {
         case 'Signup':
-
+            $surname = valid_data($nom);
+            $name = valid_data($prenom);
+            $num = valid_data($num);
+            $email = valid_data($email);
+            $mdp = valid_data($mot_de_passe);
             // $HashedPassword = password_hash($_POST['mot_de_passe'], PASSWORD_DEFAULT);
-            $HashedPassword = password_hash($mot_de_passe, PASSWORD_ARGON2ID, ['memory_cost' => 1 << 17, 'time_cost' => 4, 'threads' => 2]);
+            $HashedPassword = password_hash($mdp, PASSWORD_ARGON2ID, ['memory_cost' => 1 << 17, 'time_cost' => 4, 'threads' => 2]);
 
-            $Values = array(
-                'nom' => valid_data($nom),
-                'prenom' => valid_data($prenom),
-                'num' => valid_data($num),
-                'email' => valid_data($email),
-                'mot_de_passe' => valid_data($HashedPassword),
-                'role' => 'guest'
-            );
             // var_dump($Values);
-            $EmailVerify = $NewConnection->select('utilisateur', "email", "email = $email");
-            
-            if (!empty($EmailVerify)) {
-                $Success = $NewConnection->insert('utilisateur', $Values); # code...
-            } else {
+            $EmailVerify = $NewConnection->select('utilisateur', "email", "email = '$email'");
+
+            if (empty($EmailVerify)) {
+                $Success = $NewConnection->insert_user($surname, $name, $num, $email, $HashedPassword); #inserts a new user if the email adress doesn't exist in the DB
+            }
+             else {
                 session_start();
 
                 $_SESSION['HasFailedSignedUp'] = true;
@@ -84,10 +79,10 @@ if (isset($_POST['Intention'])) {
         case 'Logout':
             session_start();
 
-            // session_unset();
+            session_unset();
             session_destroy();
 
-            // var_dump($_SESSION);
+            //var_dump($_SESSION);
 
             header('Location: ../index.php');
             die();

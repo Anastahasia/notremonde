@@ -15,25 +15,25 @@ require_once("./components/connexion.php");
 $AllCircuits = $NewConnection->select("circuit", "*");
 $AllItineraires = $NewConnection->select("itineraire", "*");
 $AllUsers = $NewConnection->select("utilisateur", "*");
-// var_dump($AllCircuits);
+// var_dump($AllUsers);
 ?>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title> Gestion | Notre Monde </title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title> Gestion | Notre Monde</title>
     <!-- Bootstrap icons-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet" />
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 
-    <link rel="icon" href="./images/favicon.png" type="image/x-icon">
+    <link rel="icon" href="./images/favicon.png" type="image/x-icon" >
 
     <link href="styles.css" rel="stylesheet" />
-
 </head>
 
 <body>
@@ -194,7 +194,7 @@ $AllUsers = $NewConnection->select("utilisateur", "*");
 
                             echo '<tr><form action="./controllers/gestion.php" method="post" >';
                             echo '<input type="hidden" name="id_utilisateur" value="' . $Value['id_utilisateur'] . '">';
-                            echo '<td><input type="text" name="surname" value="' . $Value['nom'] . '"></td>';
+                            echo '<td>'.$Value['nom'].'</td>';
                             echo '<td><input type="text" name="name" value="' . $Value['prenom'] . '"></td>';
                             echo '<td><input type="text" name="phone" value="' . $Value['num'] . '"></td>';
                             echo '<td><input type="text" name="mail" value="' . $Value['email'] . '"></td>';
@@ -208,6 +208,7 @@ $AllUsers = $NewConnection->select("utilisateur", "*");
                 </table>
             </div>
         </section>
+        <!-- modal de supression -->
         <div class="modal" id="DeleteModal" tabindex="-1">
             <div class="modal-dialog">
                 <div class="modal-content">
