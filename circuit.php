@@ -2,14 +2,12 @@
 require_once("./components/connexion.php");
 
 $CurrentCircuitID = isset($_GET['circuit']) ? $_GET['circuit'] : 0;
-$SelectedCircuit = $NewConnection->select("circuit", "*", "id_circuit = $CurrentCircuitID");
+$SelectedCircuit = $NewConnection->select("circuit", "*", "id_circuit = $CurrentCircuitID AND visible=1");
+// if (empty($SelectedCircuit)&&$_SESSION['UserRole' != 'admin']) {
+//     header("Location: " . "./destination.php");
+// }
 $SelectedSteps = $NewConnection->select_etape("etape_circuit", "hebergement", "id_hebergement", "ville", "id_ville", $CurrentCircuitID);
 
-// foreach ($SelectedCircuit as $Key => $Value)
-// {
-//     $SelectedCategorie = $Value['categorie'];
-// var_dump($SelectedCategorie);
-// }
 $circuits = $NewConnection->select_random("circuit", "*", "3", "visible=0 AND NOT id_circuit= $CurrentCircuitID");
 ?>
 <!DOCTYPE html>

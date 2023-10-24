@@ -77,10 +77,10 @@ if ($CurrentDestinationID) {
                                 <h3 class="card-title soustitre">' . $Value['titre'] . '</h3>
                                 <p class="paragraphe">' . $Value['duree'] . ' jours | ' . $Value['prix_estimatif'] . '€</p>
                             </div>
-
+                            <form method="get" action="./controllers/user.php">
                             <input type="hidden" name="voyage" value="'.$Value['id_circuit'].'">
                             <button type="submit" id="favoris" name="Intention" value="AddFavorite" style="border-style: none;"><i class="fa-solid fa-heart" style="color: #8a817c;"></i></button>
-
+                            </form>
                         </div>
                         <a href="./circuit.php?circuit=' . $Value['id_circuit'] . '" class="btn btn-success">Explorer</a>
                     </div>
@@ -97,7 +97,7 @@ if ($CurrentDestinationID) {
 
     <?php include_once('./components/footer.php') ?>
 <script>
-    const like = document.querySelector("#favoris")
+    const like = document.querySelector(".fa-heart")
 
     like.onclick = ()=>{
         let xhr = new XMLHttpRequest();

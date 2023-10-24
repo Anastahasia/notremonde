@@ -16,27 +16,27 @@ if (isset($_POST['Intention'])) {
             $surname = valid_data($nom);
             $name = valid_data($prenom);
             $num = valid_data($num);
-            $email = valid_data($email);
+            $email = filter_var($email, FILTER_VALIDATE_EMAIL);
             $mdp = valid_data($mot_de_passe);
             // $HashedPassword = password_hash($_POST['mot_de_passe'], PASSWORD_DEFAULT);
             $HashedPassword = password_hash($mdp, PASSWORD_ARGON2ID, ['memory_cost' => 1 << 17, 'time_cost' => 4, 'threads' => 2]);
 
-            // var_dump($Values);
+            var_dump($email);
             $EmailVerify = $NewConnection->select('utilisateur', "email", "email = '$email'");
 
-            if (empty($EmailVerify)) {
-                $Success = $NewConnection->insert_user($surname, $name, $num, $email, $HashedPassword); #inserts a new user if the email adress doesn't exist in the DB
-            } else {
-                session_start();
+            // if (empty($EmailVerify)) {
+            //     $Success = $NewConnection->insert_user($surname, $name, $num, $email, $HashedPassword); #inserts a new user if the email adress doesn't exist in the DB
+            // } else {
+            //     session_start();
 
-                $_SESSION['HasFailedSignedUp'] = true;
+            //     $_SESSION['HasFailedSignedUp'] = true;
 
-                header("Location: " . '../register.php');
-                die();
-            }
+            //     header("Location: " . '../register.php');
+            //     die();
+            // }
 
             // NOTE: we let fall through from signup to login, so it automatically logs in
-            // break;
+            //break;
 
         case 'Login':
             $Condition = '(`email` = "' . $email . '")';
@@ -87,6 +87,21 @@ if (isset($_POST['Intention'])) {
             die();
 
             break;
+
+        case 'SendEmail':
+            $MessageSent = false;
+            if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                $to = "anasthasia.assani@gmail.com";
+                $body = "";
+
+                $body .= "De: " . $nom . " " . $prenom . "\r\n";
+                $body .= "Email: " . $email . "\r\n";
+                $body .= "Message: " . $message . "\r\n";
+
+                mail($to, $sujet, $body);
+                
+                $MessageSent = true;
+            }
     }
 }
 if (isset($_GET['Intention'])) {
@@ -103,13 +118,17 @@ if (isset($_GET['Intention'])) {
                 'circuit' => $circuit,
                 'utilisateur' => $user,
             );
+
             $Favorite = $NewConnection->insert('favoris', $Values);
-        }else{
+            var_dump($Favorite);
+        } else {
             $Values = array(
                 'circuit' => $circuit,
                 'utilisateur' => $user,
             );
+            
             $Favorite = $NewConnection->delete('favoris', $Values);
+            var_dump($Favorite);
         }
     }
 }
