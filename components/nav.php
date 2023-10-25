@@ -21,7 +21,7 @@ $IsUserLoggedIn = isset($_SESSION['CurrentUser']);
                 <li class="nav-item"><a class="nav-link" href="destination.php">Destination</a></li>
                 <li class="nav-item"><a class="nav-link" href="circuit.php">Circuits</a></li>
                 <li class="nav-item"><a class="nav-link" href="gestion.php">Gestion</a></li>
-                <li class="nav-item"><a class="nav-link" href="#!">Contact</a></li>
+                <li class="nav-item"><a class="nav-link" href="contact.php">Contact</a></li>
             </ul>
         </div>
         <div z-index="2" class="float-login">

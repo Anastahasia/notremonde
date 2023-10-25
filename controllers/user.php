@@ -2,6 +2,11 @@
 
 include("../components/connexion.php");
 
+require "../vendor/autoload.php";
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+
 if (isset($_POST['Intention'])) {
 
     function valid_data($data)
@@ -24,16 +29,16 @@ if (isset($_POST['Intention'])) {
             var_dump($email);
             $EmailVerify = $NewConnection->select('utilisateur', "email", "email = '$email'");
 
-            // if (empty($EmailVerify)) {
-            //     $Success = $NewConnection->insert_user($surname, $name, $num, $email, $HashedPassword); #inserts a new user if the email adress doesn't exist in the DB
-            // } else {
-            //     session_start();
+            if (empty($EmailVerify)) {
+                $Success = $NewConnection->insert_user($surname, $name, $num, $email, $HashedPassword); #inserts a new user if the email adress doesn't exist in the DB
+            } else {
+                session_start();
 
-            //     $_SESSION['HasFailedSignedUp'] = true;
+                $_SESSION['HasFailedSignedUp'] = true;
 
-            //     header("Location: " . '../register.php');
-            //     die();
-            // }
+                header("Location: " . '../register.php');
+                die();
+            }
 
             // NOTE: we let fall through from signup to login, so it automatically logs in
             //break;
@@ -91,15 +96,27 @@ if (isset($_POST['Intention'])) {
         case 'SendEmail':
             $MessageSent = false;
             if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
-                $to = "anasthasia.assani@gmail.com";
-                $body = "";
 
-                $body .= "De: " . $nom . " " . $prenom . "\r\n";
-                $body .= "Email: " . $email . "\r\n";
-                $body .= "Message: " . $message . "\r\n";
+                $mail = new PHPMailer(true);
 
-                mail($to, $sujet, $body);
-                
+                $mail->issmtp();
+                $mail->SMTPAuth = true;
+
+                $mail->Host = "smtp.gmail.com";
+                $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+                $mail->Port = 587;
+
+                $mail->Username = "licetiesta@gmail.com";
+                $mail->Password = "notremondetest";
+
+                $mail->setFrom($email, $nom);
+                $mail->addAddress("licetiesta@gmail.com");
+
+                $mail->Subject = $sujet;
+                $mail->Body = $message;
+
+                $mail->send();
+
                 $MessageSent = true;
             }
     }
@@ -126,7 +143,7 @@ if (isset($_GET['Intention'])) {
                 'circuit' => $circuit,
                 'utilisateur' => $user,
             );
-            
+
             $Favorite = $NewConnection->delete('favoris', $Values);
             var_dump($Favorite);
         }
