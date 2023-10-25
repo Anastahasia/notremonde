@@ -57,7 +57,8 @@ if (isset($_POST['Intention'])) {
             if ($UniqueUser && password_verify($mot_de_passe, $UniqueUser[0]['mot_de_passe'])) {
 
                 $_SESSION['CurrentUser'] = $UniqueUser[0]['email'];
-                $_SESSION['CurrentUserName'] = $UniqueUser[0]['nom'];
+                $_SESSION['CurrentUserSurname'] = $UniqueUser[0]['nom'];
+                $_SESSION['CurrentUserName'] = $UniqueUser[0]['prenom'];
                 $_SESSION['UserRole'] = $UniqueUser[0]['role'];
                 $_SESSION['UserID'] = $UniqueUser[0]['id_utilisateur'];
 
@@ -109,7 +110,12 @@ if (isset($_POST['Intention'])) {
                 $mail->Username = "licetiesta@gmail.com";
                 $mail->Password = "notremondetest";
 
-                $mail->setFrom($email, $nom);
+                if ($_SESSION['CurrentUser']) {
+                    $mail->setFrom($_SESSION['CurrentUser'], $_SESSION['CurrentUserSurname']);
+                }
+                else{
+                    $mail->setFrom($email, $nom);
+                }
                 $mail->addAddress("licetiesta@gmail.com");
 
                 $mail->Subject = $sujet;
@@ -119,6 +125,7 @@ if (isset($_POST['Intention'])) {
 
                 $MessageSent = true;
             }
+        case 'AskQuotation':
     }
 }
 if (isset($_GET['Intention'])) {

@@ -30,6 +30,23 @@
 
     <div class="form-container">
         <form class="contactForms" method="post" action="./controllers/user.php">
+        <?php if (isset($_SESSION['CurrentUser'])) : 
+            $nom = $_SESSION['CurrentUserSurname']; 
+            $prenom = $_SESSION['CurrentUserName']; 
+            $email = $_SESSION['CurrentUser']; ?>
+            <div class="mb-3">
+                <label for="nom" class="form-label">Nom</label>
+                <p><?php echo $nom ?></p>
+            </div>
+            <div class="mb-3">
+                <label for="prenom" class="form-label">Prénom</label>
+                <p><?php echo $prenom ?></p>
+            </div>
+            <div class="mb-3">
+                <label for="email" class="form-label">Adresse email</label>
+                <p><?php echo $email ?></p>
+            </div>        
+        <?php else : ?>
             <div class="mb-3">
                 <label for="nom" class="form-label">Nom</label>
                 <input type="text" class="form-control" id="nom" name="nom" placeholder="Votre nom" required>
@@ -42,12 +59,13 @@
                 <label for="email" class="form-label">Adresse email</label>
                 <input type="email" class="form-control" id="email" name="email" placeholder="name@example.com" required>
             </div>
+        <?php endif ?>
             <div class="mb-3">
                 <label for="sujet" class="form-label">Sujet</label>
                 <input type="text" class="form-control" id="sujet" name="sujet" placeholder="Voyage en Italie" required>
             </div>
             <div class="mb-3">
-                <label for="message" class="form-label">Meassage</label>
+                <label for="message" class="form-label">Message</label>
                 <textarea class="form-control" id="message" name="message" rows="4" required></textarea>
             </div>
             <div>
