@@ -9,8 +9,10 @@ $SelectedCircuit = $NewConnection->select("circuit", "*", "id_circuit = $Current
 // }
 $SelectedSteps = $NewConnection->select_etape("etape_circuit", "hebergement", "id_hebergement", "ville", "id_ville", $CurrentCircuitID);
 
+
 $circuits = $NewConnection->select_random("circuit", "*", "3", "visible=1 AND NOT id_circuit= $CurrentCircuitID");
-?>
+// var_dump($circuits, $SelectedCircuit);
+ ?>
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -131,7 +133,7 @@ $circuits = $NewConnection->select_random("circuit", "*", "3", "visible=1 AND NO
                             <h3 class="card-title soustitre">' . $Value['titre'] . '</h3>
                             <p class="paragraphe">' . $Value['duree'] . ' jours | ' . $Value['prix_estimatif'] . '€</p>
                         </div>
-                        <a href="./destination.php?destination=' . $Value['id_circuit'] . '" class="btn btn-success">Explorer</a>
+                        <a href="./circuit.php?circuit=' . $Value['id_circuit'] . '" class="btn btn-success">Explorer</a>
                     </div>
                 </div>';
                 }

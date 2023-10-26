@@ -37,11 +37,9 @@
             try {
                 // NOTE: we cannot wrap Column in `` because it could be a regex like '*'
                 // $SQLQueryString = "SELECT `$Column` FROM `$Table` WHERE $ConditionField";
-                $SQLQueryString = "SELECT $Column FROM `$Table` WHERE :condition";
+                $SQLQueryString = "SELECT $Column FROM `$Table` WHERE $ConditionField";
 
                 $Result = $this->Connection->prepare($SQLQueryString);
-
-                $Result->bindParam(':condition', $ConditionField,PDO::PARAM_STR, 40);
                 $Result->execute();
 
                 return $Result->fetchAll(PDO::FETCH_ASSOC);
@@ -75,23 +73,23 @@
             }
         }
 
-        // public function select_distinct($Column, $Table, $Condition = 1)
-        // {
-        //     try {
-        //         $SQLQueryString = "SELECT DISTINCT $Column FROM $Table WHERE $Condition";
+        public function select_distinct($Column, $Table, $Condition = 1)
+        {
+            try {
+                $SQLQueryString = "SELECT DISTINCT $Column FROM $Table WHERE $Condition";
 
-        //         // var_dump($SQLQueryString);
+                // var_dump($SQLQueryString);
 
-        //         $Result = $this->Connection->query($SQLQueryString);
+                $Result = $this->Connection->query($SQLQueryString);
 
-        //         return $Result->fetchAll(PDO::FETCH_ASSOC);
+                return $Result->fetchAll(PDO::FETCH_ASSOC);
 
-        //     } catch (PDOException $e) {
-        //         echo "Erreur: " . $e->getMessage();
+            } catch (PDOException $e) {
+                echo "Erreur: " . $e->getMessage();
 
-        //         return false;
-        //     }
-        // }
+                return false;
+            }
+        }
 
         public function select_etape($Intermediate, $Table1, $Key1, $Table2, $Key2, $CircuitID)
         {
@@ -256,41 +254,8 @@
 
     }
 
-    // $NewConnection = new MaConnexion("liste_utilisateurs", "root", "", "localhost");
-    // $NewConnection = new MaConnexion("products", "root", "", "localhost");
-    // echo var_dump($NewConnection);
-
-    // $Result = $NewConnection->select("utilisateur", "email");
-    // $Result = $NewConnection->select("produit", "*");
-    // echo var_dump($Result);
-
-    // $Result = $NewConnection->__deprecated_insert("utilisateur", array("Doe", "Jane", rand(0, 10000) . "@domain", "20230101", null, "path/to/image.jpg"));
-    // $Result = $NewConnection->insert("utilisateur", array(
-    //     "NameLast" => "Doe", 
-    //     "NameFirst" => "Jane",
-    //     "Email" => (rand(0, 10000) . "@domain"),
-    //     "Birthday" => "20230101",
-    //     "idUser" => "NULL",
-    //     "Image" => "path/to/image.jpg")
-    // );
-
-
-    // $UpdateFieldCondition = array( "Email" => "1070@domain" );
-
-    // $UpdateValues = array(
-    //     "NameLast" => "Yoka",
-    //     "NameFirst" => "dahl",
-    //     "Email" => "1070@domain",
-    //     "Birthday" => "20230121",
-    //     "Image" => "image13.jpg"
-    // );
-
-    // $Result = $NewConnection->update("utilisateur", $UpdateFieldCondition, $UpdateValues);
-
-    // $UpdateFieldCondition = array( "Email" => "ol@dsfdsfsf" );
-
-    // $Result = $NewConnection->delete("utilisateur", $UpdateFieldCondition);
-
     $NewConnection = new MaConnexion('notre_monde', "root", "", "localhost");
+    // var_dump($Result = $NewConnection->select("circuit", "*", "visible=1"));
+
 
 ?>

@@ -95,7 +95,18 @@ if (isset($_POST['Intention'])) {
             break;
 
         case 'SendEmail':
+            session_start();
             $MessageSent = false;
+            $email="";
+            var_dump($_SESSION);
+            if (isset($_SESSION['CurrentUser'])) {
+                $email = $_SESSION['CurrentUser'];
+                $prenom = $_SESSION['CurrentUserName'];
+            }else{ 
+                $email = $_POST['email'];
+                $prenom = $_POST['prenom'];
+            }
+            var_dump($email);
             if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
 
                 $mail = new PHPMailer(true);
@@ -110,12 +121,8 @@ if (isset($_POST['Intention'])) {
                 $mail->Username = "licetiesta@gmail.com";
                 $mail->Password = "notremondetest";
 
-                if ($_SESSION['CurrentUser']) {
-                    $mail->setFrom($_SESSION['CurrentUser'], $_SESSION['CurrentUserSurname']);
-                }
-                else{
-                    $mail->setFrom($email, $prenom);
-                }
+                $mail->setFrom($email, $prenom);
+                
                 $mail->addAddress("licetiesta@gmail.com");
 
                 $mail->Subject = $sujet;
@@ -124,6 +131,7 @@ if (isset($_POST['Intention'])) {
                 $mail->send();
 
                 $MessageSent = true;
+                var_dump($MessageSent);
             }
         case 'AskQuotation':
     }
