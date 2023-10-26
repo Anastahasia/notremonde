@@ -50,7 +50,7 @@ $AllUsers = $NewConnection->select("utilisateur", "*");
                         <img id="AddNewIcon" src="./images/icons_plus.png" alt="New Circuit picture">
                     </div>
                     <div class="card-text">
-                        <h5>Pour créer un nouveeu circuit:</h5>
+                        <h5>Pour créer un nouveau circuit:</h5>
                         <button name="Intention" value="AddCircuit" type="submit">Cliquer ici</button>
                     </div>
                     <!-- href="./Circuit.php?edit=true&id_Circuit=0" -->
@@ -63,7 +63,7 @@ $AllUsers = $NewConnection->select("utilisateur", "*");
                     echo '<form action="./controllers/gestion.php" method="post" class="card gestion">';
                     echo '<input type="hidden" name="id_circuit" value="' . $Value['id_circuit'] . '">';
                     echo '<button name="Intention" value="DeleteCircuit" data-bs-toggle="modal" data-bs-target="#DeleteModal" type="button" class="floating"></button>';
-                    echo '<div class="card-image-container"><img src="' . $Value['photo'] . '" alt="Circuit picture"></div>';
+                    echo '<div class="card-image-container"><img src="' . $Value['photo'] . '" alt="'.$Value['alt'].'"></div>';
                     echo '<div class="card-text"><h3>' . $Value['titre'] . '</h3>';
                     // echo '<button name="Intention" value="UpdateCircuit" type="button">Modifier</button>';
                     echo '<a href="' . $CircuitPageRedirectionWithParameters . '" class="btn" >Modifier</a></div>';
@@ -84,7 +84,7 @@ $AllUsers = $NewConnection->select("utilisateur", "*");
                         <img id="AddNewIcon" src="./images/icons_plus.png" alt="New Circuit picture">
                     </div>
                     <div class="card-text">
-                        <h5>Pour créer un nouveeu circuit:</h5>
+                        <h5>Pour créer un nouvel itinéraire:</h5>
                         <button name="Intention" value="AddItineraire" type="submit">Cliquer ici</button>
                     </div>
                     <!-- href="./Circuit.php?edit=true&id_Circuit=0" -->
@@ -97,7 +97,7 @@ $AllUsers = $NewConnection->select("utilisateur", "*");
                     echo '<form action="./controllers/gestion.php" method="post" class="card gestion">';
                     echo '<input type="hidden" name="id_itineraire" value="' . $Value['id_itineraire'] . '">';
                     echo '<button name="Intention" value="DeleteItineraire" data-bs-toggle="modal" data-bs-target="#DeleteModal" type="button" class="floating"></button>';
-                    echo '<div class="card-image-container"><img src="' . $Value['photo'] . '" alt="Circuit picture"></div>';
+                    echo '<div class="card-image-container"><img src="' . $Value['photo'] . '" alt="'.$Value['alt'].'"></div>';
                     echo '<div class="card-text"><h3>' . $Value['titre'] . '</h3>';
                     // echo '<button name="Intention" value="UpdateCircuit" type="button">Modifier</button>';
                     echo '<a href="' . $ItinerairePageRedirectionWithParameters . '" class="btn">Modifier</a></div>';
@@ -194,7 +194,7 @@ $AllUsers = $NewConnection->select("utilisateur", "*");
 
                             echo '<tr><form action="./controllers/gestion.php" method="post" >';
                             echo '<input type="hidden" name="id_utilisateur" value="' . $Value['id_utilisateur'] . '">';
-                            echo '<td>'.$Value['nom'].'</td>';
+                            echo '<td><input type="text" name="surname" value="'.$Value['nom'].'"></td>';
                             echo '<td><input type="text" name="name" value="' . $Value['prenom'] . '"></td>';
                             echo '<td><input type="text" name="phone" value="' . $Value['num'] . '"></td>';
                             echo '<td><input type="text" name="mail" value="' . $Value['email'] . '"></td>';

@@ -37,9 +37,12 @@
             try {
                 // NOTE: we cannot wrap Column in `` because it could be a regex like '*'
                 // $SQLQueryString = "SELECT `$Column` FROM `$Table` WHERE $ConditionField";
-                $SQLQueryString = "SELECT $Column FROM `$Table` WHERE $ConditionField";
+                $SQLQueryString = "SELECT $Column FROM `$Table` WHERE :condition";
 
-                $Result = $this->Connection->query($SQLQueryString);
+                $Result = $this->Connection->prepare($SQLQueryString);
+
+                $Result->bindParam(':condition', $ConditionField,PDO::PARAM_STR, 40);
+                $Result->execute();
 
                 return $Result->fetchAll(PDO::FETCH_ASSOC);
 
@@ -60,7 +63,8 @@
                 // $SQLQueryString = "SELECT `$Column` FROM `$Table` WHERE $ConditionField";
                 $SQLQueryString = "SELECT $Column FROM `$Table` WHERE $ConditionField ORDER BY rand() LIMIT $LimitNumber";
 
-                $Result = $this->Connection->query($SQLQueryString);
+                $Result = $this->Connection->prepare($SQLQueryString);
+                $Result->execute();
 
                 return $Result->fetchAll(PDO::FETCH_ASSOC);
 
@@ -96,11 +100,13 @@
                 FROM $Intermediate
                 INNER JOIN $Table1 ON $Intermediate.$Table1 = $Table1.$Key1
                 LEFT JOIN $Table2 ON $Table1.$Table2 = $Table2.$Key2
-                WHERE $Intermediate.circuit = '$CircuitID'";
+                WHERE $Intermediate.circuit = '$CircuitID'
+                ORDER BY ordre ASC";
 
                 // var_dump($SQLQueryString);
 
-                $Result = $this->Connection->query($SQLQueryString);
+                $Result = $this->Connection->prepare($SQLQueryString);
+                $Result->execute();
 
                 return $Result->fetchAll(PDO::FETCH_ASSOC);
 
@@ -127,7 +133,6 @@
                 $KeyAsString = rtrim($KeyAsString, ', ');
                 $ValueAsString = rtrim($ValueAsString, ', ');
 
-                /* $SQLQueryString = "INSERT IGNORE INTO $Table (<?>) VALUES (<!>)"; */
                 $SQLQueryString = "INSERT INTO $Table (<?>) VALUES (<!>)";
                 $SQLQueryString = str_replace("<!>", $ValueAsString, str_replace("<?>", $KeyAsString, $SQLQueryString));
                 
@@ -153,7 +158,7 @@
 
                 $query->bindParam(':nom', $surname,PDO::PARAM_STR, 40);
                 $query->bindParam(':prenom', $name,PDO::PARAM_STR, 40);
-                $query->bindParam(':num', $num,PDO::PARAM_STR);
+                $query->bindParam(':num', $num,PDO::PARAM_STR, 30);
                 $query->bindParam(':email', $email,PDO::PARAM_STR, 60);
                 $query->bindParam(':mot_de_passe', $mdp,PDO::PARAM_STR);
 

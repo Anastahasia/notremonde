@@ -114,7 +114,7 @@ if (isset($_POST['Intention'])) {
                     $mail->setFrom($_SESSION['CurrentUser'], $_SESSION['CurrentUserSurname']);
                 }
                 else{
-                    $mail->setFrom($email, $nom);
+                    $mail->setFrom($email, $prenom);
                 }
                 $mail->addAddress("licetiesta@gmail.com");
 

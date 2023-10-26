@@ -3,12 +3,13 @@ require_once("./components/connexion.php");
 
 $CurrentCircuitID = isset($_GET['circuit']) ? $_GET['circuit'] : 0;
 $SelectedCircuit = $NewConnection->select("circuit", "*", "id_circuit = $CurrentCircuitID AND visible=1");
+// var_dump($SelectedCircuit);
 // if (empty($SelectedCircuit)&&$_SESSION['UserRole' != 'admin']) {
 //     header("Location: " . "./destination.php");
 // }
 $SelectedSteps = $NewConnection->select_etape("etape_circuit", "hebergement", "id_hebergement", "ville", "id_ville", $CurrentCircuitID);
 
-$circuits = $NewConnection->select_random("circuit", "*", "3", "visible=0 AND NOT id_circuit= $CurrentCircuitID");
+$circuits = $NewConnection->select_random("circuit", "*", "3", "visible=1 AND NOT id_circuit= $CurrentCircuitID");
 ?>
 <!DOCTYPE html>
 <html lang="fr">
