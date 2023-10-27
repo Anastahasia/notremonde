@@ -121,7 +121,7 @@ if (isset($_POST['Intention'])) {
                 $mail->Username = "licetiesta@gmail.com";
                 $mail->Password = "notremondetest";
 
-                $mail->setFrom($email, $prenom);
+                $mail->setFrom($email, $prenom .' '. $nom);
                 
                 $mail->addAddress("licetiesta@gmail.com");
 
@@ -134,6 +134,55 @@ if (isset($_POST['Intention'])) {
                 var_dump($MessageSent);
             }
         case 'AskQuotation':
+            session_start();
+
+            $email="";
+            // var_dump($_SESSION);
+            if (isset($_SESSION['CurrentUser'])) {
+                $email = $_SESSION['CurrentUser'];
+                $prenom = $_SESSION['CurrentUserName'];
+            }else{ 
+                $email = $_POST['email'];
+                $prenom = $_POST['prenom'];
+            }
+            // var_dump($email);
+            if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
+
+                $mail = new PHPMailer(true);
+
+                $mail->issmtp();
+                $mail->SMTPAuth = true;
+
+                $mail->Host = "smtp.gmail.com";
+                $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+                $mail->Port = 587;
+
+                $mail->Username = "licetiesta@gmail.com";
+                $mail->Password = "notremondetest";
+
+                $mail->setFrom($email, $prenom.' '. $nom);
+                
+                $mail->addAddress("licetiesta@gmail.com");
+
+                $mail->Subject = "Demande de devis";
+
+                $body = "";
+
+                $body .= "Date d'arrivée" . $arrivalDate . "  ";
+                $body .= "Date de retour: " . $departureDate . "\r\n";
+                $body .= "Nombre de voyageurs: " . $adults . " adultes et ". $adults . " enfants \r\n";
+                $body .= "À partir du circuit: " . $inspi . "\r\n";
+                $body .= "Interessé(e) par: " . $categorie . "\r\n";
+                $body .= "Où: " . $pays . "\r\n";
+                $body .= "Message: " . $message . "\r\n";
+
+                $mail->Body = $body;
+
+                $mail->send();
+
+                $MessageSent = true;
+                var_dump($body);
+            }
     }
 }
 if (isset($_GET['Intention'])) {
