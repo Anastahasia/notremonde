@@ -129,21 +129,21 @@ $categorie = $NewConnection->select("categorie", "*", "NOT nom='brouillon'");
 
                 <p><?php echo $nom ?></p>
                 <p><?php echo $prenom ?></p>
-                <div class="flex-text">
-                    <?php echo $email ?>
+                <div class="d-flex justify-content-between">
+                    <p><?php echo $email ?></p>
                     <!-- Button trigger modal -->
                     <button type="button" class="soustitre2" data-bs-toggle="modal" data-bs-target="#Modal">
                         Modifier
                     </button>
                 </div>
-                <div class="flex-text">
-                    <p><?php echo $num ?></p>
+                <div class="d-flex justify-content-between">
+                    <p><?php echo $phone ?></p>
                     <!-- Button trigger modal -->
                     <button type="button" class="soustitre2" data-bs-toggle="modal" data-bs-target="#Modal">
                         Modifier
                     </button>
                 </div>
-                <div class="flex-text">
+                <div class="d-flex justify-content-between">
                     <p>Mot de passe</p>
                     <!-- Button trigger modal -->
                     <button type="button" class="soustitre2" data-bs-toggle="modal" data-bs-target="#Modal">
