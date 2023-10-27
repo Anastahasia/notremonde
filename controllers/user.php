@@ -59,6 +59,7 @@ if (isset($_POST['Intention'])) {
                 $_SESSION['CurrentUser'] = $UniqueUser[0]['email'];
                 $_SESSION['CurrentUserSurname'] = $UniqueUser[0]['nom'];
                 $_SESSION['CurrentUserName'] = $UniqueUser[0]['prenom'];
+                $_SESSION['CurrentUserPhone'] = $UniqueUser[0]['numero'];
                 $_SESSION['UserRole'] = $UniqueUser[0]['role'];
                 $_SESSION['UserID'] = $UniqueUser[0]['id_utilisateur'];
 

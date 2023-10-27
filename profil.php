@@ -121,17 +121,23 @@ $categorie = $NewConnection->select("categorie", "*", "NOT nom='brouillon'");
         <section>
             <h2 class="titre1"> Mon compte </h2>
             <div>
-                <p>Nom</p>
-                <p>Prénom</p>
+                <?php
+                $nom = $_SESSION['CurrentUserSurname'];
+                $prenom = $_SESSION['CurrentUserName'];
+                $email = $_SESSION['CurrentUser'];
+                $phone = $_SESSION['CurrentUserPhone']; ?>
+
+                <p><?php echo $nom ?></p>
+                <p><?php echo $prenom ?></p>
                 <div class="flex-text">
-                    <p>Email</p>
+                    <?php echo $email ?>
                     <!-- Button trigger modal -->
                     <button type="button" class="soustitre2" data-bs-toggle="modal" data-bs-target="#Modal">
                         Modifier
                     </button>
                 </div>
                 <div class="flex-text">
-                    <p>Numéro de téléphone</p>
+                    <p><?php echo $num ?></p>
                     <!-- Button trigger modal -->
                     <button type="button" class="soustitre2" data-bs-toggle="modal" data-bs-target="#Modal">
                         Modifier
