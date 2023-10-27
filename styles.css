@@ -80,52 +80,67 @@ footer {
         justify-content: center;
         gap: 2%;
     }
+
     /* END INDEX STYLES */
 
     /* CIRCUIT DISPLAY  */
 
-    .presentation{
+    .presentation {
         padding: 3% 10%;
         display: grid;
         grid-template-columns: 48% 48%;
         justify-content: space-between;
     }
 
-    .img-presentation{
+    .img-presentation {
         width: 100%
     }
 
-    .img-presentation img{
+    .img-presentation img {
         width: 100%;
     }
 
-    .txt-presentation{
+    .txt-presentation {
         text-align: justify;
     }
 
-    .flex-bouton{
+    .flex-bouton {
         text-align: center;
     }
-    
 
-/* END CIRCUIT DISPLAY */
-/* CIRCUIT CARDS */
-    .circuit-card{
+
+    /* END CIRCUIT DISPLAY */
+    /* CIRCUIT CARDS */
+    .circuit-card {
         flex: 0 0 30%;
     }
-    .fa-heart{
+
+    .fa-heart {
         font-size: 150%;
     }
-    .fa-heart.active{
+
+    .fa-heart.active {
         font-size: 180%;
         color: #ff0000;
     }
-/* END CIRCUIT CARDS*/
+
+    /* END CIRCUIT CARDS*/
+    /* GESTION */
+    .nav-tabs {
+        display: flex;
+        justify-content: center;
+        margin: 0 7%;
+    }
+
+    .tab-content{
+        padding: 1% 2%;
+        margin: 0 7%;
+    }
     /*GESTION CARDS */
 
     .card-container {
         display: flex;
-        justify-content: flex-start;
+        justify-content: space-between;
         flex-wrap: wrap;
         padding: 1% 0;
     }
@@ -138,9 +153,8 @@ footer {
     .gestion {
         display: grid;
         justify-items: center;
-        width: 29%;
+        width: 30%;
         background-color: #fff;
-        margin-left: 3.5%;
         margin-bottom: 3%;
     }
 
@@ -205,10 +219,11 @@ footer {
         margin-bottom: 0.5em;
     }
 
-    #Users{
+    #Users {
         padding-left: 6%;
     }
-    table td:last-child{
+
+    table td:last-child {
         display: flex;
     }
 }
