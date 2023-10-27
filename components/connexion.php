@@ -51,14 +51,11 @@
             }
         }
 
-    // selects random data from the table
+    // selects random lines from the table according to the conditions
         public function select_random($Table, $Column, $LimitNumber, $ConditionField = 1)
         {
-            // $SQLQueryString = 'SELECT * FROM `users` WHERE (`mail` = "superuser@local" AND `password` = "pass")';
-            // $SQLQueryString = "SELECT $Column FROM $Table WHERE 1";
             try {
                 // NOTE: we cannot wrap Column in `` because it could be a regex like '*'
-                // $SQLQueryString = "SELECT `$Column` FROM `$Table` WHERE $ConditionField";
                 $SQLQueryString = "SELECT $Column FROM `$Table` WHERE $ConditionField ORDER BY rand() LIMIT $LimitNumber";
 
                 $Result = $this->Connection->prepare($SQLQueryString);
@@ -73,6 +70,7 @@
             }
         }
 
+            // selects one occurence of a data 
         public function select_distinct($Column, $Table, $Condition = 1)
         {
             try {
@@ -91,6 +89,7 @@
             }
         }
 
+        //selects steps for a circuit using inner join and left join
         public function select_etape($Intermediate, $Table1, $Key1, $Table2, $Key2, $CircuitID)
         {
             try {
@@ -100,6 +99,53 @@
                 LEFT JOIN $Table2 ON $Table1.$Table2 = $Table2.$Key2
                 WHERE $Intermediate.circuit = '$CircuitID'
                 ORDER BY ordre ASC";
+
+                // var_dump($SQLQueryString);
+
+                $Result = $this->Connection->prepare($SQLQueryString);
+                $Result->execute();
+
+                return $Result->fetchAll(PDO::FETCH_ASSOC);
+
+            } catch (PDOException $e) {
+                echo "Erreur: " . $e->getMessage();
+
+                return false;
+            }
+        }
+
+        //selects using join
+        public function select_join($Table1, $Key1, $Table2, $ID)
+        {
+            try {
+                $SQLQueryString = "SELECT *
+                FROM $Table1
+                INNER JOIN $Table2 ON $Table1.$Key1 = $Table2.$Table1
+                WHERE $Table1.$Key1 = '$ID'";
+
+                // var_dump($SQLQueryString);
+
+                $Result = $this->Connection->prepare($SQLQueryString);
+                $Result->execute();
+
+                return $Result->fetchAll(PDO::FETCH_ASSOC);
+
+            } catch (PDOException $e) {
+                echo "Erreur: " . $e->getMessage();
+
+                return false;
+            }
+        }
+
+        //selects using inner join
+        public function inner_join($Intermediate, $Table1, $Key1, $Table2, $Key2, $ID)
+        {
+            try {
+                $SQLQueryString = "SELECT *
+                FROM $Intermediate
+                INNER JOIN $Table1 ON $Intermediate.$Table1 = $Table1.$Key1
+                INNER JOIN $Table2 ON $Intermediate.$Table2 = $Table2.$Key2
+                WHERE $Intermediate.$Table1 = '$ID'";
 
                 // var_dump($SQLQueryString);
 
@@ -256,6 +302,3 @@
 
     $NewConnection = new MaConnexion('notre_monde', "root", "", "localhost");
     // var_dump($Result = $NewConnection->select("circuit", "*", "visible=1"));
-
-
-?>
