@@ -10,7 +10,7 @@ footer {
     }
 
     section {
-        padding: 3% 10%;
+        padding: 1% 10%;
     }
 
     /* footer */
@@ -126,6 +126,9 @@ footer {
 
     /* END CIRCUIT CARDS*/
     /* GESTION */
+    .serveurSection{
+        padding: 1% 10%;
+    }
     .nav-tabs {
         display: flex;
         justify-content: center;

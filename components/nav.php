@@ -1,9 +1,9 @@
 <?php
 require_once("./components/connexion.php");
 
-if (session_id() == "") {
-    session_start();
-}
+// if (session_id() == "") {
+//     session_start();
+// }
 
 //var_dump($_SESSION);
 $IsUserLoggedIn = isset($_SESSION['CurrentUser']);

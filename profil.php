@@ -46,7 +46,7 @@ $categorie = $NewConnection->select("categorie", "*", "NOT nom='brouillon'");
 <body>
     <?php include_once('./components/nav.php'); ?>
 
-    <header>
+    <header class="serveurSection">
         <h1>Bienvenue sur votre profil</h1>
         <p class="soustitre">Consultez vos voyages et circuits favoris !</p>
     </header>

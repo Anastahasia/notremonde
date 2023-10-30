@@ -1,21 +1,21 @@
 <?php
-
+session_start();
 require_once('./components/connexion.php');
 
 $CurrentDestinationID = isset($_GET['destination']) ? $_GET['destination'] : 0;
-$SelectedDestination = $NewConnection->select("continent", "*", "id_continent = $CurrentDestinationID");
+$SelectedDestination = $NewConnection->select("continent", "id_continent", $CurrentDestinationID);
 
 $CurrentCategorieID = isset($_GET['categorie']) ? $_GET['categorie'] : 0;
-$SelectedCategorie = $NewConnection->select("categorie", "*", "id_categorie = $CurrentCategorieID");
+$SelectedCategorie = $NewConnection->select("categorie", "id_categorie", $CurrentCategorieID);
 
 if ($CurrentDestinationID) {
-    $circuits = $NewConnection->select("circuit", "*", "continent = $CurrentDestinationID AND visible=1");
+    $circuits = $NewConnection->select_visible("circuit", "continent", $CurrentDestinationID);
 } elseif ($CurrentCategorieID) {
-    $circuits = $NewConnection->select("circuit", "*", "categorie = $CurrentCategorieID AND visible=1");
+    $circuits = $NewConnection->select_visible("circuit", "categorie", $CurrentCategorieID);
 } else {
-    $circuits = $NewConnection->select("circuit", "*", "visible=1");
+    $circuits = $NewConnection->select("circuit", "visible");
 }
-
+// var_dump($circuits);
 
 ?>
 <!DOCTYPE html>

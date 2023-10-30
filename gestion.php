@@ -12,9 +12,9 @@ session_start();
 require_once("./components/connexion.php");
 // require_once('./components/commons.php');
 
-$AllCircuits = $NewConnection->select("circuit", "*");
-$AllItineraires = $NewConnection->select("itineraire", "*");
-$AllUsers = $NewConnection->select("utilisateur", "*");
+$AllCircuits = $NewConnection->select("circuit");
+$AllItineraires = $NewConnection->select("itineraire");
+$AllUsers = $NewConnection->select("utilisateur");
 // var_dump($AllUsers);
 ?>
 <!DOCTYPE html>

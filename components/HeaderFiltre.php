@@ -7,8 +7,8 @@ require_once('connexion.php');
 //     $villeRecherchee = $connexion->select("bien", "*", "ville = '$ville' AND contrat = '$contrat'");
 // }
 
-$destinations = $NewConnection->select("continent", "*");
-$categories = $NewConnection->select("categorie", "*");
+$destinations = $NewConnection->select("continent");
+$categories = $NewConnection->select("categorie");
 
 ?>
 <!-- header -->

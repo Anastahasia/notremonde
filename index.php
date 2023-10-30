@@ -1,9 +1,9 @@
 <?php 
-
+session_start();
 require_once('./components/connexion.php');
 
-$destinations = $NewConnection->select("continent", "*");
-$circuits = $NewConnection->select_random("circuit", "*", "3", "visible=1");
+$destinations = $NewConnection->select("continent");
+$circuits = $NewConnection->select_random("circuit", "categorie");
 
 ?>
 <!DOCTYPE html>

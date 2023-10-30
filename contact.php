@@ -1,12 +1,13 @@
 <?php
+session_start();
 
 require_once('./components/connexion.php');
 
-$circuits = $NewConnection->select("circuit", "*", "visible=1");
+$circuits = $NewConnection->select("circuit", "visible");
 // var_dump($circuits);
 $pays = $NewConnection->select_distinct('pays', 'ville');
 // var_dump($pays);
-$categorie = $NewConnection->select("categorie", "*", "NOT nom='brouillon'");
+$categorie = $NewConnection->select("categorie", "NOT id_categorie", "1");
 ?>
 <!DOCTYPE html>
 <html lang="fr">

@@ -30,19 +30,39 @@
         /**
          * The ConditionField is a filter to isolate a specific result
          * Returns an associative array of the results, or false on error */
-        public function select($Table, $Column, $ConditionField = 1)
+        public function select($Table, $Column = 1, $ConditionField = 1)
         {
             // $SQLQueryString = 'SELECT * FROM `users` WHERE (`mail` = "superuser@local" AND `password` = "pass")';
             // $SQLQueryString = "SELECT $Column FROM $Table WHERE 1";
             try {
                 // NOTE: we cannot wrap Column in `` because it could be a regex like '*'
                 // $SQLQueryString = "SELECT `$Column` FROM `$Table` WHERE $ConditionField";
-                $SQLQueryString = "SELECT $Column FROM `$Table` WHERE $ConditionField";
+                $SQLQueryString = "SELECT * FROM `$Table` WHERE $Column = :condition";
+                $query = $this->Connection->prepare($SQLQueryString);
 
-                $Result = $this->Connection->prepare($SQLQueryString);
-                $Result->execute();
+                $query->bindParam(':condition', $ConditionField,PDO::PARAM_INT);
 
-                return $Result->fetchAll(PDO::FETCH_ASSOC);
+                $query->execute();
+                return $query->fetchAll(PDO::FETCH_ASSOC);
+
+            } catch (PDOException $e) {
+                echo "Erreur: " . $e->getMessage();
+
+                return false;
+            }
+        }
+        public function select_visible($Table, $Column, $ConditionField)
+        {
+            // $SQLQueryString = 'SELECT * FROM `users` WHERE (`mail` = "superuser@local" AND `password` = "pass")';
+            // $SQLQueryString = "SELECT $Column FROM $Table WHERE 1";
+            try {
+                $SQLQueryString = "SELECT * FROM `$Table` WHERE visible = 1 AND $Column = :condition ";
+                $query = $this->Connection->prepare($SQLQueryString);
+
+                $query->bindParam(':condition', $ConditionField,PDO::PARAM_INT);
+
+                $query->execute();
+                return $query->fetchAll(PDO::FETCH_ASSOC);
 
             } catch (PDOException $e) {
                 echo "Erreur: " . $e->getMessage();
@@ -52,16 +72,18 @@
         }
 
     // selects random lines from the table according to the conditions
-        public function select_random($Table, $Column, $LimitNumber, $ConditionField = 1)
+        public function select_random($Table, $Column, $ConditionField = 1)
         {
             try {
                 // NOTE: we cannot wrap Column in `` because it could be a regex like '*'
-                $SQLQueryString = "SELECT $Column FROM `$Table` WHERE $ConditionField ORDER BY rand() LIMIT $LimitNumber";
+                $SQLQueryString = "SELECT * FROM `$Table` WHERE visible=1 AND NOT $Column = :condition ORDER BY rand() LIMIT 3";
+                $query = $this->Connection->prepare($SQLQueryString);
 
-                $Result = $this->Connection->prepare($SQLQueryString);
-                $Result->execute();
+                $query->bindParam(':condition', $ConditionField,PDO::PARAM_INT);
 
-                return $Result->fetchAll(PDO::FETCH_ASSOC);
+                $query->execute();
+
+                return $query->fetchAll(PDO::FETCH_ASSOC);
 
             } catch (PDOException $e) {
                 echo "Erreur: " . $e->getMessage();
@@ -301,4 +323,5 @@
     }
 
     $NewConnection = new MaConnexion('notre_monde', "root", "", "localhost");
-    // var_dump($Result = $NewConnection->select("circuit", "*", "visible=1"));
+    // var_dump($Result = $NewConnection->select("circuit", "visible", "1"));
+  
