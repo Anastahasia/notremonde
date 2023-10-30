@@ -124,8 +124,7 @@
 
                 // var_dump($SQLQueryString);
 
-                $Result = $this->Connection->prepare($SQLQueryString);
-                $Result->execute();
+                $Result = $this->Connection->query($SQLQueryString);
 
                 return $Result->fetchAll(PDO::FETCH_ASSOC);
 
@@ -147,8 +146,7 @@
 
                 // var_dump($SQLQueryString);
 
-                $Result = $this->Connection->prepare($SQLQueryString);
-                $Result->execute();
+                $Result = $this->Connection->query($SQLQueryString);
 
                 return $Result->fetchAll(PDO::FETCH_ASSOC);
 
@@ -171,8 +169,7 @@
 
                 // var_dump($SQLQueryString);
 
-                $Result = $this->Connection->prepare($SQLQueryString);
-                $Result->execute();
+                $Result = $this->Connection->query($SQLQueryString);
 
                 return $Result->fetchAll(PDO::FETCH_ASSOC);
 
