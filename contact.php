@@ -36,7 +36,7 @@ $categorie = $NewConnection->select("categorie", "NOT id_categorie", "1");
     <?php include_once('./components/nav.php'); ?>
     <main>
         <section>
-            <?php if (isset($_POST['Intention']) && $MessageSent) : ?>
+            <?php if (isset($_POST['SendEmail']) && $MessageSent) : ?>
                 <h4>Merci pour votre message. Nous revenons vers vous dans les plus brefs délais</h4>
             <?php else : ?>
                 <h4 class="titre2">Envoyez nous un message</h4>
@@ -81,7 +81,7 @@ $categorie = $NewConnection->select("categorie", "NOT id_categorie", "1");
                             <textarea class="form-control" name="message" rows="4" required></textarea>
                         </div>
                         <div>
-                            <button type="submit" name="Intention" value="SendEmail" class="btn btn-success">Submit</button>
+                            <button type="submit" name="SendEmail" class="btn btn-success">Submit</button>
                         </div>
                     </form>
                 </div>
@@ -89,7 +89,7 @@ $categorie = $NewConnection->select("categorie", "NOT id_categorie", "1");
         </section>
 
         <section>
-            <?php if (isset($_POST['Intention'])) : ?>
+            <?php if (isset($_POST['AskQuotation']) && $MessageSent) : ?>
                 <h4>Votre demande a bien été envoyé. Vous recevrez votre devis dans les plus brefs délais !</h4>
             <?php else : ?>
                 <h4 class="titre2">Votre futur voyage</h4>
@@ -177,7 +177,7 @@ $categorie = $NewConnection->select("categorie", "NOT id_categorie", "1");
                             <textarea class="form-control" name="message" rows="4" required></textarea>
                         </div>
                         <div>
-                            <button type="submit" name="Intention" value="AskQuotation" class="btn btn-success">Submit</button>
+                            <button type="submit" name="AskQuotation" class="btn btn-success">Submit</button>
                         </div>
                     </form>
                 </div>

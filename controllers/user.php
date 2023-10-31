@@ -1,19 +1,14 @@
 <?php
 session_start();
-include("../components/connexion.php");
+require_once("../components/connexion.php");
+require_once("../components/communs.php");
 
-require "../vendor/autoload.php";
+require_once("../vendor/autoload.php");
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 
 if (isset($_POST['Intention'])) {
-
-    function valid_data($data)
-    {
-        $data = htmlspecialchars($data);
-        return $data;
-    }
 
     extract($_POST);
     switch ($_POST['Intention']) {
@@ -92,136 +87,113 @@ if (isset($_POST['Intention'])) {
             die();
 
             break;
-
-        case 'SendEmail':
-            session_start();
-            $MessageSent = false;
-            $email = "";
-            var_dump($_SESSION);
-            if (isset($_SESSION['CurrentUser'])) {
-                $email = $_SESSION['CurrentUser'];
-                $prenom = $_SESSION['CurrentUserName'];
-            } else {
-                $email = $_POST['email'];
-                $prenom = $_POST['prenom'];
-            }
-            var_dump($email);
-            if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
-
-                $mail = new PHPMailer(true);
-
-                $mail->issmtp();
-                $mail->SMTPAuth = true;
-
-                $mail->Host = "smtp.gmail.com";
-                $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-                $mail->Port = 587;
-
-                $mail->Username = "licetiesta@gmail.com";
-                $mail->Password = "notremondetest";
-
-                $mail->setFrom($email, $prenom . ' ' . $nom);
-
-                $mail->addAddress("licetiesta@gmail.com");
-
-                $mail->Subject = $sujet;
-                $mail->Body = $message;
-
-                $mail->send();
-
-                $MessageSent = true;
-                var_dump($MessageSent);
-            }
-        case 'AskQuotation':
-            session_start();
-
-            $email = "";
-            // var_dump($_SESSION);
-            if (isset($_SESSION['CurrentUser'])) {
-                $email = $_SESSION['CurrentUser'];
-                $prenom = $_SESSION['CurrentUserName'];
-            } else {
-                $email = $_POST['email'];
-                $prenom = $_POST['prenom'];
-            }
-            // var_dump($email);
-            if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
-
-                $mail = new PHPMailer(true);
-
-                $mail->issmtp();
-                $mail->SMTPAuth = true;
-
-                $mail->Host = "smtp.gmail.com";
-                $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-                $mail->Port = 587;
-
-                $mail->Username = "licetiesta@gmail.com";
-                $mail->Password = "notremondetest";
-
-                $mail->setFrom($email, $prenom . ' ' . $nom);
-
-                $mail->addAddress("licetiesta@gmail.com");
-
-                $mail->Subject = "Demande de devis";
-
-                $body = "";
-
-                $body .= "Date d'arrivée" . $arrivalDate . "  ";
-                $body .= "Date de retour: " . $departureDate . "\r\n";
-                $body .= "Nombre de voyageurs: " . $adults . " adultes et " . $adults . " enfants \r\n";
-                $body .= "À partir du circuit: " . $inspi . "\r\n";
-                $body .= "Interessé(e) par: " . $categorie . "\r\n";
-                $body .= "Où: " . $pays . "\r\n";
-                $body .= "Message: " . $message . "\r\n";
-
-                $mail->Body = $body;
-
-                $mail->send();
-
-                $MessageSent = true;
-                var_dump($body);
-            }
     }
 }
 
-if (isset($_POST['modifyEmail'])&& isset($_POST['token'])) {
-    var_dump($_POST['token']);
-
-    if ($_SESSION['csrf_token'] == $_POST['token']){
-        
+if (isset($_POST['SendEmail'])) {
+    $MessageSent = false;
+    if (token_verify()) {
         extract($_POST);
 
-        $Condition = array('id_utilisateur' => $_SESSION['UserID']);
-var_dump($Condition);
-        $Values = array('email' => $email);
-
-        $NewEmail = $NewConnection->update('utilisateur', $Condition, $Values);
-
-        if ($NewEmail) {
-            header("Location: " . "../profil.php");
-            die();
-        }
+        contact_form($message);
     }
 }
 
-if (isset($_POST['modifyPhone'])&& isset($_POST['token'])) {
-    if ($_SESSION['csrf_token'] == $_POST['token']){
-
+if (isset($_POST['AskQuotation'])) {
+    $MessageSent = false;
+    if (token_verify()) {
         extract($_POST);
 
-        $Condition = array('id_utilisateur' => $_SESSION['UserID']);
+        $body .= "Date d'arrivée" . $arrivalDate . "  ";
+        $body .= "Date de retour: " . $departureDate . "\r\n";
+        $body .= "Nombre de voyageurs: " . $adults . " adultes et " . $adults . " enfants \r\n";
+        $body .= "À partir du circuit: " . $inspi . "\r\n";
+        $body .= "Interessé(e) par: " . $categorie . "\r\n";
+        $body .= "Où: " . $pays . "\r\n";
+        $body .= "Message: " . $message . "\r\n";
 
-        $Values = array('num' => $phone);
+        contact_form($body);
+    }
+}
+
+//modification du profil par l'utilisateur
+
+if (isset($_POST['modifyEmail'])) {
+    if (token_verify()) {
+        extract($_POST);
+
+        $Values = array('email' => filter_var($email, FILTER_VALIDATE_EMAIL));
+        $Condition = array('id_utilisateur' => $_SESSION['UserID']);
 
         $NewPhone = $NewConnection->update('utilisateur', $Condition, $Values);
 
         if ($NewPhone) {
+            session_start();
+            header("Location: " . "../profil.php");
+            die();
+        }else {
+            $_SESSION['FailedUpdate']=true;
             header("Location: " . "../profil.php");
             die();
         }
     }
 }
+
+if (isset($_POST['modifyPhone'])) {
+    if (token_verify()) {
+        extract($_POST);
+
+        $Values = array('num' => valid_data($phone));
+        $Condition = array('id_utilisateur' => $_SESSION['UserID']);
+
+        $NewPhone = $NewConnection->update('utilisateur', $Condition, $Values);
+
+        if ($NewPhone) {
+            session_start();
+            header("Location: " . "../profil.php");
+            die();
+        }else {
+            $_SESSION['FailedUpdate']=true;
+            header("Location: " . "../profil.php");
+            die();
+        }
+    }
+}
+
+if (isset($_POST['modifyMDP'])) {
+    extract($_POST);
+    if ($newMdp == $verifMdp) {
+        if (token_verify()) {
+            $Condition = $_SESSION['UserID'];
+            $UniqueUser = $NewConnection->select('utilisateur', "id_utilisateur", $Condition);
+
+            var_dump($UniqueUser, $_SESSION, $Condition);
+            if ($UniqueUser && password_verify($oldMdp, $UniqueUser[0]['mot_de_passe'])) {
+                $Condition = array('id_utilisateur' => $_SESSION['UserID']);
+                $Values = array('mot_de_passe' => password_hash($newMdp, PASSWORD_ARGON2ID, ['memory_cost' => 1 << 17, 'time_cost' => 4, 'threads' => 2]));
+
+                $NewPhone = $NewConnection->update('utilisateur', $Condition, $Values);
+
+                if ($NewPhone) {
+                    session_start();
+                    $_SESSION['SuccessfulUpdate']=true;
+                    header("Location: " . "../profil.php");
+                    die();
+                }
+            } else {
+                $_SESSION['FailedUpdate']=true;
+                header("Location: " . "../profil.php");
+                die();
+            }
+        } else {
+            session_start();
+            $_SESSION['FailedUpdate']=true;
+            header("Location: " . "../profil.php");
+            die();
+        }
+    }
+}
+
 if (isset($_GET['Intention'])) {
     session_start();
 

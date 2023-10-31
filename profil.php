@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once('./components/connexion.php');
+require_once("./components/communs.php");
 
 // Redirect unregistered users
 // if (!isset($_SESSION['CurrentUser']))
@@ -48,6 +49,17 @@ $itineraire = $NewConnection->select_join('utilisateur', 'id_utilisateur', 'itin
     <header class="serveurSection">
         <h1>Bienvenue sur votre profil</h1>
         <p class="soustitre">Consultez vos voyages et circuits favoris !</p>
+        <?php
+            if (isset($_SESSION['SuccessfulUpdate']) && $_SESSION['SuccessfulUpdate']) {
+                echo '<h4 class="titre2" >Modification réussie.</h4>';
+
+                unset($_SESSION['SuccessfulUpdate']);
+
+            }else if (isset($_SESSION['FailedUpdate']) && $_SESSION['FailedUpdate']) {
+                echo '<h4 class="titre2" >La modification a échoué ! Veuillez réessayer.</h4>';
+                unset($_SESSION['FailedUpdate']); 
+            }
+            ?>
     </header>
 
     <main>
@@ -131,8 +143,8 @@ $itineraire = $NewConnection->select_join('utilisateur', 'id_utilisateur', 'itin
                 <div class="mt-3">
                     <form class="d-flex justify-content-between" action="./controllers/user.php" method="POST">
                         <input type="text" value="<?php echo $email ?>" name="email">
-                        <!-- hidden button for token verification -->
-                        <input type="hidden" name="token" value="<?php echo $_SESSION['crsf_token'] ?>">
+                        <!-- hidden button for token verifMdpication -->
+                        <input type="hidden" name="token" value="<?php echo $_SESSION['csrf_token'] ?>">
                         <!-- Button trigger modal -->
                         <button type="button" name="modifyEmail" class="soustitre2" data-bs-toggle="modal" data-bs-target="#Modal">
                             Modifier
@@ -142,8 +154,8 @@ $itineraire = $NewConnection->select_join('utilisateur', 'id_utilisateur', 'itin
                 <div class="mt-3">
                     <form class="d-flex justify-content-between" action="./controllers/user.php" method="POST">
                         <input type="text" value="<?php echo $phone ?>" name="phone">
-                        <!-- hidden button for token verification -->
-                        <input type="hidden" name="token" value="<?php echo $_SESSION['crsf_token'] ?>">
+                        <!-- hidden button for token verifMdpication -->
+                        <input type="hidden" name="token" value="<?php echo $_SESSION['csrf_token'] ?>">
                         <!-- Button trigger modal -->
                         <button type="button" name="modifyPhone" class="soustitre2" data-bs-toggle="modal" data-bs-target="#Modal">
                             Modifier
@@ -159,7 +171,7 @@ $itineraire = $NewConnection->select_join('utilisateur', 'id_utilisateur', 'itin
                 </div>
             </div>
 
-            <!-- Modal de modification-->
+            <!-- Modal de Update-->
             <div class="modal fade" id="Modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -167,7 +179,7 @@ $itineraire = $NewConnection->select_join('utilisateur', 'id_utilisateur', 'itin
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <p>Êtes-vous sûrs de vouloir effectuer cette modification ?</p>
+                            <p>Êtes-vous sûrs de vouloir effectuer cette Update ?</p>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
@@ -177,7 +189,7 @@ $itineraire = $NewConnection->select_join('utilisateur', 'id_utilisateur', 'itin
                 </div>
             </div>
 
-            <!-- Modal de modification du mot de passe -->
+            <!-- Modal de Update du mot de passe -->
             <div class="modal fade" id="PasswordModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -194,18 +206,18 @@ $itineraire = $NewConnection->select_join('utilisateur', 'id_utilisateur', 'itin
                                 </div>
                                 <div class="mb-3">
                                     <label for="newMdp" class="col-form-label">Nouveau mot de passe</label>
-                                    <input type="password" class="form-control" name="newMdp">
+                                    <input type="password" class="form-control" name="newMdp" id="newMdp">
                                 </div>
                                 <div class="mb-3">
-                                    <label for="verif" class="col-form-label">Confirmation du mot de passe</label>
-                                    <input type="password" class="form-control" name="verif">
+                                    <label for="verifMdp" class="col-form-label">Confirmation du mot de passe</label>
+                                    <input type="password" class="form-control" name="verifMdp" id="verifMdp">
                                 </div>
-                                <input type="hidden" name="token" value="<?php echo $_SESSION['crsf_token'] ?>">
+                                <input type="hidden" name="token" value="<?php echo $_SESSION['csrf_token'] ?>">
 
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-                                <button type="submit" name="modifyMDP" class="btn btn-primary">Enregistrer</button>
+                                <button type="submit" name="modifyMDP" class="btn btn-primary" id="PasswordSubmitButton">Enregistrer</button>
                             </div>
                         </form>
                     </div>
@@ -229,6 +241,22 @@ $itineraire = $NewConnection->select_join('utilisateur', 'id_utilisateur', 'itin
 
             return event.preventDefault();
         });
+
+//         let PasswordButton = document.getElementById('PasswordSubmitButton')
+//         function validate() {
+//  PasswordButton.addEventListener('click', function(event){
+//      let newMDP = document.getElementById("newMdp").value;
+//  let verif = document.getElementById("verifMdp").value; 
+//  if (newMDP!=verif) {
+//      alert("Les mots de passe ne correspondent pas.");
+//      return false; }
+//  else {
+//      alert("Les mots de passe correspondent.");
+//      return true; }}
+//  )}
+
+
+
     </script>
 </body>
 
