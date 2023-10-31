@@ -40,7 +40,7 @@
                 $SQLQueryString = "SELECT * FROM `$Table` WHERE $Column = :condition";
                 $query = $this->Connection->prepare($SQLQueryString);
 
-                $query->bindParam(':condition', $ConditionField,PDO::PARAM_INT);
+                $query->bindParam(':condition', $ConditionField, PDO::PARAM_STR);
 
                 $query->execute();
                 return $query->fetchAll(PDO::FETCH_ASSOC);
@@ -60,6 +60,27 @@
                 $query = $this->Connection->prepare($SQLQueryString);
 
                 $query->bindParam(':condition', $ConditionField,PDO::PARAM_INT);
+
+                $query->execute();
+                return $query->fetchAll(PDO::FETCH_ASSOC);
+
+            } catch (PDOException $e) {
+                echo "Erreur: " . $e->getMessage();
+
+                return false;
+            }
+        }
+
+        public function two_conditions_select($Table, $Column1, $Column2, $ConditionField1, $ConditionField2)
+        {
+            // $SQLQueryString = 'SELECT * FROM `users` WHERE (`mail` = "superuser@local" AND `password` = "pass")';
+            // $SQLQueryString = "SELECT $Column FROM $Table WHERE 1";
+            try {
+                $SQLQueryString = "SELECT * FROM `$Table` WHERE $Column1 = :condition1 AND $Column2 = :condition2 ";
+                $query = $this->Connection->prepare($SQLQueryString);
+
+                $query->bindParam(':condition1', $ConditionField1,PDO::PARAM_INT);
+                $query->bindParam(':condition2', $ConditionField2,PDO::PARAM_INT);
 
                 $query->execute();
                 return $query->fetchAll(PDO::FETCH_ASSOC);

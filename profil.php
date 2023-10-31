@@ -18,7 +18,6 @@ $favoris = $NewConnection->inner_join("favoris", "utilisateur", "id_utilisateur"
 // var_dump($favoris);
 $itineraire = $NewConnection->select_join('utilisateur', 'id_utilisateur', 'itineraire', $CurrentUserID);
 // var_dump($itineraire);
-$categorie = $NewConnection->select("categorie", "*", "NOT nom='brouillon'");
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -129,49 +128,89 @@ $categorie = $NewConnection->select("categorie", "*", "NOT nom='brouillon'");
 
                 <p><?php echo $nom ?></p>
                 <p><?php echo $prenom ?></p>
-                <div class="d-flex justify-content-between">
-                    <p><?php echo $email ?></p>
-                    <!-- Button trigger modal -->
-                    <button type="button" class="soustitre2" data-bs-toggle="modal" data-bs-target="#Modal">
-                        Modifier
-                    </button>
+                <div class="mt-3">
+                    <form class="d-flex justify-content-between" action="./controllers/user.php" method="POST">
+                        <input type="text" value="<?php echo $email ?>" name="email">
+                        <!-- hidden button for token verification -->
+                        <input type="hidden" name="token" value="<?php echo $_SESSION['crsf_token'] ?>">
+                        <!-- Button trigger modal -->
+                        <button type="button" name="modifyEmail" class="soustitre2" data-bs-toggle="modal" data-bs-target="#Modal">
+                            Modifier
+                        </button>
+                    </form>
                 </div>
-                <div class="d-flex justify-content-between">
-                    <p><?php echo $phone ?></p>
-                    <!-- Button trigger modal -->
-                    <button type="button" class="soustitre2" data-bs-toggle="modal" data-bs-target="#Modal">
-                        Modifier
-                    </button>
+                <div class="mt-3">
+                    <form class="d-flex justify-content-between" action="./controllers/user.php" method="POST">
+                        <input type="text" value="<?php echo $phone ?>" name="phone">
+                        <!-- hidden button for token verification -->
+                        <input type="hidden" name="token" value="<?php echo $_SESSION['crsf_token'] ?>">
+                        <!-- Button trigger modal -->
+                        <button type="button" name="modifyPhone" class="soustitre2" data-bs-toggle="modal" data-bs-target="#Modal">
+                            Modifier
+                        </button>
+                    </form>
                 </div>
-                <div class="d-flex justify-content-between">
+                <div class="d-flex justify-content-between mt-3">
                     <p>Mot de passe</p>
                     <!-- Button trigger modal -->
-                    <button type="button" class="soustitre2" data-bs-toggle="modal" data-bs-target="#Modal">
+                    <button type="button" class="soustitre2" data-bs-toggle="modal" data-bs-target="#PasswordModal">
                         Modifier
                     </button>
                 </div>
             </div>
 
-
-            <!-- Modal -->
+            <!-- Modal de modification-->
             <div class="modal fade" id="Modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="exampleModalLabel">Modifier</h1>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <input type="text" value="">
+                            <p>Êtes-vous sûrs de vouloir effectuer cette modification ?</p>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="submit" id="ModalSubmitButton" class="btn btn-primary">Save changes</button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                            <button type="button" id="ModalSubmitButton" class="btn btn-danger">Oui</button>
                         </div>
                     </div>
                 </div>
             </div>
 
+            <!-- Modal de modification du mot de passe -->
+            <div class="modal fade" id="PasswordModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title fs-5" id="exampleModalLabel">Modifiez votre mot de passe</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <form action="./controllers/user.php" method="POST">
+                            <div class="modal-body">
+
+                                <div class="mb-3">
+                                    <label for="oldMdp" class="col-form-label">Ancien mot de passe</label>
+                                    <input type="password" class="form-control" name="oldMdp">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="newMdp" class="col-form-label">Nouveau mot de passe</label>
+                                    <input type="password" class="form-control" name="newMdp">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="verif" class="col-form-label">Confirmation du mot de passe</label>
+                                    <input type="password" class="form-control" name="verif">
+                                </div>
+                                <input type="hidden" name="token" value="<?php echo $_SESSION['crsf_token'] ?>">
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                                <button type="submit" name="modifyMDP" class="btn btn-primary">Enregistrer</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </section>
     </main>
     <?php include_once('./components/footer.php'); ?>

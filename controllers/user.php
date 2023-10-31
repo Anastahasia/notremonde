@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 include("../components/connexion.php");
 
 require "../vendor/autoload.php";
@@ -27,7 +27,7 @@ if (isset($_POST['Intention'])) {
             $HashedPassword = password_hash($mdp, PASSWORD_ARGON2ID, ['memory_cost' => 1 << 17, 'time_cost' => 4, 'threads' => 2]);
 
             var_dump($email);
-            $EmailVerify = $NewConnection->select('utilisateur', "email", "email = '$email'");
+            $EmailVerify = $NewConnection->select('utilisateur', "email", $email);
 
             if (empty($EmailVerify)) {
                 $Success = $NewConnection->insert_user($surname, $name, $num, $email, $HashedPassword); #inserts a new user if the email adress doesn't exist in the DB
@@ -44,22 +44,20 @@ if (isset($_POST['Intention'])) {
             //break;
 
         case 'Login':
-            $Condition = '(`email` = "' . $email . '")';
-            $UniqueUser = $NewConnection->select('utilisateur', "*", $Condition);
+            $Condition = $email;
+            $UniqueUser = $NewConnection->select('utilisateur', "email", $Condition);
             // var_dump($UniqueUser[0]);
 
             session_start([
                 'cookie_lifetime' => (30 * 60) //lifetime of session in seconds
             ]);
 
-            $_SESSION['crsf_token'] = bin2hex(random_bytes(32));
-
             if ($UniqueUser && password_verify($mot_de_passe, $UniqueUser[0]['mot_de_passe'])) {
-
+                $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
                 $_SESSION['CurrentUser'] = $UniqueUser[0]['email'];
                 $_SESSION['CurrentUserSurname'] = $UniqueUser[0]['nom'];
                 $_SESSION['CurrentUserName'] = $UniqueUser[0]['prenom'];
-                $_SESSION['CurrentUserPhone'] = $UniqueUser[0]['numero'];
+                $_SESSION['CurrentUserPhone'] = $UniqueUser[0]['num'];
                 $_SESSION['UserRole'] = $UniqueUser[0]['role'];
                 $_SESSION['UserID'] = $UniqueUser[0]['id_utilisateur'];
 
@@ -98,12 +96,12 @@ if (isset($_POST['Intention'])) {
         case 'SendEmail':
             session_start();
             $MessageSent = false;
-            $email="";
+            $email = "";
             var_dump($_SESSION);
             if (isset($_SESSION['CurrentUser'])) {
                 $email = $_SESSION['CurrentUser'];
                 $prenom = $_SESSION['CurrentUserName'];
-            }else{ 
+            } else {
                 $email = $_POST['email'];
                 $prenom = $_POST['prenom'];
             }
@@ -122,8 +120,8 @@ if (isset($_POST['Intention'])) {
                 $mail->Username = "licetiesta@gmail.com";
                 $mail->Password = "notremondetest";
 
-                $mail->setFrom($email, $prenom .' '. $nom);
-                
+                $mail->setFrom($email, $prenom . ' ' . $nom);
+
                 $mail->addAddress("licetiesta@gmail.com");
 
                 $mail->Subject = $sujet;
@@ -137,12 +135,12 @@ if (isset($_POST['Intention'])) {
         case 'AskQuotation':
             session_start();
 
-            $email="";
+            $email = "";
             // var_dump($_SESSION);
             if (isset($_SESSION['CurrentUser'])) {
                 $email = $_SESSION['CurrentUser'];
                 $prenom = $_SESSION['CurrentUserName'];
-            }else{ 
+            } else {
                 $email = $_POST['email'];
                 $prenom = $_POST['prenom'];
             }
@@ -161,8 +159,8 @@ if (isset($_POST['Intention'])) {
                 $mail->Username = "licetiesta@gmail.com";
                 $mail->Password = "notremondetest";
 
-                $mail->setFrom($email, $prenom.' '. $nom);
-                
+                $mail->setFrom($email, $prenom . ' ' . $nom);
+
                 $mail->addAddress("licetiesta@gmail.com");
 
                 $mail->Subject = "Demande de devis";
@@ -171,7 +169,7 @@ if (isset($_POST['Intention'])) {
 
                 $body .= "Date d'arrivée" . $arrivalDate . "  ";
                 $body .= "Date de retour: " . $departureDate . "\r\n";
-                $body .= "Nombre de voyageurs: " . $adults . " adultes et ". $adults . " enfants \r\n";
+                $body .= "Nombre de voyageurs: " . $adults . " adultes et " . $adults . " enfants \r\n";
                 $body .= "À partir du circuit: " . $inspi . "\r\n";
                 $body .= "Interessé(e) par: " . $categorie . "\r\n";
                 $body .= "Où: " . $pays . "\r\n";
@@ -186,15 +184,54 @@ if (isset($_POST['Intention'])) {
             }
     }
 }
+
+if (isset($_POST['modifyEmail'])&& isset($_POST['token'])) {
+    var_dump($_POST['token']);
+
+    if ($_SESSION['csrf_token'] == $_POST['token']){
+        
+        extract($_POST);
+
+        $Condition = array('id_utilisateur' => $_SESSION['UserID']);
+var_dump($Condition);
+        $Values = array('email' => $email);
+
+        $NewEmail = $NewConnection->update('utilisateur', $Condition, $Values);
+
+        if ($NewEmail) {
+            header("Location: " . "../profil.php");
+            die();
+        }
+    }
+}
+
+if (isset($_POST['modifyPhone'])&& isset($_POST['token'])) {
+    if ($_SESSION['csrf_token'] == $_POST['token']){
+
+        extract($_POST);
+
+        $Condition = array('id_utilisateur' => $_SESSION['UserID']);
+
+        $Values = array('num' => $phone);
+
+        $NewPhone = $NewConnection->update('utilisateur', $Condition, $Values);
+
+        if ($NewPhone) {
+            header("Location: " . "../profil.php");
+            die();
+        }
+    }
+}
 if (isset($_GET['Intention'])) {
     session_start();
 
     $circuit = $_GET['voyage'];
     $user = $_SESSION['UserID'];
 
-    $Condition = '(`circuit`=' . $circuit . ' AND `utilisateur`=' . $user . ')';
+    $Condition1 = $circuit;
+    $Condition2 = $user;
     if (isset($user)) {
-        $Select = $NewConnection->select('favoris', '*', $Condition);
+        $Select = $NewConnection->two_conditions_select('favoris', 'circuit', 'utilisateur', $Condition1, $Condition2);
         if (empty($Select)) {
             $Values = array(
                 'circuit' => $circuit,

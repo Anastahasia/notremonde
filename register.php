@@ -1,6 +1,6 @@
 <?php
 session_start();
-// var_dump($_SESSION);
+ var_dump($_SESSION);
 
 if (isset($_SESSION['CurrentUser'])) {
     header("Location: " . 'index.php');
@@ -58,7 +58,7 @@ require_once("./components/connexion.php");
 
                 <div class="input-group">
                     <label for="num">Numéro de téléphone </label>
-                    <input type="number" name="num">
+                    <input type="text" name="num">
                 </div>
 
                 <div class="input-group">
