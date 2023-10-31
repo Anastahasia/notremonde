@@ -13,64 +13,68 @@ if (isset($_POST['Intention'])) {
     extract($_POST);
     switch ($_POST['Intention']) {
         case 'Signup':
-            $surname = valid_data($nom);
-            $name = valid_data($prenom);
-            $num = valid_data($num);
-            $email = filter_var($email, FILTER_VALIDATE_EMAIL);
-            $mdp = valid_data($mot_de_passe);
-            // $HashedPassword = password_hash($_POST['mot_de_passe'], PASSWORD_DEFAULT);
-            $HashedPassword = password_hash($mdp, PASSWORD_ARGON2ID, ['memory_cost' => 1 << 17, 'time_cost' => 4, 'threads' => 2]);
+            if (token_verify()) {
+                $surname = valid_data($nom);
+                $name = valid_data($prenom);
+                $num = valid_data($num);
+                $email = filter_var($email, FILTER_VALIDATE_EMAIL);
+                $mdp = valid_data($mot_de_passe);
+                // $HashedPassword = password_hash($_POST['mot_de_passe'], PASSWORD_DEFAULT);
+                $HashedPassword = password_hash($mdp, PASSWORD_ARGON2ID, ['memory_cost' => 1 << 17, 'time_cost' => 4, 'threads' => 2]);
 
-            var_dump($email);
-            $EmailVerify = $NewConnection->select('utilisateur', "email", $email);
+                var_dump($email);
+                $EmailVerify = $NewConnection->select('utilisateur', "email", $email);
 
-            if (empty($EmailVerify)) {
-                $Success = $NewConnection->insert_user($surname, $name, $num, $email, $HashedPassword); #inserts a new user if the email adress doesn't exist in the DB
-            } else {
-                session_start();
+                if (empty($EmailVerify)) {
+                    $Success = $NewConnection->insert_user($surname, $name, $num, $email, $HashedPassword); #inserts a new user if the email adress doesn't exist in the DB
+                } else {
+                    session_start();
 
-                $_SESSION['HasFailedSignedUp'] = true;
+                    $_SESSION['HasFailedSignedUp'] = true;
 
-                header("Location: " . '../register.php');
-                die();
+                    header("Location: " . '../register.php');
+                    die();
+                }
             }
 
             // NOTE: we let fall through from signup to login, so it automatically logs in
             //break;
 
         case 'Login':
-            $Condition = $email;
-            $UniqueUser = $NewConnection->select('utilisateur', "email", $Condition);
-            // var_dump($UniqueUser[0]);
+            if (token_verify()) {
 
-            session_start([
-                'cookie_lifetime' => (30 * 60) //lifetime of session in seconds
-            ]);
+                $Condition = $email;
+                $UniqueUser = $NewConnection->select('utilisateur', "email", $Condition);
+                // var_dump($UniqueUser[0]);
 
-            if ($UniqueUser && password_verify($mot_de_passe, $UniqueUser[0]['mot_de_passe'])) {
-                $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
-                $_SESSION['CurrentUser'] = $UniqueUser[0]['email'];
-                $_SESSION['CurrentUserSurname'] = $UniqueUser[0]['nom'];
-                $_SESSION['CurrentUserName'] = $UniqueUser[0]['prenom'];
-                $_SESSION['CurrentUserPhone'] = $UniqueUser[0]['num'];
-                $_SESSION['UserRole'] = $UniqueUser[0]['role'];
-                $_SESSION['UserID'] = $UniqueUser[0]['id_utilisateur'];
+                session_start([
+                    'cookie_lifetime' => (30 * 60) //lifetime of session in seconds
+                ]);
 
-                // if (isset($_SESSION['HasFailedSignedUp']))
-                //     unset($_SESSION['HasFailedSignedUp']);
+                if ($UniqueUser && password_verify($mot_de_passe, $UniqueUser[0]['mot_de_passe'])) {
+                    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+                    $_SESSION['CurrentUser'] = $UniqueUser[0]['email'];
+                    $_SESSION['CurrentUserSurname'] = $UniqueUser[0]['nom'];
+                    $_SESSION['CurrentUserName'] = $UniqueUser[0]['prenom'];
+                    $_SESSION['CurrentUserPhone'] = $UniqueUser[0]['num'];
+                    $_SESSION['UserRole'] = $UniqueUser[0]['role'];
+                    $_SESSION['UserID'] = $UniqueUser[0]['id_utilisateur'];
 
-                // if (isset($_SESSION['HasFailedLogin']))
-                //     unset($_SESSION['HasFailedLogin']);
+                    // if (isset($_SESSION['HasFailedSignedUp']))
+                    //     unset($_SESSION['HasFailedSignedUp']);
 
-                header("Location: " . '../index.php');
-                die();
-            } else {
-                $_SESSION['HasFailedLogin'] = true;
+                    // if (isset($_SESSION['HasFailedLogin']))
+                    //     unset($_SESSION['HasFailedLogin']);
 
-                header("Location: " . '../login.php');
-                die();
+                    header("Location: " . '../index.php');
+                    die();
+                } else {
+                    $_SESSION['HasFailedLogin'] = true;
+
+                    header("Location: " . '../login.php');
+                    die();
+                }
             }
-
             // var_dump($_SESSION);
 
             break;
@@ -131,8 +135,8 @@ if (isset($_POST['modifyEmail'])) {
             session_start();
             header("Location: " . "../profil.php");
             die();
-        }else {
-            $_SESSION['FailedUpdate']=true;
+        } else {
+            $_SESSION['FailedUpdate'] = true;
             header("Location: " . "../profil.php");
             die();
         }
@@ -152,8 +156,8 @@ if (isset($_POST['modifyPhone'])) {
             session_start();
             header("Location: " . "../profil.php");
             die();
-        }else {
-            $_SESSION['FailedUpdate']=true;
+        } else {
+            $_SESSION['FailedUpdate'] = true;
             header("Location: " . "../profil.php");
             die();
         }
@@ -176,18 +180,18 @@ if (isset($_POST['modifyMDP'])) {
 
                 if ($NewPhone) {
                     session_start();
-                    $_SESSION['SuccessfulUpdate']=true;
+                    $_SESSION['SuccessfulUpdate'] = true;
                     header("Location: " . "../profil.php");
                     die();
                 }
             } else {
-                $_SESSION['FailedUpdate']=true;
+                $_SESSION['FailedUpdate'] = true;
                 header("Location: " . "../profil.php");
                 die();
             }
         } else {
             session_start();
-            $_SESSION['FailedUpdate']=true;
+            $_SESSION['FailedUpdate'] = true;
             header("Location: " . "../profil.php");
             die();
         }

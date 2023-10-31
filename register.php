@@ -1,13 +1,15 @@
 <?php
 session_start();
  var_dump($_SESSION);
+require_once("./components/connexion.php");
+require_once("./components/communs.php");
 
 if (isset($_SESSION['CurrentUser'])) {
     header("Location: " . 'index.php');
     die();
 }
 
-require_once("./components/connexion.php");
+
 
 ?>
 
@@ -70,6 +72,8 @@ require_once("./components/connexion.php");
                     <label for="mot_de_passe">Mot de passe </label>
                     <input type="password" name="mot_de_passe" required>
                 </div>
+
+                <input type="hidden" name="token" value="<?php echo $_SESSION['csrf_token'] ?>">
 
                 <div class="input-group">
                     <input name="Intention" value="Signup" type="submit">
