@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once('./components/connexion.php');
+require_once("./components/communs.php");
 
 $CurrentDestinationID = isset($_GET['destination']) ? $_GET['destination'] : 0;
 $SelectedDestination = $NewConnection->select("continent", "id_continent", $CurrentDestinationID);
@@ -27,14 +28,20 @@ if ($CurrentDestinationID) {
     <meta name="description" content="" />
     <meta name="author" content="" />
     <title> <?php
+            $Title = "Circuits";
             if ($CurrentDestinationID) {
-                $DestinationsName = "";
+                
                 foreach ($SelectedDestination as $Key => $Value) {
-                    $DestinationsName = $Value['nom'];
+                    $Title = $Value['nom'];
                 }
-                echo $DestinationsName;
+                echo $Title;
+            } else if ($CurrentCategorieID) {
+                foreach ($SelectedCategorie as $Key => $Value) {
+                    $Title = $Value['nom'];
+                }
+                echo $Title;
             } else {
-                echo 'Tous les circuits';
+                echo $Title;
             } //mettre un else if incluant un for each pour catégories 
             ?>
         | Notre Monde</title>
@@ -82,7 +89,7 @@ if ($CurrentDestinationID) {
                             <button type="submit" id="favoris" name="Intention" value="AddFavorite" style="border-style: none;"><i class="fa-solid fa-heart" style="color: #8a817c;"></i></button>
                             </form>
                         </div>
-                        <a href="./circuit.php?circuit=' . $Value['id_circuit'] . '" class="btn btn-success">Explorer</a>
+                        <a href="./circuit.php?circuit=' . $Value['id_circuit'] . '&title='.$Title.'" class="btn btn-success">Explorer</a>
                     </div>
                 </div>';
                     }

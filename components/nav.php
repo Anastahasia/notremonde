@@ -29,7 +29,7 @@ $IsUserLoggedIn = isset($_SESSION['CurrentUser']);
             <a href="" class="btn btn-success">Devis</a>
             <?php if ($IsUserLoggedIn) : $UserIcon = './images/icons_user.png';
             ?>
-                <a href="./profil.php"><img src=<?php echo '"' . $UserIcon . '"'; ?> alt="User Role Image" style="width: 32px; height: 32px;"></a>
+                <a class="nav-link" href="./profil.php"><img src=<?php echo '"' . $UserIcon . '"'; ?> alt="User Role Image" style="width: 32px; height: 32px;"></a>
                 <form method="POST" action="./controllers/user.php"><button type="submit" name="Intention" value="Logout" class="ConnexionButtons red-button">Deconnexion</button></form>
             <?php else : ?>
                 <button class="ConnexionButtons green-button" style="border-style: none;" onclick="window.location='./login.php'">Login</button>

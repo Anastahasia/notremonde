@@ -1,6 +1,7 @@
 <?php 
 session_start();
 require_once('./components/connexion.php');
+require_once("./components/communs.php");
 
 $destinations = $NewConnection->select("continent");
 $circuits = $NewConnection->select_random("circuit", "categorie");

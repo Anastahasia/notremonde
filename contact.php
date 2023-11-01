@@ -2,6 +2,7 @@
 session_start();
 
 require_once('./components/connexion.php');
+require_once("./components/communs.php");
 
 $circuits = $NewConnection->select("circuit", "visible");
 // var_dump($circuits);
@@ -35,154 +36,175 @@ $categorie = $NewConnection->select("categorie", "NOT id_categorie", "1");
 <body>
     <?php include_once('./components/nav.php'); ?>
     <main>
-        <section>
-            <?php if (isset($_POST['SendEmail']) && $MessageSent) : ?>
-                <h4>Merci pour votre message. Nous revenons vers vous dans les plus brefs délais</h4>
-            <?php else : ?>
-                <h4 class="titre2">Envoyez nous un message</h4>
-                <div class="form-container">
-                    <form class="contactForms" method="post" action="./controllers/user.php">
-                        <?php if (isset($_SESSION['CurrentUser'])) :
-                            $nom = $_SESSION['CurrentUserSurname'];
-                            $prenom = $_SESSION['CurrentUserName'];
-                            $email = $_SESSION['CurrentUser']; ?>
-                            <div class="mb-3">
-                                <label for="nom" class="form-label soustitre">Nom</label>
-                                <p><?php echo $nom ?></p>
-                            </div>
-                            <div class="mb-3">
-                                <label for="prenom" class="form-label soustitre">Prénom</label>
-                                <p><?php echo $prenom ?></p>
-                            </div>
-                            <div class="mb-3">
-                                <label for="email" class="form-label soustitre">Adresse email</label>
-                                <p><?php echo $email ?></p>
-                            </div>
-                        <?php else : ?>
-                            <div class="mb-3">
-                                <label for="nom" class="form-label soustitre">Nom</label>
-                                <input type="text" class="form-control" name="nom" placeholder="Votre nom" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="prenom" class="form-label soustitre">Prénom</label>
-                                <input type="text" class="form-control" name="prenom" placeholder="Votre prénom" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="email" class="form-label soustitre">Adresse email</label>
-                                <input type="email" class="form-control" name="email" placeholder="name@example.com" required>
-                            </div>
-                        <?php endif ?>
-                        <div class="mb-3">
-                            <label for="sujet" class="form-label soustitre">Sujet</label>
-                            <input type="text" class="form-control" id="sujet" name="sujet" placeholder="Voyage en Italie" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="message" class="form-label soustitre">Message</label>
-                            <textarea class="form-control" name="message" rows="4" required></textarea>
-                        </div>
-                        <div>
-                            <button type="submit" name="SendEmail" class="btn btn-success">Submit</button>
-                        </div>
-                    </form>
-                </div>
-            <?php endif ?>
-        </section>
+        <div>
+            <ul class="nav nav-tabs" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" data-bs-target="#Quotation" data-bs-toggle="tab" type="button" role="tab" aria-selected="true">Devis</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-bs-target="#Email" data-bs-toggle="tab" type="button" role="tab" aria-selected="false">Contact</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-bs-target="#Comptes" data-bs-toggle="tab" type="button" role="tab" aria-selected="false">Coordonnées</a>
+                </li>
+            </ul>
+        </div>
 
-        <section>
-            <?php if (isset($_POST['AskQuotation']) && $MessageSent) : ?>
-                <h4>Votre demande a bien été envoyé. Vous recevrez votre devis dans les plus brefs délais !</h4>
-            <?php else : ?>
-                <h4 class="titre2">Votre futur voyage</h4>
-                <div class="form-container">
-                    <form class="contactForms" method="post" action="./controllers/user.php">
-                        <div class="mb-3">
-                            <label for="arrivalDate" class="form-label soustitre">Quand souhaitez-vous voyager ? </label>
-                            <input type="date" name="arrivalDate" id="" placeholder="Votre date d'arrivée">
-                            <input type="date" name="departureDate" id="" placeholder="Votre date de retour">
-                        </div>
-                        <!-- <div class="mb-3">
+        <!-- Formulaire de devis -->
+        <div class="tab-content">
+            <div class="tab-pane fade show active" id="Quotation">
+                <?php if (isset($_POST['AskQuotation']) && $MessageSent) : ?>
+                    <h4>Votre demande a bien été envoyé. Vous recevrez votre devis dans les plus brefs délais !</h4>
+                <?php else : ?>
+                    <h4 class="titre2">Votre futur voyage</h4>
+                    <div class="form-container">
+                        <form class="contactForms" method="post" action="./controllers/user.php">
+                            <div class="mb-3">
+                                <label for="arrivalDate" class="form-label soustitre">Quand souhaitez-vous voyager ? </label>
+                                <input type="date" name="arrivalDate" id="" placeholder="Votre date d'arrivée">
+                                <input type="date" name="departureDate" id="" placeholder="Votre date de retour">
+                            </div>
+                            <!-- <div class="mb-3">
                         <label for="duree" class="form-label soustitre">Combien de temps souhaitez vous rester ? </label>
                         <input type="date" name="duree" id="" placeholder="Durée estimée">
                     </div> faire apparaître lors d'un clique sur une check box ? question Connaissez-vous vos dates de voyage ?-->
-                        <div class="mb-3">
-                            <label for="adults" class="form-label soustitre">Avec qui voyagez vous ? </label>
-                            <input type="number" name="adults" id="" placeholder="Nombre d'adultes" min="0" required>
-                            <input type="number" name="children" id="" placeholder="Nombre d'enfants" min="0" required>
-                        </div>
+                            <div class="mb-3">
+                                <label for="adults" class="form-label soustitre">Avec qui voyagez vous ? </label>
+                                <input type="number" name="adults" id="" placeholder="Nombre d'adultes" min="0" required>
+                                <input type="number" name="children" id="" placeholder="Nombre d'enfants" min="0" required>
+                            </div>
 
-                        <h4 class="titre2">Le voyage de vos rêves</h4>
-                        <div class="mb-3">
-                            <label for="inspi" class="form-label soustitre">Souhaitez-vous personnaliser un circuit présent sur le site ?</label>
-                            <select class="form-select" name="inspi" aria-label="Default select example" required>
-                                <option value="Aucun" selected>Choisissez le circuit</option>
-                                <?php foreach ($circuits as $Value) {
-                                    echo '<option value="' . $Value['titre'] . '">' . $Value['titre'] . '</option>';
-                                } ?>
-                            </select>
-                        </div>
-                        <p class="soustitre">Par quel type de voyage êtes-vous intéressé ?</p>
-                        <div class="check-flex">
-                            <?php foreach ($categorie as $Value) {
-                                echo '<div class="form-check">   
+                            <h4 class="titre2">Le voyage de vos rêves</h4>
+                            <div class="mb-3">
+                                <label for="inspi" class="form-label soustitre">Souhaitez-vous personnaliser un circuit présent sur le site ?</label>
+                                <select class="form-select" name="inspi" aria-label="Default select example" required>
+                                    <option value="Aucun" selected>Choisissez le circuit</option>
+                                    <?php foreach ($circuits as $Value) {
+                                        echo '<option value="' . $Value['titre'] . '">' . $Value['titre'] . '</option>';
+                                    } ?>
+                                </select>
+                            </div>
+                            <p class="soustitre">Par quel type de voyage êtes-vous intéressé ?</p>
+                            <div class="check-flex">
+                                <?php foreach ($categorie as $Value) {
+                                    echo '<div class="form-check">   
                                 <input class="form-check-input" type="radio" value="' . $Value['nom'] . '" name="categorie" required>
                                 <label class="form-check-label" for="pays">
                                     ' . $Value['nom'] . '
                                 </label>
                             </div>';
-                            } ?>
-                        </div>
-                        <p class=" soustitre">Quelle est la destination dont vous rêvez ?</p>
-                        <div class="check-flex">
-                            <?php foreach ($pays as $Value) {
-                                echo '<div class="form-check">   
+                                } ?>
+                            </div>
+                            <p class=" soustitre">Quelle est la destination dont vous rêvez ?</p>
+                            <div class="check-flex">
+                                <?php foreach ($pays as $Value) {
+                                    echo '<div class="form-check">   
                                 <input class="form-check-input" type="radio" value="' . $Value['pays'] . '" name="pays" required>
                                 <label class="form-check-label" for="pays">
                                     ' . $Value['pays'] . '
                                 </label>
                             </div>';
-                            } ?>
-                        </div>
-                        <?php if (isset($_SESSION['CurrentUser'])) :
-                            $nom = $_SESSION['CurrentUserSurname'];
-                            $prenom = $_SESSION['CurrentUserName'];
-                            $email = $_SESSION['CurrentUser']; ?>
+                                } ?>
+                            </div>
+                            <?php if (isset($_SESSION['CurrentUser'])) :
+                                $nom = $_SESSION['CurrentUserSurname'];
+                                $prenom = $_SESSION['CurrentUserName'];
+                                $email = $_SESSION['CurrentUser']; ?>
+                                <div class="mb-3">
+                                    <label for="nom" class="form-label soustitre">Nom</label>
+                                    <p><?php echo $nom ?></p>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="prenom" class="form-label soustitre">Prénom</label>
+                                    <p><?php echo $prenom ?></p>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="email" class="form-label soustitre">Adresse email</label>
+                                    <p><?php echo $email ?></p>
+                                </div>
+                            <?php else : ?>
+                                <div class="mb-3">
+                                    <label for="nom" class="form-label soustitre">Nom</label>
+                                    <input type="text" class="form-control" name="nom" placeholder="Votre nom" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="prenom" class="form-label soustitre">Prénom</label>
+                                    <input type="text" class="form-control" name="prenom" placeholder="Votre prénom" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="email" class="form-label soustitre">Adresse email</label>
+                                    <input type="email" class="form-control" name="email" placeholder="name@example.com" required>
+                                </div>
+                            <?php endif ?>
                             <div class="mb-3">
-                                <label for="nom" class="form-label soustitre">Nom</label>
-                                <p><?php echo $nom ?></p>
+                                <label for="message" class="form-label soustitre">Message</label>
+                                <textarea class="form-control" name="message" rows="4" required></textarea>
+                            </div>
+                            <div>
+                                <button type="submit" name="AskQuotation" class="btn btn-success">Submit</button>
+                            </div>
+                        </form>
+                    </div>
+                <?php endif ?>
+            </div>
+        </div>
+
+        <!-- Formulaire de contact -->
+        <div class="tab-content">
+            <div class="tab-pane fade show" id="Email">
+                <?php if (isset($_POST['SendEmail']) && $MessageSent) : ?>
+                    <h4>Merci pour votre message. Nous revenons vers vous dans les plus brefs délais</h4>
+                <?php else : ?>
+                    <h4 class="titre2">Envoyez nous un message</h4>
+                    <div class="form-container">
+                        <form class="contactForms" method="post" action="./controllers/user.php">
+                            <?php if (isset($_SESSION['CurrentUser'])) :
+                                $nom = $_SESSION['CurrentUserSurname'];
+                                $prenom = $_SESSION['CurrentUserName'];
+                                $email = $_SESSION['CurrentUser']; ?>
+                                <div class="mb-3">
+                                    <label for="nom" class="form-label soustitre">Nom</label>
+                                    <p><?php echo $nom ?></p>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="prenom" class="form-label soustitre">Prénom</label>
+                                    <p><?php echo $prenom ?></p>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="email" class="form-label soustitre">Adresse email</label>
+                                    <p><?php echo $email ?></p>
+                                </div>
+                            <?php else : ?>
+                                <div class="mb-3">
+                                    <label for="nom" class="form-label soustitre">Nom</label>
+                                    <input type="text" class="form-control" name="nom" placeholder="Votre nom" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="prenom" class="form-label soustitre">Prénom</label>
+                                    <input type="text" class="form-control" name="prenom" placeholder="Votre prénom" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="email" class="form-label soustitre">Adresse email</label>
+                                    <input type="email" class="form-control" name="email" placeholder="name@example.com" required>
+                                </div>
+                            <?php endif ?>
+                            <div class="mb-3">
+                                <label for="sujet" class="form-label soustitre">Sujet</label>
+                                <input type="text" class="form-control" id="sujet" name="sujet" placeholder="Voyage en Italie" required>
                             </div>
                             <div class="mb-3">
-                                <label for="prenom" class="form-label soustitre">Prénom</label>
-                                <p><?php echo $prenom ?></p>
+                                <label for="message" class="form-label soustitre">Message</label>
+                                <textarea class="form-control" name="message" rows="4" required></textarea>
                             </div>
-                            <div class="mb-3">
-                                <label for="email" class="form-label soustitre">Adresse email</label>
-                                <p><?php echo $email ?></p>
+                            <div>
+                                <button type="submit" name="SendEmail" class="btn btn-success">Submit</button>
                             </div>
-                        <?php else : ?>
-                            <div class="mb-3">
-                                <label for="nom" class="form-label soustitre">Nom</label>
-                                <input type="text" class="form-control" name="nom" placeholder="Votre nom" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="prenom" class="form-label soustitre">Prénom</label>
-                                <input type="text" class="form-control" name="prenom" placeholder="Votre prénom" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="email" class="form-label soustitre">Adresse email</label>
-                                <input type="email" class="form-control" name="email" placeholder="name@example.com" required>
-                            </div>
-                        <?php endif ?>
-                        <div class="mb-3">
-                            <label for="message" class="form-label soustitre">Message</label>
-                            <textarea class="form-control" name="message" rows="4" required></textarea>
-                        </div>
-                        <div>
-                            <button type="submit" name="AskQuotation" class="btn btn-success">Submit</button>
-                        </div>
-                    </form>
-                </div>
-            <?php endif ?>
-        </section>
+                        </form>
+                    </div>
+                <?php endif ?>
+            </div>
+        </div>
+
     </main>
     <?php include_once('./components/footer.php'); ?>
 </body>

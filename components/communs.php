@@ -1,10 +1,11 @@
 <?php
+require_once ("connexion.php");
 
 if (!isset($_SESSION['csrf_token'])) {
     $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
 }
 
-// require_once ("./vendor/autoload.php");
+// require_once ("../vendor/autoload.php");
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;

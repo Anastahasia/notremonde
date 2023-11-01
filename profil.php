@@ -1,14 +1,16 @@
 <?php
 session_start();
-require_once('./components/connexion.php');
-require_once("./components/communs.php");
-
 // Redirect unregistered users
 // if (!isset($_SESSION['CurrentUser']))
 //     {
 //         header("Location: " . 'index.php');
 //         die();
 //     }
+
+require_once('./components/connexion.php');
+require_once("./components/communs.php");
+
+
 
 // $CurrentUserID = $_SESSION['UserID'];
 // var_dump($CurrentUserID);

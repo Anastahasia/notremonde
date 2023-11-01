@@ -1,18 +1,20 @@
 <?php
 session_start();
-require_once("./components/connexion.php");
+require_once('./components/connexion.php');
+require_once("./components/communs.php");
 
 $CurrentCircuitID = isset($_GET['circuit']) ? $_GET['circuit'] : 0;
 $SelectedCircuit = $NewConnection->select_visible("circuit", "id_circuit", $CurrentCircuitID);
+$IdCategorie = $SelectedCircuit[0]['categorie'];
+$SelectedCategories = $NewConnection->select("categorie", "id_categorie", $IdCategorie );
 var_dump($SelectedCircuit);
 if (empty($SelectedCircuit)) {
     header("Location: " . "./destination.php");
 }
 $SelectedSteps = $NewConnection->select_etape("etape_circuit", "hebergement", "id_hebergement", "ville", "id_ville", $CurrentCircuitID);
 
-
 $circuits = $NewConnection->select_random("circuit", "NOT id_circuit", $CurrentCircuitID);
-// var_dump($circuits, $SelectedCircuit);
+ var_dump($IdCategorie, $SelectedCategories);
  ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -48,8 +50,9 @@ $circuits = $NewConnection->select_random("circuit", "NOT id_circuit", $CurrentC
     <main>
         <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item accent"><a href="#">Home</a></li>
-                <li class="breadcrumb-item accent active" aria-current="page">Library</li>
+                <li class="breadcrumb-item accent"><a href="index.php">Accueil</a></li>
+                <li class="breadcrumb-item accent"><a href="destination.php?categorie=<?php echo $IdCategorie?>"><?php echo $SelectedCategories[0]['nom']?></a></li>
+                <li class="breadcrumb-item accent active" aria-current="page"><?php echo $CircuitsName ?></li>
             </ol>
         </nav>
 

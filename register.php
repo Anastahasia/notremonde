@@ -1,15 +1,14 @@
 <?php
 session_start();
  var_dump($_SESSION);
-require_once("./components/connexion.php");
-require_once("./components/communs.php");
-
-if (isset($_SESSION['CurrentUser'])) {
+ 
+ if (isset($_SESSION['CurrentUser'])) {
     header("Location: " . 'index.php');
     die();
 }
 
-
+require_once("./components/connexion.php");
+require_once("./components/communs.php");
 
 ?>
 
