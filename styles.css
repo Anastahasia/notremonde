@@ -6,7 +6,7 @@ footer {
     /* toutes les pages */
 
     img {
-        max-height: 100%;
+        object-fit: cover;
     }
 
     section {
@@ -90,6 +90,10 @@ footer {
         display: grid;
         grid-template-columns: 48% 48%;
         justify-content: space-between;
+    }
+
+    .etape-display{
+        height: 100%;
     }
 
     .img-presentation {

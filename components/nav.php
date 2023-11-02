@@ -5,7 +5,7 @@ require_once("./components/connexion.php");
 //     session_start();
 // }
 
-var_dump($_SESSION);
+// var_dump($_SESSION);
 $IsUserLoggedIn = isset($_SESSION['CurrentUser']);
 // $CanEditArticles = (isset($_SESSION['UserRole']) && CanEditArticles($_SESSION['UserRole']));
 
@@ -25,7 +25,6 @@ $IsUserLoggedIn = isset($_SESSION['CurrentUser']);
             </ul>
         </div>
         <div z-index="2" class="float-login">
-        <i class="fa-solid fa-magnifying-glass" style="color: #000000;"></i>
             <a href="" class="btn btn-success">Devis</a>
             <?php if ($IsUserLoggedIn) : $UserIcon = './images/icons_user.png';
             ?>

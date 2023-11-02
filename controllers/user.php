@@ -60,12 +60,6 @@ if (isset($_POST['Intention'])) {
                     $_SESSION['UserRole'] = $UniqueUser[0]['role'];
                     $_SESSION['UserID'] = $UniqueUser[0]['id_utilisateur'];
 
-                    // if (isset($_SESSION['HasFailedSignedUp']))
-                    //     unset($_SESSION['HasFailedSignedUp']);
-
-                    // if (isset($_SESSION['HasFailedLogin']))
-                    //     unset($_SESSION['HasFailedLogin']);
-
                     header("Location: " . '../index.php');
                     die();
                 } else {
