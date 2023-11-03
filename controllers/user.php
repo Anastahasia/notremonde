@@ -191,9 +191,10 @@ if (isset($_POST['modifyMDP'])) {
         }
     }
 }
-$circuit = $_POST['voyage'];
-$user = $_POST['user_id'];
-if (isset($_POST['AddFavorite'])) {
+
+if (isset($_POST['favorite'])) {
+    $circuit = $_POST['circuit'];
+    $user = $_POST['utilisateur'];
     if (token_verify()) {
         $Condition1 = $circuit;
         $Condition2 = $user;
@@ -206,8 +207,9 @@ if (isset($_POST['AddFavorite'])) {
                 );
 
                 $Favorite = $NewConnection->insert('favoris', $Values);
-                var_dump($Favorite);
-                $Select = $NewConnection->$Select = $NewConnection->two_conditions_select('favoris', 'circuit', 'utilisateur', $Condition1, $Condition2);
+                // var_dump($Favorite);
+                $Select = $NewConnection->two_conditions_select('favoris', 'circuit', 'utilisateur', $Condition1, $Condition2);
+
                 return json_encode($Select);
             } else {
                 $Values = array(
@@ -219,7 +221,7 @@ if (isset($_POST['AddFavorite'])) {
             }
         } else {
             session_start();
-            $_SESSION['failed'] = true;
+            $_SESSION['Failed'] = true;
             echo 'utilisateur non défini';
         }
     }

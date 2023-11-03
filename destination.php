@@ -76,6 +76,14 @@ var_dump($_SESSION, $_POST);
                 <h2 class="titre1">ça pourrait vous plaire...</h2>
                 <a href="destination.php" class="soustitre2">Tous les circuits</a>
             </div>
+            <?php
+            if (isset($_SESSION['Failed']) && $_SESSION['Failed']) {
+                echo '<h4 class="animate__animated animate__shakeX" >Connectez vous pour ajouter des favoris</h4>';
+
+                unset($_SESSION['Failed']);
+            }
+            ?>
+
             <div class="card-container">
                 <?php
                 foreach ($circuits as $Value) {
@@ -115,32 +123,31 @@ var_dump($_SESSION, $_POST);
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js" integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
     <script>
+        let FavoriteButton = document.getElementsByTagName('.favoris')
         $(document).ready(function($) {
             $("#favoris").click(function(e) {
                 e.preventDefault();
                 var formData = {
-                    voyage: $('#voyage').val(),
-                    user_id: $('#user_id').val(),
+                    favorite: $('#favoris').val(),
+                    circuit: $('#voyage').val(),
+                    utilisateur: $('#user_id').val(),
                 };
                 const user_id = $('#user_id').val();
                 if (Boolean(user_id)) {
                     console.log(user_id)
-                }
-                $.ajax({
-                    url: './controllers/user.php',
-                    type: 'POST',
-                    data: formData,
-                    dataType: 'json',
-                    success: function(data) {
-                        console.log(formData);
-                    },
-                    error: function(data) {
-                        console.log(data)
-                        alert("erreur lors de l'envoi des données")
-                    }
-                });
+
+                    $.ajax({
+                        url: './controllers/user.php',
+                        type: "POST",
+                        data: formData,
+                        dataType: 'json',
+                        cache: false
+
+
+                    });
+                };
             });
-        });
+        })
     </script>
 </body>
 
