@@ -1,5 +1,5 @@
 <?php
-require_once ("connexion.php");
+require_once("connexion.php");
 
 if (!isset($_SESSION['csrf_token'])) {
     $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
@@ -12,6 +12,8 @@ use PHPMailer\PHPMailer\SMTP;
 //fonction échappée des entrées utilisateur 
 function valid_data($data)
 {
+    $data = trim($data);
+    $data = stripslashes($data);
     $data = htmlspecialchars($data);
     return $data;
 }
@@ -22,7 +24,7 @@ function token_verify()
     if (isset($_SESSION['csrf_token']) && isset($_POST['token'])) {
         if ($_SESSION['csrf_token'] == $_POST['token']) {
             return true;
-        }else {
+        } else {
             echo 'La session présente est périmée';
         }
     }

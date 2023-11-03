@@ -165,7 +165,7 @@ if (isset($_POST['modifyMDP'])) {
             $Condition = $_SESSION['UserID'];
             $UniqueUser = $NewConnection->select('utilisateur', "id_utilisateur", $Condition);
 
-            var_dump($UniqueUser, $_SESSION, $Condition);
+            // var_dump($UniqueUser, $_SESSION, $Condition);
             if ($UniqueUser && password_verify($oldMdp, $UniqueUser[0]['mot_de_passe'])) {
                 $Condition = array('id_utilisateur' => $_SESSION['UserID']);
                 $Values = array('mot_de_passe' => password_hash($newMdp, PASSWORD_ARGON2ID, ['memory_cost' => 1 << 17, 'time_cost' => 4, 'threads' => 2]));
@@ -191,33 +191,36 @@ if (isset($_POST['modifyMDP'])) {
         }
     }
 }
+$circuit = $_POST['voyage'];
+$user = $_POST['user_id'];
+if (isset($_POST['AddFavorite'])) {
+    if (token_verify()) {
+        $Condition1 = $circuit;
+        $Condition2 = $user;
+        if (!empty($user)) {
+            $Select = $NewConnection->two_conditions_select('favoris', 'circuit', 'utilisateur', $Condition1, $Condition2);
+            if (empty($Select)) {
+                $Values = array(
+                    'circuit' => $circuit,
+                    'utilisateur' => $user,
+                );
 
-if (isset($_GET['Intention'])) {
-    session_start();
+                $Favorite = $NewConnection->insert('favoris', $Values);
+                var_dump($Favorite);
+                $Select = $NewConnection->$Select = $NewConnection->two_conditions_select('favoris', 'circuit', 'utilisateur', $Condition1, $Condition2);
+                return json_encode($Select);
+            } else {
+                $Values = array(
+                    'circuit' => $circuit,
+                    'utilisateur' => $user,
+                );
 
-    $circuit = $_GET['voyage'];
-    $user = $_SESSION['UserID'];
-
-    $Condition1 = $circuit;
-    $Condition2 = $user;
-    if (isset($user)) {
-        $Select = $NewConnection->two_conditions_select('favoris', 'circuit', 'utilisateur', $Condition1, $Condition2);
-        if (empty($Select)) {
-            $Values = array(
-                'circuit' => $circuit,
-                'utilisateur' => $user,
-            );
-
-            $Favorite = $NewConnection->insert('favoris', $Values);
-            var_dump($Favorite);
+                $Favorite = $NewConnection->delete('favoris', $Values);
+            }
         } else {
-            $Values = array(
-                'circuit' => $circuit,
-                'utilisateur' => $user,
-            );
-
-            $Favorite = $NewConnection->delete('favoris', $Values);
-            var_dump($Favorite);
+            session_start();
+            $_SESSION['failed'] = true;
+            echo 'utilisateur non défini';
         }
     }
 }

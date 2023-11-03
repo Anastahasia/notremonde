@@ -16,8 +16,14 @@ if ($CurrentDestinationID) {
 } else {
     $circuits = $NewConnection->select("circuit", "visible");
 }
-// var_dump($circuits);
 
+$_SESSION['UserID'] = 1;
+if (isset($_SESSION['UserID'])) {
+    $session = $_SESSION['UserID'];
+} else {
+    $session = "";
+}
+var_dump($_SESSION, $_POST);
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -30,7 +36,7 @@ if ($CurrentDestinationID) {
     <title> <?php
             $Title = "Circuits";
             if ($CurrentDestinationID) {
-                
+
                 foreach ($SelectedDestination as $Key => $Value) {
                     $Title = $Value['nom'];
                 }
@@ -72,8 +78,8 @@ if ($CurrentDestinationID) {
             </div>
             <div class="card-container">
                 <?php
-                    foreach ($circuits as $Value) {
-                        echo '
+                foreach ($circuits as $Value) {
+                    echo '
                 <div class="card circuit-card">
                     <div class="img-wrapper">
                         <img src="' . $Value['photo'] . '" class="card-img-top" alt="' . $Value['alt'] . '">
@@ -84,15 +90,17 @@ if ($CurrentDestinationID) {
                                 <h3 class="card-title soustitre">' . $Value['titre'] . '</h3>
                                 <p class="paragraphe">' . $Value['duree'] . ' jours | ' . $Value['prix_estimatif'] . '€</p>
                             </div>
-                            <form method="get" action="./controllers/user.php">
-                            <input type="hidden" name="voyage" value="'.$Value['id_circuit'].'">
-                            <button type="submit" id="favoris" name="Intention" value="AddFavorite" style="border-style: none;"><i class="fa-solid fa-heart" style="color: #8a817c;"></i></button>
+                            <form>
+                                <input type="hidden" name="voyage" id="voyage" value="' . $Value['id_circuit'] . '">
+                                <input type="hidden" name="token"  value="' . $_SESSION['csrf_token'] . '">
+                                <input type="hidden" name="user_id" id="user_id" value="' . $session . '">
+                                <button id="favoris" name="AddFavorite" style="border-style: none;"><i class="fa-solid fa-heart" style="color: #8a817c;"></i></button>
                             </form>
                         </div>
-                        <a href="./circuit.php?circuit=' . $Value['id_circuit'] . '&title='.$Title.'" class="btn btn-success">Explorer</a>
+                        <a href="./circuit.php?circuit=' . $Value['id_circuit'] . '&title=' . $Title . '" class="btn btn-success">Explorer</a>
                     </div>
                 </div>';
-                    }
+                }
                 ?>
             </div>
             <div class="flex-bouton">
@@ -103,21 +111,37 @@ if ($CurrentDestinationID) {
     </main>
 
     <?php include_once('./components/footer.php') ?>
-<script>
-    const like = document.querySelector(".fa-heart")
 
-    like.onclick = ()=>{
-        let xhr = new XMLHttpRequest();
-        xhr.open("GET", "./controllers/signin.php",true);
-        xhr.onload = () =>{
-            if(xhr.readyState === XMLHttpRequest.DONE){
-                if (xhr.status === 200) {
-                    like.classList.toggle("active");
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js" integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <script>
+        $(document).ready(function($) {
+            $("#favoris").click(function(e) {
+                e.preventDefault();
+                var formData = {
+                    voyage: $('#voyage').val(),
+                    user_id: $('#user_id').val(),
+                };
+                const user_id = $('#user_id').val();
+                if (Boolean(user_id)) {
+                    console.log(user_id)
                 }
-            }
-        }
-    }
-</script>
+                $.ajax({
+                    url: './controllers/user.php',
+                    type: 'POST',
+                    data: formData,
+                    dataType: 'json',
+                    success: function(data) {
+                        console.log(formData);
+                    },
+                    error: function(data) {
+                        console.log(data)
+                        alert("erreur lors de l'envoi des données")
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 
 </html>

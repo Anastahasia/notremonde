@@ -45,7 +45,7 @@ $AllUsers = $NewConnection->select("utilisateur");
                     <a class="nav-link active" aria-current="page" data-bs-target="#Circuits" data-bs-toggle="tab" type="button" role="tab" aria-selected="true">Circuits</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" data-bs-target="#Itineraires" data-bs-toggle="tab" type="button" role="tab" aria-selected="false">Itinéraires</a>
+                    <a class="nav-link" aria-current="page" data-bs-target="#Itineraires" data-bs-toggle="tab" type="button" role="tab" aria-selected="false">Itinéraires</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" data-bs-target="#Comptes" data-bs-toggle="tab" type="button" role="tab" aria-selected="false">Comptes</a>

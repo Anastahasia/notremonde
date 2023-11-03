@@ -32,6 +32,7 @@ footer {
         justify-content: center;
     }
 
+    /* INDEX */
     /* Index Card Carousel */
 
     .card-carousel-inner {
@@ -92,7 +93,7 @@ footer {
         justify-content: space-between;
     }
 
-    .etape-display{
+    .etape-display {
         height: 100%;
     }
 
@@ -116,7 +117,7 @@ footer {
     /* END CIRCUIT DISPLAY */
     /* CIRCUIT CARDS */
     .circuit-card {
-        flex: 0 0 30%;
+        flex: 0 0 31%;
     }
 
     .fa-heart {
@@ -130,19 +131,21 @@ footer {
 
     /* END CIRCUIT CARDS*/
     /* GESTION */
-    .serveurSection{
+    .serveurSection {
         padding: 1% 10%;
     }
+
     .nav-tabs {
         display: flex;
         justify-content: center;
         margin: 0 7%;
     }
 
-    .tab-content{
+    .tab-content {
         padding: 1% 2%;
-        margin: 0 7%;
+        margin: 0 3%;
     }
+
     /*GESTION CARDS */
 
     .card-container {

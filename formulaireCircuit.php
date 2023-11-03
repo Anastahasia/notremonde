@@ -66,7 +66,7 @@ $SelectedSteps = $NewConnection->select_etape("etape_circuit", "hebergement", "i
                 </div>
                 <div class="mb-3">
                     <label class="soutitre" for="duree">Durée:</label>
-                    <input type="text" class="form-control d-inline w-50 titre2" name="duree" value="' . $Circuit['prix_estimatif'] . '">€
+                    <input type="text" class="form-control d-inline w-50 titre2" name="duree" value="' . $Circuit['prix_estimatif'] . '"> €
                 </div>
             </div>';
             }
