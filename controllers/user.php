@@ -122,11 +122,13 @@ if (isset($_POST['modifyEmail'])) {
 
         $Values = array('email' => filter_var($email, FILTER_VALIDATE_EMAIL));
         $Condition = array('id_utilisateur' => $_SESSION['UserID']);
+        if ($Values['email'] != false) {
+            $NewEmail = $NewConnection->update('utilisateur', $Condition, $Values);
+            $NewEmail = $NewConnection->select('utilisateur', 'id_utilisateur', $_SESSION['UserID']);
+            $NewEmail = $NewEmail[0]['email'];
 
-        $NewPhone = $NewConnection->update('utilisateur', $Condition, $Values);
-
-        if ($NewPhone) {
-            session_start();
+            $_SESSION['CurrentUser'] = $NewEmail;
+            // var_dump($_SESSION);
             header("Location: " . "../profil.php");
             die();
         } else {
@@ -147,7 +149,6 @@ if (isset($_POST['modifyPhone'])) {
         $NewPhone = $NewConnection->update('utilisateur', $Condition, $Values);
 
         if ($NewPhone) {
-            session_start();
             header("Location: " . "../profil.php");
             die();
         } else {
@@ -170,10 +171,9 @@ if (isset($_POST['modifyMDP'])) {
                 $Condition = array('id_utilisateur' => $_SESSION['UserID']);
                 $Values = array('mot_de_passe' => password_hash($newMdp, PASSWORD_ARGON2ID, ['memory_cost' => 1 << 17, 'time_cost' => 4, 'threads' => 2]));
 
-                $NewPhone = $NewConnection->update('utilisateur', $Condition, $Values);
+                $NewMdp = $NewConnection->update('utilisateur', $Condition, $Values);
 
-                if ($NewPhone) {
-                    session_start();
+                if ($NewMdp) {
                     $_SESSION['SuccessfulUpdate'] = true;
                     header("Location: " . "../profil.php");
                     die();
@@ -184,7 +184,6 @@ if (isset($_POST['modifyMDP'])) {
                 die();
             }
         } else {
-            session_start();
             $_SESSION['FailedUpdate'] = true;
             header("Location: " . "../profil.php");
             die();
@@ -220,7 +219,6 @@ if (isset($_POST['favorite'])) {
                 $Favorite = $NewConnection->delete('favoris', $Values);
             }
         } else {
-            session_start();
             $_SESSION['Failed'] = true;
             echo 'utilisateur non défini';
         }

@@ -181,7 +181,7 @@ $itineraire = $NewConnection->select_join('utilisateur', 'id_utilisateur', 'itin
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <p>Êtes-vous sûrs de vouloir effectuer cette Update ?</p>
+                            <p>Êtes-vous sûrs de vouloir effectuer cette modification ?</p>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>

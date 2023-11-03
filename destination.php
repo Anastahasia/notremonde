@@ -105,7 +105,7 @@ var_dump($_SESSION, $_POST);
                                 <button id="favoris" name="AddFavorite" style="border-style: none;"><i class="fa-solid fa-heart" style="color: #8a817c;"></i></button>
                             </form>
                         </div>
-                        <a href="./circuit.php?circuit=' . $Value['id_circuit'] . '&title=' . $Title . '" class="btn btn-success">Explorer</a>
+                        <a href="./circuit.php?circuit=' . $Value['id_circuit'] . '" class="btn btn-success">Explorer</a>
                     </div>
                 </div>';
                 }
