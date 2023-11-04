@@ -39,6 +39,7 @@ $AllUsers = $NewConnection->select("utilisateur");
 <body>
     <?php include_once('./components/nav.php'); ?>
     <main>
+        <!-- Le menu du Dashbord -->
         <div>
             <ul class="nav nav-tabs" role="tablist">
                 <li class="nav-item">
@@ -88,9 +89,7 @@ $AllUsers = $NewConnection->select("utilisateur");
                     ?>
                 </div>
             </div>
-        </div>
 
-        <div class="tab-content">
             <div class="tab-pane fade show" id="Itineraires">
                 <div class="entete">
                     <h2 class="titre">Tous les itinéraires</h2>
@@ -124,9 +123,7 @@ $AllUsers = $NewConnection->select("utilisateur");
                     ?>
                 </div>
             </div>
-        </div>
-
-        <div class="tab-content">
+   
             <div class="tab-pane fade show" id="Comptes">
                 <div class="entete">
                     <h2 class="titre">Tous les comptes</h2>

@@ -23,19 +23,12 @@ class MaConnexion
         }
     }
 
-    //TODO: working through that, I think 'method chaining' would be a perfect interface, as in:
-    //$NewConnection.prepare().delete().fromtable("User").where(array( "email" => "example@local") ).execute();
-
     /**
      * The ConditionField is a filter to isolate a specific result
      * Returns an associative array of the results, or false on error */
     public function select($Table, $Column = 1, $ConditionField = 1)
     {
-        // $SQLQueryString = 'SELECT * FROM `users` WHERE (`mail` = "superuser@local" AND `password` = "pass")';
-        // $SQLQueryString = "SELECT $Column FROM $Table WHERE 1";
         try {
-            // NOTE: we cannot wrap Column in `` because it could be a regex like '*'
-            // $SQLQueryString = "SELECT `$Column` FROM `$Table` WHERE $ConditionField";
             $SQLQueryString = "SELECT * FROM `$Table` WHERE $Column = :condition";
             $query = $this->Connection->prepare($SQLQueryString);
 
@@ -49,10 +42,9 @@ class MaConnexion
             return false;
         }
     }
+    
     public function select_visible($Table, $Column, $ConditionField)
     {
-        // $SQLQueryString = 'SELECT * FROM `users` WHERE (`mail` = "superuser@local" AND `password` = "pass")';
-        // $SQLQueryString = "SELECT $Column FROM $Table WHERE 1";
         try {
             $SQLQueryString = "SELECT * FROM `$Table` WHERE visible = 1 AND $Column = :condition ";
             $query = $this->Connection->prepare($SQLQueryString);
@@ -326,5 +318,5 @@ class MaConnexion
     }
 }
 
-$NewConnection = new MaConnexion('notre_monde', "root", "", "localhost");
+$NewConnection = new MaConnexion("notre_monde", "root", "", "localhost");
     // var_dump($Result = $NewConnection->select("circuit", "visible", "1"));

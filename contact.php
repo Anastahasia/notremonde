@@ -147,10 +147,9 @@ $categorie = $NewConnection->select("categorie", "NOT id_categorie", "1");
                     </div>
                 <?php endif ?>
             </div>
-        </div>
+        
 
         <!-- Formulaire de contact -->
-        <div class="tab-content">
             <div class="tab-pane fade show" id="Email">
                 <?php if (isset($_POST['SendEmail']) && $MessageSent) : ?>
                     <h4>Merci pour votre message. Nous revenons vers vous dans les plus brefs délais</h4>

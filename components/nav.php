@@ -7,7 +7,7 @@ require_once("./components/connexion.php");
 
 // var_dump($_SESSION);
 $IsUserLoggedIn = isset($_SESSION['CurrentUser']);
-// $CanEditArticles = (isset($_SESSION['UserRole']) && CanEditArticles($_SESSION['UserRole']));
+$ViewDashbord = (isset($_SESSION['UserRole'])&&$_SESSION['UserRole']=='admin'); 
 
 ?>
 <!-- Responsive navbar-->
@@ -22,16 +22,21 @@ $IsUserLoggedIn = isset($_SESSION['CurrentUser']);
                 <li class="nav-item"><a class="nav-link" href="circuit.php">Circuits</a></li>
                 <li class="nav-item"><a class="nav-link" href="gestion.php">Gestion</a></li>
                 <li class="nav-item"><a class="nav-link" href="contact.php">Contact</a></li>
+                <?php if ($IsUserLoggedIn && $ViewDashbord) : ?>
+                    <li class="nav-item">
+                        <a href="./gestion.php" class="nav-link">Dashbord</a>
+                    </li>
+                <?php endif; ?>
             </ul>
         </div>
-        <div z-index="2" class="float-login">
+        <div z-index="2" class="float-login d-flex">
             <a href="" class="btn btn-success">Devis</a>
             <?php if ($IsUserLoggedIn) : $UserIcon = './images/icons_user.png';
             ?>
                 <a class="nav-link" href="./profil.php"><img src=<?php echo '"' . $UserIcon . '"'; ?> alt="User Role Image" style="width: 32px; height: 32px;"></a>
                 <form method="POST" action="./controllers/user.php"><button type="submit" name="Intention" value="Logout" class="ConnexionButtons red-button">Deconnexion</button></form>
             <?php else : ?>
-                <button class="ConnexionButtons green-button" style="border-style: none;" onclick="window.location='./login.php'">Login</button>
+                <a class="nav-link" href="./login.php"><img src="./images/icons_user.png" alt="User Role Image" style="width: 32px; height: 32px;">Connexion</a>
             <?php endif ?>
         </div>
     </div>

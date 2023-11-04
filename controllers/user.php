@@ -47,10 +47,6 @@ if (isset($_POST['Intention'])) {
                 $UniqueUser = $NewConnection->select('utilisateur', "email", $Condition);
                 // var_dump($UniqueUser[0]);
 
-                session_start([
-                    'cookie_lifetime' => (30 * 60) //lifetime of session in seconds
-                ]);
-
                 if ($UniqueUser && password_verify($mot_de_passe, $UniqueUser[0]['mot_de_passe'])) {
                     $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
                     $_SESSION['CurrentUser'] = $UniqueUser[0]['email'];

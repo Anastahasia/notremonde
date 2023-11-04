@@ -47,22 +47,19 @@ if (isset($_SESSION['CurrentUser'])) {
             ?>
 
             <form action="./controllers/user.php" method="POST">
-                <div class="input-group">
+                <div class="mb-3">
                     <label for="email">Adresse e-mail :</label>
-                    <input type="email" name="email" required>
+                    <input type="email" class="form-control" name="email" required>
                 </div>
 
-                <div class="input-group">
+                <div class="mb-3">
                     <label for="mot_de_passe">Mot de passe :</label>
-                    <input type="password" name="mot_de_passe" required>
+                    <input type="password" class="form-control" name="mot_de_passe" required>
                 </div>
 
                 <input type="hidden" name="token" value="<?php echo $_SESSION['csrf_token'] ?>">
 
-                <div class="input-group">
-                    <input name="Intention" value="Login" type="submit">
-                    <!-- <button name="Intention" value="Login" type="submit">Se connecter</button> -->
-                </div>
+                <input name="Intention" class="btn btn-success" value="Login" type="submit">
             </form>
         </section>
     </main>
