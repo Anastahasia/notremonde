@@ -73,3 +73,8 @@ function contact_form($body)
         var_dump($body);
     }
 }
+function GetImagePath($Filename)
+{
+    return './images/' . $Filename;
+}
+

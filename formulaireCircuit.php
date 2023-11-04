@@ -6,8 +6,8 @@ require_once("./components/communs.php");
 $CurrentCircuitID = isset($_GET['circuit']) ? $_GET['circuit'] : 0;
 $SelectedCircuit = $NewConnection->select_visible("circuit", "id_circuit", $CurrentCircuitID);
 
-$IdCategorie = $SelectedCircuit[0]['categorie'];
-$SelectedCategorie = $NewConnection->select("categorie", "id_categorie", $IdCategorie);
+$CurrentCategorieID = $SelectedCircuit[0]['categorie'];
+$SelectedCategorie = $NewConnection->select("categorie", "id_categorie", $CurrentCategorieID);
 
 $AllCategories = $NewConnection->select("categorie");
 // var_dump($SelectedCircuit, $AllCategories);
@@ -50,16 +50,20 @@ $SelectedSteps = $NewConnection->select_etape("etape_circuit", "hebergement", "i
 
 
                 echo '
-            <div class="img-presentation">
-                <div class="mb-3">
+            <div class="img-presentation"> <form enctype="multipart/form-data" action="./controllers/gestion.php" method="post">';
+                $ImageSource = $Circuit['photo'] != '' ?
+                    GetImagePath($Circuit['photo'])
+                    : '<i class="fa-solid fa-circle-plus" style="color: #1b512d;"></i>';
+                echo '<div class="mb-3">
                     <label for="circuitImage">Sélectionnez une image :</label>
-                    <input type="file" class="form-control" name="circuitImage" accept="image/png, image/jpeg">
+                    <input type="file" class="form-control image-selector" name="circuitImage" accept="image/png, image/jpeg">
+                
+                <img  class="image-preview" src="' . $ImageSource . '" alt="' . $Circuit['alt'] . '">
                 </div>
-                <img src="' . $Circuit['photo'] . '" alt="' . $Circuit['alt'] . '">
             </div>
             <div class="txt-presentation">
-                <h1 class="titre1" contenteditable="true">' . $Circuit['titre'] . '</h1>
-                <p contenteditable="true">' . $Circuit['description'] . '</p>
+                <h1 class="titre1" name="title" contenteditable="true">' . $Circuit['titre'] . '</h1>
+                <p name="description" contenteditable="true">' . $Circuit['description'] . '</p>
                 <div class="mb-3">
                     <label class="soutitre" for="duree">Durée:</label>
                     <input type="text" class="form-control d-inline w-50 titre2" name="duree" value="' . $Circuit['duree'] . '">  jours</input>
@@ -68,7 +72,10 @@ $SelectedSteps = $NewConnection->select_etape("etape_circuit", "hebergement", "i
                     <label class="soutitre" for="duree">Durée:</label>
                     <input type="text" class="form-control d-inline w-50 titre2" name="duree" value="' . $Circuit['prix_estimatif'] . '"> €
                 </div>
-            </div>';
+
+                <input type="hidden" name="token"  value="' . $_SESSION['csrf_token'] . '">
+                <input type="hidden" name="circuit_id" value="' . $CurrentCircuitID . '">
+            </div></form>';
             }
             ?>
         </header>
@@ -118,7 +125,116 @@ $SelectedSteps = $NewConnection->select_etape("etape_circuit", "hebergement", "i
         } ?>
     </main>
     <?php include_once('./components/footer.php') ?>
+    <script>
+        /* Variables */
 
+        // We're using the same button for all ajax submit
+        let UpdateButton = document.createElement('button');
+            UpdateButton.innerHTML = "Update";
+            UpdateButton.className = 'update-edit';
+            UpdateButton.type = 'button';
+        ;
+
+        /* Transmitting informations in between PHP and JS */
+
+        function GetCurrentCircuitID()
+        {
+            return Number( <?php echo $CurrentCircuitID; ?> );
+        }
+
+        function  GetCurrentCategorieID()
+        {
+            return <?php echo '"' . $CurrentCategorieID . '"'; ?> ;
+        }
+
+
+        /* Image previewing: aesthetic */
+        [...document.getElementsByClassName('image-selector')].forEach(Each => {
+            Each.addEventListener('change', (Event) => {
+                let Section = Event.target.parentNode;
+
+                let src = URL.createObjectURL(Event.target.files[0]);
+                let ImagePreviewPlaceholder = Section.getElementsByClassName('image-preview');
+                if (ImagePreviewPlaceholder)
+                {
+                    ImagePreviewPlaceholder[0].src = src;
+                }
+            });
+        });
+
+        /** Updating the article fields:
+         * The point is to hook all those elements to be able to send genericly their data to databases
+         * */
+        [...document.querySelectorAll('*[contenteditable="true"]')]
+        .concat([...document.querySelectorAll('.image-selector')])
+        .concat([...document.querySelectorAll("input")])
+        .forEach(Each => {
+
+            if (!Each) return;
+
+            async function SendUpdateArticleField (Event) {
+
+                let url = "./controllers/gestion.php";
+
+                let form_data = new FormData();
+                form_data.append('Intention', 'UpdateCircuit');
+                form_data.append('id_circuit', GetCurrentCircuitID());
+                form_data.append('id_categorie', GetCurrentCategorieID());
+                form_data.append('Column', Each.getAttribute('name'));
+
+                // We either send a file (images), the content of the form value (#Categorie), or the actual editable text content
+                const File = Each.files ? Each.files[0] : null;
+                form_data.append(Each.getAttribute('name'), File || Each.value || Each.innerHTML );
+
+                const Request = await fetch(url, {
+                    method: "POST",
+                    mode: "cors",
+                    cache: "no-cache",
+                    credentials: "same-origin",
+                    // It doesnt work with Content-Type, the WebBrowser will assess the content-type
+                    // headers: { 'Content-Type': 'multipart/form-data' },
+                    redirect: "follow",
+                    referrerPolicy: "no-referrer",
+                    body: form_data
+                })
+                .then(function (Response) { 
+                    
+                    UpdateButton.remove();
+                    UpdateButton.removeEventListener('click', SendUpdateArticleField, true);
+
+                    return Response.text();
+                })
+                // .then(function (ResponseText) {
+                //     console.log(ResponseText);
+                // })
+                ;
+
+                return true;
+            }
+
+            //Hooking up the button to appear below the edited field
+            Each.addEventListener('focus', (Event) => {
+
+                Event.target.insertAdjacentElement('afterend', UpdateButton);
+
+                UpdateButton.addEventListener('click', SendUpdateArticleField);
+
+                UpdateButton.style.display = 'block';
+            });
+
+            // Hiding the button on blur, but see notes below
+            Each.addEventListener('blur', (Event) => {
+                //NOTE: originally thought about removing the button when clicking elsewhere
+                //BUT because the button click causes a blur event on the editable element,
+                //we cannot remove the button here: otherwise we cripple the async fetch
+                //We could simply hide it, but the button would still be there existing,
+                // and could be clicked by a (malicious?) script
+                // setTimeout(()=>{
+                //     UpdateButton.style.display = 'none';
+                // }, 3600);
+            });
+        });
+    </script>
 </body>
 
 </html>
