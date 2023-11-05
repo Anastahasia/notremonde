@@ -95,9 +95,9 @@ if (isset($_POST['Intention'])) {
 
         case 'UpdateUser':
 
-            $Condition= array('id_utilisateur' => $_POST['id_utilisateur']);
+            $Condition = array('id_utilisateur' => $_POST['id_utilisateur']);
 
-            $Values= array(
+            $Values = array(
                 'nom' => $surname,
                 'prenom' => $name,
                 'num' => $phone,
@@ -124,30 +124,20 @@ if (isset($_POST['Intention'])) {
                 die();
             }
             break;
-            case 'UpdateCircuit':
-             
-                if(is_array($_FILES)) {
-                    var_dump($_POST);
-                  if(is_uploaded_file($_FILES['circuitImage']['tmp_name'])) {
-                    var_dump($_FILES);
-            //         $sourcePath = $_FILES['userImage']['tmp_name'];
-            //         $targetPath = "images/".$_FILES['userImage']['name'];
-            //         if(move_uploaded_file($sourcePath,$targetPath)) {
-    
-            //   echo'<img class="img-fluid" width="100%" height="100" src="  '.$targetPath.'" />';
-            //     }
-                  }
-                    }                    $Values = array(
-                        $_POST['Column'] => $_POST[$_POST['Column']]
-                    );
+            
+        case 'UpdateCircuit':
+            if (isset($_FILES) && $_FILES) {
+                $_POST[$_POST['Column']] = $_FILES[$_POST['Column']]['name'];
+            }
+            $Values = array(
+                $_POST['Column'] => $_POST[$_POST['Column']]
+            );
 
-                    $Condition = array('id_circuit' => $_POST['id_circuit']);
+            $Condition = array('id_circuit' => $_POST['id_circuit']);
 
-                    $Success = $NewConnection->update('circuit', $Condition, $Values);
+            $Success = $NewConnection->update('circuit', $Condition, $Values);
 
-                    die();
-                    break;
-
+            die();
+            break;
     }
-
 }
