@@ -50,7 +50,7 @@ $circuits = $NewConnection->select_random("circuit", "categorie");
                         <div class="carousel-item card-carousel-item">
                             <div class="card card-carousel">
                                 <div class="img-wrapper">
-                                    <img src="' . $Value['illustration'] .'" class="card-img-top" alt="...">
+                                    <img src="' . GetImagePath($Value['illustration']) .'" class="card-img-top" alt="...">
                                 </div>
                                 <div class="card-body carousel-card-body">
                                     <h3 class="card-title soustitre">'. $Value['nom'] .'</h3>
@@ -98,7 +98,7 @@ $circuits = $NewConnection->select_random("circuit", "categorie");
                      echo 
                      '<div class="carousel-item active">
                         <div class="carousel-img-wrapper">
-                            <img src="'.$Value['photo'].'" class="d-block w-100" alt="'.$Value['alt'].'">
+                            <img src="'.GetImagePath($Value['photo']).'" class="d-block w-100" alt="'.$Value['alt'].'">
                         </div>
                         <div class="carousel-caption d-none d-md-block">
                             <h3 class="soustitre">'.$Value['titre'].'</h3>

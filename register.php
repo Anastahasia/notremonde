@@ -69,7 +69,7 @@ require_once("./components/communs.php");
 
                 <div class="input-group">
                     <label for="mot_de_passe">Mot de passe </label>
-                    <input type="password" name="mot_de_passe" required>
+                    <input type="password" name="mot_de_passe" min="13" required>
                 </div>
 
                 <input type="hidden" name="token" value="<?php echo $_SESSION['csrf_token'] ?>">

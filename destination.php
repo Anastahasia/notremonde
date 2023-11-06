@@ -58,6 +58,7 @@ var_dump($_SESSION, $_POST);
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="icon" href="./images/favicon.png" type="image/x-icon">
 
     <link href="./styles.css" rel="stylesheet" />
@@ -86,6 +87,13 @@ var_dump($_SESSION, $_POST);
 
             <div class="card-container">
                 <?php
+                if (empty($circuits)&&$CurrentDestinationID) {
+                   echo'<p class="animate__animated animate__shakeX" >Pas de circuits disponible sur cette destination pour le moment...</p>
+                   <a href="destination.php">Voir tous les circuits.</a>';
+                }elseif (empty($circuits)&&$CurrentCategorieID) {
+                    echo'<p class="animate__animated animate__shakeX">Pas de circuits disponible dans cette thématique pour le moment...</p>
+                    <a href="destination.php">Voir tous les circuits.</a>';
+                }
                 foreach ($circuits as $Value) {
                     echo '
                 <div class="card circuit-card">
@@ -102,7 +110,7 @@ var_dump($_SESSION, $_POST);
                                 <input type="hidden" name="voyage" id="voyage" value="' . $Value['id_circuit'] . '">
                                 <input type="hidden" name="token"  value="' . $_SESSION['csrf_token'] . '">
                                 <input type="hidden" name="user_id" id="user_id" value="' . $session . '">
-                                <button id="favoris" name="AddFavorite" style="border-style: none;"><i class="fa-solid fa-heart" style="color: #8a817c;"></i></button>
+                                <button id="favoris" name="AddFavorite" style="border-style: none;"></button>
                             </form>
                         </div>
                         <a href="./circuit.php?circuit=' . $Value['id_circuit'] . '" class="btn btn-success">Explorer</a>

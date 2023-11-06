@@ -59,11 +59,24 @@ class MaConnexion
             return false;
         }
     }
+    // $SQLQueryString = "SELECT * FROM `$Table` WHERE $ConditionField";
+
+    // $ConditionAsString = "";
+    // foreach ($ConditionField as $EachColumn => $EachValue) {
+    //     $ConditionAsString .= ("`$EachColumn` = " . $this->Connection->quote($EachValue) . " AND ");
+    // }
+    // $ConditionAsString = rtrim($ConditionAsString, ' AND');
+
+    // $SQLQueryString = str_replace("<? >", $ConditionAsString, $SQLQueryString);
+
+    // $query = $this->Connection->prepare($SQLQueryString);
+    // $query->execute();
+    // return $query->fetchAll(PDO::FETCH_ASSOC);
 
     public function two_conditions_select($Table, $Column1, $Column2, $ConditionField1, $ConditionField2)
     {
         // $SQLQueryString = 'SELECT * FROM `users` WHERE (`mail` = "superuser@local" AND `password` = "pass")';
-        // $SQLQueryString = "SELECT $Column FROM $Table WHERE 1";
+        // $SQLQueryString = "SELECT $Column FROM `$Table` WHERE 1";
         try {
             $SQLQueryString = "SELECT * FROM `$Table` WHERE $Column1 = :condition1 AND $Column2 = :condition2 ";
             $query = $this->Connection->prepare($SQLQueryString);
@@ -104,7 +117,7 @@ class MaConnexion
     public function select_distinct($Column, $Table, $Condition = 1)
     {
         try {
-            $SQLQueryString = "SELECT DISTINCT $Column FROM $Table WHERE $Condition";
+            $SQLQueryString = "SELECT DISTINCT $Column FROM `$Table` WHERE $Condition";
 
             // var_dump($SQLQueryString);
 
@@ -148,7 +161,7 @@ class MaConnexion
     {
         try {
             $SQLQueryString = "SELECT *
-                FROM $Table1
+                FROM `$Table1`
                 INNER JOIN $Table2 ON $Table1.$Key1 = $Table2.$Table1
                 WHERE $Table1.$Key1 = '$ID'";
 
@@ -289,8 +302,6 @@ class MaConnexion
             $ConditionAsString = rtrim($ConditionAsString, ' AND');
 
             $SQLQueryString = str_replace("<?>", $ConditionAsString, $SQLQueryString);
-
-            echo $SQLQueryString;
 
             $query = $this->Connection->prepare($SQLQueryString);
             $query->execute();

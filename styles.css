@@ -13,6 +13,27 @@ footer {
         padding: 1% 10%;
     }
 
+    /* NAVBAR */
+    .navbar{
+        background-color:#fff;
+    }
+    .navbar .container{
+        margin: 0;
+        padding: 0;
+    }
+    ul{
+        list-style: none;
+    }
+    .navbar-brand img{
+      
+            width: 25%;
+            height: auto;
+            display: block;       
+    
+    }
+.dropdown-toggle::after{
+    display: none;
+}
     /* footer */
     footer {
         display: flex;
@@ -131,6 +152,7 @@ footer {
 
     /* END CIRCUIT CARDS*/
     /* GESTION */
+    
     .serveurSection {
         padding: 1% 10%;
     }
@@ -145,7 +167,11 @@ footer {
         padding: 1% 2%;
         margin: 0 3%;
     }
-
+/* FORMULAIRE DE MODIFICATION */
+/* .update-edit{
+position: absolute;
+left: 45%;
+} */
     /*GESTION CARDS */
 
     .card-container {

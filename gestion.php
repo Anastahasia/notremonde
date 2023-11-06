@@ -31,6 +31,8 @@ $AllUsers = $NewConnection->select("utilisateur");
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
     <link rel="icon" href="./images/favicon.png" type="image/x-icon">
 
     <link href="styles.css" rel="stylesheet" />
@@ -38,6 +40,10 @@ $AllUsers = $NewConnection->select("utilisateur");
 
 <body>
     <?php include_once('./components/nav.php'); ?>
+    <header>
+        <h1>Tableau de bord</h1>
+        <p class="soustitre">Gérez les circuits en quelques clics!</p>
+    </header>
     <main>
         <!-- Le menu du Dashbord -->
         <div>
@@ -46,7 +52,7 @@ $AllUsers = $NewConnection->select("utilisateur");
                     <a class="nav-link active" aria-current="page" data-bs-target="#Circuits" data-bs-toggle="tab" type="button" role="tab" aria-selected="true">Circuits</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" aria-current="page" data-bs-target="#Itineraires" data-bs-toggle="tab" type="button" role="tab" aria-selected="false">Itinéraires</a>
+                    <a class="nav-link" aria-current="page" data-bs-target="#Hebergements" data-bs-toggle="tab" type="button" role="tab" aria-selected="false">Hébergements</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" data-bs-target="#Comptes" data-bs-toggle="tab" type="button" role="tab" aria-selected="false">Comptes</a>
@@ -63,11 +69,8 @@ $AllUsers = $NewConnection->select("utilisateur");
 
                 <div id="CircuitsViewerBox" class="card-container">
                     <form action="./controllers/gestion.php" method="post" class="card gestion">
-                        <div class="card-image-container">
-                            <img id="AddNewIcon" src="./images/icons_plus.png" alt="New Circuit picture">
-                        </div>
                         <div class="card-text">
-                            <h5>Pour créer un nouveau circuit:</h5>
+                            <h3 class="soustitre">Pour créer un nouveau circuit:</h3>
                             <button name="Intention" value="AddCircuit" type="submit">Cliquer ici</button>
                         </div>
                         <!-- href="./Circuit.php?edit=true&id_Circuit=0" -->
@@ -79,7 +82,7 @@ $AllUsers = $NewConnection->select("utilisateur");
 
                         echo '<form action="./controllers/gestion.php" method="post" class="card gestion">';
                         echo '<input type="hidden" name="id_circuit" value="' . $Value['id_circuit'] . '">';
-                        echo '<button name="Intention" value="DeleteCircuit" data-bs-toggle="modal" data-bs-target="#DeleteModal" type="button" class="floating"></button>';
+                        echo '<button name="Intention" value="DeleteCircuit" data-bs-toggle="modal" data-bs-target="#DeleteModal" type="button" class="floating"><i class="fa-solid fa-circle-xmark" style="color: #ff0000;"></i></button>';
                         echo '<div class="card-image-container"><img src="' . GetImagePath($Value['photo']) . '" alt="' . $Value['alt'] . '"></div>';
                         echo '<div class="card-text"><h3>' . $Value['titre'] . '</h3>';
                         // echo '<button name="Intention" value="UpdateCircuit" type="button">Modifier</button>';
@@ -90,9 +93,9 @@ $AllUsers = $NewConnection->select("utilisateur");
                 </div>
             </div>
 
-            <div class="tab-pane fade show" id="Itineraires">
+            <div class="tab-pane fade show" id="Hebergement">
                 <div class="entete">
-                    <h2 class="titre">Tous les itinéraires</h2>
+                    <h2 class="titre">Tous les hébergements</h2>
                 </div>
 
                 <div id="ItinerairesViewerBox" class="card-container">
@@ -101,7 +104,7 @@ $AllUsers = $NewConnection->select("utilisateur");
                             <img id="AddNewIcon" src="./images/icons_plus.png" alt="New Circuit picture">
                         </div>
                         <div class="card-text">
-                            <h5>Pour créer un nouvel itinéraire:</h5>
+                            <h3 class="soustitre">Pour créer un nouvel itinéraire:</h3 class="soustitre">
                             <button name="Intention" value="AddItineraire" type="submit">Cliquer ici</button>
                         </div>
                         <!-- href="./Circuit.php?edit=true&id_Circuit=0" -->
@@ -131,7 +134,7 @@ $AllUsers = $NewConnection->select("utilisateur");
                 <div id="UserInsert">
                     <input type="hidden" name="id_utilisateur" value="' . $Value['id_utilisateur'] . '">
                     <div class="card-text">
-                        <h5>Pour créer un nouveau compte:</h5>
+                        <h3 class="soustitre">Pour créer un nouveau compte:</h3 class="soustitre">
                         <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#InsertModal">Cliquer ici</button>
                     </div>
                     <!-- Modal d'insertion -->
@@ -232,7 +235,7 @@ $AllUsers = $NewConnection->select("utilisateur");
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">Supprimer</h5>
+                        <h3 class="soustitre" class="modal-title">Supprimer</h3 class="soustitre">
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">

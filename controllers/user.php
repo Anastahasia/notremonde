@@ -7,13 +7,13 @@ require_once("../vendor/autoload.php");
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
-
+if(token_verify()){
 if (isset($_POST['Intention'])) {
 
     extract($_POST);
     switch ($_POST['Intention']) {
         case 'Signup':
-            if (token_verify()) {
+            
                 $surname = valid_data($nom);
                 $name = valid_data($prenom);
                 $num = valid_data($num);
@@ -35,13 +35,13 @@ if (isset($_POST['Intention'])) {
                     header("Location: " . '../register.php');
                     die();
                 }
-            }
+            
 
             // NOTE: we let fall through from signup to login, so it automatically logs in
             //break;
 
         case 'Login':
-            if (token_verify()) {
+            
 
                 $Condition = $email;
                 $UniqueUser = $NewConnection->select('utilisateur', "email", $Condition);
@@ -64,7 +64,7 @@ if (isset($_POST['Intention'])) {
                     header("Location: " . '../login.php');
                     die();
                 }
-            }
+            
             // var_dump($_SESSION);
 
             break;
@@ -82,20 +82,20 @@ if (isset($_POST['Intention'])) {
 
             break;
     }
-}
+
 
 if (isset($_POST['SendEmail'])) {
     $MessageSent = false;
-    if (token_verify()) {
+    
         extract($_POST);
 
         contact_form($message);
     }
-}
+
 
 if (isset($_POST['AskQuotation'])) {
     $MessageSent = false;
-    if (token_verify()) {
+    
         extract($_POST);
 
         $body .= "Date d'arrivée" . $arrivalDate . "  ";
@@ -108,12 +108,12 @@ if (isset($_POST['AskQuotation'])) {
 
         contact_form($body);
     }
-}
+
 
 //modification du profil par l'utilisateur
 
 if (isset($_POST['modifyEmail'])) {
-    if (token_verify()) {
+    
         extract($_POST);
 
         $Values = array('email' => filter_var($email, FILTER_VALIDATE_EMAIL));
@@ -133,10 +133,10 @@ if (isset($_POST['modifyEmail'])) {
             die();
         }
     }
-}
+
 
 if (isset($_POST['modifyPhone'])) {
-    if (token_verify()) {
+    
         extract($_POST);
 
         $Values = array('num' => valid_data($phone));
@@ -153,12 +153,12 @@ if (isset($_POST['modifyPhone'])) {
             die();
         }
     }
-}
+
 
 if (isset($_POST['modifyMDP'])) {
     extract($_POST);
     if ($newMdp == $verifMdp) {
-        if (token_verify()) {
+        
             $Condition = $_SESSION['UserID'];
             $UniqueUser = $NewConnection->select('utilisateur', "id_utilisateur", $Condition);
 
@@ -185,12 +185,12 @@ if (isset($_POST['modifyMDP'])) {
             die();
         }
     }
-}
+
 
 if (isset($_POST['favorite'])) {
     $circuit = $_POST['circuit'];
     $user = $_POST['utilisateur'];
-    if (token_verify()) {
+    
         $Condition1 = $circuit;
         $Condition2 = $user;
         if (!empty($user)) {
@@ -219,4 +219,5 @@ if (isset($_POST['favorite'])) {
             echo 'utilisateur non défini';
         }
     }
+}
 }

@@ -42,7 +42,7 @@ $SelectedSteps = $NewConnection->select_etape("etape_circuit", "hebergement", "i
     include_once('./components/nav.php');
     ?>
     <main>
-        <header class="presentation">
+        <header class="presentation pb-0" id="vif">
 
             <?php
             function GenerateCategorieSelector($Categories, $Name, $SelectedId)
@@ -58,7 +58,7 @@ $SelectedSteps = $NewConnection->select_etape("etape_circuit", "hebergement", "i
 
                 echo '
                     <label for="Categorie">Choisissez une categorie:</label>
-                    <select name="' . $Name . '" id="Categorie">'
+                    <select name="' . $Name . '" id="Categorie" class="form-select d-inline w-25 titre2">'
                     . $Options .
                     '</select>
                                 ';
@@ -83,15 +83,15 @@ $SelectedSteps = $NewConnection->select_etape("etape_circuit", "hebergement", "i
             <div class="txt-presentation">
                 <h1 class="titre1" name="title" contenteditable="true">' . $Circuit['titre'] . '</h1>
                 <p name="description" contenteditable="true">' . $Circuit['description'] . '</p>';
-GenerateCategorieSelector($AllCategories,'categorie', $Circuit['categorie']);
+                GenerateCategorieSelector($AllCategories,'categorie', $Circuit['categorie']);
                 echo '
-                <div class="mb-3" contenteditable="true">
+                <div class="mb-3">
                     <label class="soutitre" for="duree">Durée:</label>
-                    <input type="text" class="form-control d-inline w-50 titre2" name="duree" value="' . $Circuit['duree'] . '">  jours
+                    <input type="text" class="form-control d-inline w-25 titre2" name="duree" value="' . $Circuit['duree'] . '">  jours
                 </div>
-                <div class="mb-3" contenteditable="true">
+                <div class="mb-3">
                     <label class="soutitre" for="duree">Durée:</label>
-                    <input type="text" class="form-control d-inline w-50 titre2" name="duree" value="' . $Circuit['prix_estimatif'] . '"> €
+                    <input type="text" class="form-control d-inline w-25 titre2" name="duree" value="' . $Circuit['prix_estimatif'] . '"> €
                 </div>
 
                 <input type="hidden" name="token"  value="' . $_SESSION['csrf_token'] . '">
@@ -100,7 +100,7 @@ GenerateCategorieSelector($AllCategories,'categorie', $Circuit['categorie']);
             }
             ?>
         </header>
-        <h2 class="titre1">Circuit</h2>
+        <h2 class="titre1 pt-5">Circuit</h2>
         <?php foreach ($SelectedSteps as $Step) {
             echo '
         <div class="flex-etape">
@@ -124,14 +124,15 @@ GenerateCategorieSelector($AllCategories,'categorie', $Circuit['categorie']);
             <div class="img-presentation">
                 <div id="carouselExample" class="carousel slide">
                     <div class="carousel-inner">
+                    
                         <div class="carousel-item active">
-                            <img src="' . $Step['photoVille'] . '" class="" alt="...">
+                            <img src="' .GetImagePath($Step['photoVille']) . '" class="" alt="...">
                         </div>
                         <div class="carousel-item">
-                            <img src="' . $Step['photo1'] . '" class="" alt="photo de ' . $Step['nom'] . '">
+                            <img src="' . GetImagePath($Step['photo1']) . '" class="" alt="photo de ' . $Step['nom'] . '">
                         </div>
                         <div class="carousel-item">
-                            <img src="' . $Step['photo2'] . '" class="" alt="' . $Step['nom'] . '">
+                            <img src="' . GetImagePath($Step['photo2']) . '" class="" alt="' . $Step['nom'] . '">
                         </div>
                     </div>
                     <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
@@ -153,9 +154,9 @@ GenerateCategorieSelector($AllCategories,'categorie', $Circuit['categorie']);
 
         // We're using the same button for all ajax submit
         let UpdateButton = document.createElement('button');
-        UpdateButton.innerHTML = "Update";
-        UpdateButton.className = 'update-edit';
-        UpdateButton.type = 'button';;
+        UpdateButton.innerHTML = "Modifier";
+        UpdateButton.className = 'update-edit btn btn-success';
+        UpdateButton.type = 'button';
 
         /* Transmitting informations in between PHP and JS */
 
@@ -181,17 +182,18 @@ GenerateCategorieSelector($AllCategories,'categorie', $Circuit['categorie']);
             });
         });
 
-        /** Updating the article fields:
+        /** Updating the Circuit fields:
          * The point is to hook all those elements to be able to send genericly their data to databases
          * */
         [...document.querySelectorAll('*[contenteditable="true"]')]
         .concat([...document.querySelectorAll('.image-selector')])
-            .concat([...document.querySelectorAll("input")])
+            .concat([...document.querySelectorAll('.form-control')])
+                .concat([...document.querySelectorAll('#Categorie')])
             .forEach(Each => {
 
                 if (!Each) return;
 
-                async function SendUpdateArticleField(Event) {
+                async function SendUpdateCircuitField(Event) {
 
                     let url = "./controllers/gestion.php";
 
@@ -219,7 +221,7 @@ GenerateCategorieSelector($AllCategories,'categorie', $Circuit['categorie']);
                         .then(function(Response) {
 
                             UpdateButton.remove();
-                            UpdateButton.removeEventListener('click', SendUpdateArticleField, true);
+                            UpdateButton.removeEventListener('click', SendUpdateCircuitField, true);
 
                             return Response.text();
                         })
@@ -233,24 +235,16 @@ GenerateCategorieSelector($AllCategories,'categorie', $Circuit['categorie']);
 
                 //Hooking up the button to appear below the edited field
                 Each.addEventListener('focus', (Event) => {
-
                     Event.target.insertAdjacentElement('afterend', UpdateButton);
 
-                    UpdateButton.addEventListener('click', SendUpdateArticleField);
+                    UpdateButton.addEventListener('click', SendUpdateCircuitField);
 
                     UpdateButton.style.display = 'block';
                 });
 
                 // Hiding the button on blur, but see notes below
                 Each.addEventListener('blur', (Event) => {
-                    //NOTE: originally thought about removing the button when clicking elsewhere
-                    //BUT because the button click causes a blur event on the editable element,
-                    //we cannot remove the button here: otherwise we cripple the async fetch
-                    //We could simply hide it, but the button would still be there existing,
-                    // and could be clicked by a (malicious?) script
-                    // setTimeout(()=>{
-                    //     UpdateButton.style.display = 'none';
-                    // }, 3600);
+
                 });
             });
     </script>
