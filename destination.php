@@ -64,7 +64,6 @@ var_dump($_SESSION, $_POST);
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="icon" href="./images/favicon.png" type="image/x-icon">
 
     <link href="./styles.css" rel="stylesheet" />
@@ -114,9 +113,9 @@ var_dump($_SESSION, $_POST);
                             </div>
                             <form>
                                 <input type="hidden" name="voyage" id="voyage" value="' . $Value['id_circuit'] . '">
-                                <input type="hidden" name="token"  value="' . $_SESSION['csrf_token'] . '">
+                                <input type="hidden" name="token" id="csrf_token" value="' . $_SESSION['csrf_token'] . '">
                                 <input type="hidden" name="user_id" id="user_id" value="' . $session . '">
-                                <button id="favoris" name="AddFavorite" style="border-style: none;"></button>
+                                <button id="favoris" name="AddFavorite" style="border-style: none; background-color:#ffffff;"><i class="fa-solid fa-heart" style="color: #8a817c;"></i></button>
                             </form>
                         </div>
                         <a href="./circuit.php?circuit=' . $Value['id_circuit'] . '" class="btn btn-success">Explorer</a>
@@ -145,6 +144,7 @@ var_dump($_SESSION, $_POST);
                     favorite: $('#favoris').val(),
                     circuit: $('#voyage').val(),
                     utilisateur: $('#user_id').val(),
+                    token: $('#csrf_token').val(),
                 };
                 const user_id = $('#user_id').val();
                 if (Boolean(user_id)) {
@@ -155,9 +155,14 @@ var_dump($_SESSION, $_POST);
                         type: "POST",
                         data: formData,
                         dataType: 'json',
-                        cache: false
-
-
+                        cache: false,
+                        success: function(data) {
+                        console.log(formData);
+                    },
+                    error: function(data) {
+                        console.log(data)
+                        alert("erreur lors de l'envoi des données")
+                    }
                     });
                 };
             });

@@ -7,13 +7,14 @@ require_once("../vendor/autoload.php");
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
-if(token_verify()){
-if (isset($_POST['Intention'])) {
 
-    extract($_POST);
-    switch ($_POST['Intention']) {
-        case 'Signup':
-            
+if (token_verify()) {
+    if (isset($_POST['Intention'])) {
+
+        extract($_POST);
+        switch ($_POST['Intention']) {
+            case 'Signup':
+
                 $surname = valid_data($nom);
                 $name = valid_data($prenom);
                 $num = valid_data($num);
@@ -35,13 +36,13 @@ if (isset($_POST['Intention'])) {
                     header("Location: " . '../register.php');
                     die();
                 }
-            
 
-            // NOTE: we let fall through from signup to login, so it automatically logs in
-            //break;
 
-        case 'Login':
-            
+                // NOTE: we let fall through from signup to login, so it automatically logs in
+                //break;
+
+            case 'Login':
+
 
                 $Condition = $email;
                 $UniqueUser = $NewConnection->select('utilisateur', "email", $Condition);
@@ -64,38 +65,38 @@ if (isset($_POST['Intention'])) {
                     header("Location: " . '../login.php');
                     die();
                 }
-            
-            // var_dump($_SESSION);
 
-            break;
+                // var_dump($_SESSION);
 
-        case 'Logout':
-            session_start();
+                break;
 
-            session_unset();
-            session_destroy();
+            case 'Logout':
+                session_start();
 
-            //var_dump($_SESSION);
+                session_unset();
+                session_destroy();
 
-            header('Location: ../index.php');
-            die();
+                //var_dump($_SESSION);
 
-            break;
+                header('Location: ../index.php');
+                die();
+
+                break;
+        }
     }
 
+    if (isset($_POST['SendEmail'])) {
+        $MessageSent = false;
 
-if (isset($_POST['SendEmail'])) {
-    $MessageSent = false;
-    
         extract($_POST);
 
         contact_form($message);
     }
 
 
-if (isset($_POST['AskQuotation'])) {
-    $MessageSent = false;
-    
+    if (isset($_POST['AskQuotation'])) {
+        $MessageSent = false;
+
         extract($_POST);
 
         $body .= "Date d'arrivée" . $arrivalDate . "  ";
@@ -110,10 +111,10 @@ if (isset($_POST['AskQuotation'])) {
     }
 
 
-//modification du profil par l'utilisateur
+    //modification du profil par l'utilisateur
 
-if (isset($_POST['modifyEmail'])) {
-    
+    if (isset($_POST['modifyEmail'])) {
+
         extract($_POST);
 
         $Values = array('email' => filter_var($email, FILTER_VALIDATE_EMAIL));
@@ -135,8 +136,8 @@ if (isset($_POST['modifyEmail'])) {
     }
 
 
-if (isset($_POST['modifyPhone'])) {
-    
+    if (isset($_POST['modifyPhone'])) {
+
         extract($_POST);
 
         $Values = array('num' => valid_data($phone));
@@ -155,10 +156,10 @@ if (isset($_POST['modifyPhone'])) {
     }
 
 
-if (isset($_POST['modifyMDP'])) {
-    extract($_POST);
-    if ($newMdp == $verifMdp) {
-        
+    if (isset($_POST['modifyMDP'])) {
+        extract($_POST);
+        if ($newMdp == $verifMdp) {
+
             $Condition = $_SESSION['UserID'];
             $UniqueUser = $NewConnection->select('utilisateur', "id_utilisateur", $Condition);
 
@@ -187,23 +188,24 @@ if (isset($_POST['modifyMDP'])) {
     }
 
 
-if (isset($_POST['favorite'])) {
-    $circuit = $_POST['circuit'];
-    $user = $_POST['utilisateur'];
-    
+    if (isset($_POST['favorite'])) {
+        $circuit = $_POST['circuit'];
+        $user = $_POST['utilisateur'];
+
         $Condition1 = $circuit;
         $Condition2 = $user;
         if (!empty($user)) {
-            $Select = $NewConnection->two_conditions_select('favoris', 'circuit', 'utilisateur', $Condition1, $Condition2);
+            $Values = array(
+                'circuit' => $circuit,
+                'utilisateur' => $user,
+            );
+            $Select = $NewConnection->select_multi_conditions('favoris', $Values);
             if (empty($Select)) {
-                $Values = array(
-                    'circuit' => $circuit,
-                    'utilisateur' => $user,
-                );
+
 
                 $Favorite = $NewConnection->insert('favoris', $Values);
                 // var_dump($Favorite);
-                $Select = $NewConnection->two_conditions_select('favoris', 'circuit', 'utilisateur', $Condition1, $Condition2);
+                $Select = $NewConnection->select_multi_conditions('favoris', $Values);
 
                 return json_encode($Select);
             } else {
@@ -219,5 +221,4 @@ if (isset($_POST['favorite'])) {
             echo 'utilisateur non défini';
         }
     }
-}
 }
