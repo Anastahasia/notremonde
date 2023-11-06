@@ -2,9 +2,14 @@
 session_start();
 require_once('./components/connexion.php');
 require_once("./components/communs.php");
-
+// Redirect unregistered users
+// if (!isset($_SESSION['UserRole']) || $_SESSION['UserRole'] != 'admin')
+//     {
+//         header("Location: " . 'index.php');
+//         die();
+//     }
 $CurrentCircuitID = isset($_GET['circuit']) ? $_GET['circuit'] : 0;
-$SelectedCircuit = $NewConnection->select_visible("circuit", "id_circuit", $CurrentCircuitID);
+$SelectedCircuit = $NewConnection->select("circuit", "id_circuit", $CurrentCircuitID);
 
 $CurrentCategorieID = $SelectedCircuit[0]['categorie'];
 $SelectedCategorie = $NewConnection->select("categorie", "id_categorie", $CurrentCategorieID);
@@ -83,15 +88,15 @@ $SelectedSteps = $NewConnection->select_etape("etape_circuit", "hebergement", "i
             <div class="txt-presentation">
                 <h1 class="titre1" name="title" contenteditable="true">' . $Circuit['titre'] . '</h1>
                 <p name="description" contenteditable="true">' . $Circuit['description'] . '</p>';
-                GenerateCategorieSelector($AllCategories,'categorie', $Circuit['categorie']);
+                GenerateCategorieSelector($AllCategories, 'categorie', $Circuit['categorie']);
                 echo '
                 <div class="mb-3">
-                    <label class="soutitre" for="duree">Durée:</label>
-                    <input type="text" class="form-control d-inline w-25 titre2" name="duree" value="' . $Circuit['duree'] . '">  jours
+                    <label class="soutitre" for="duree">Durée (en jours):</label>
+                    <input type="text" class="form-control d-inline w-25 titre2" name="duree" value="' . $Circuit['duree'] . '"> 
                 </div>
                 <div class="mb-3">
-                    <label class="soutitre" for="duree">Durée:</label>
-                    <input type="text" class="form-control d-inline w-25 titre2" name="duree" value="' . $Circuit['prix_estimatif'] . '"> €
+                    <label class="soutitre" for="prix_estimatif">Prix (en euros):</label>
+                    <input type="text" class="form-control d-inline w-25 titre2" name="prix_estimatif" value="' . $Circuit['prix_estimatif'] . '">
                 </div>
 
                 <input type="hidden" name="token"  value="' . $_SESSION['csrf_token'] . '">
@@ -100,53 +105,57 @@ $SelectedSteps = $NewConnection->select_etape("etape_circuit", "hebergement", "i
             }
             ?>
         </header>
-        <h2 class="titre1 pt-5">Circuit</h2>
-        <?php foreach ($SelectedSteps as $Step) {
-            echo '
-        <div class="flex-etape">
-            <hr>
-            <div class="mb-3">
-                <label class="titre2 etape" for="ordre">étape <label>
-                <input type="num" class="form-control d-inline w-25 titre2" name="ordre" value="' . $Step['ordre'] . '">
+        <section>
+            <h2 class="titre1 pt-5">Circuit</h2>
+            <?php foreach ($SelectedSteps as $Step) {
+                echo '
+        
+            <div class="flex-etape">
+                <hr>
+                <div class="mb-3">
+                    <label class="titre2 etape" for="ordre">étape <label>
+                    <input type="num" class="form-control d-inline w-25 titre2" name="ordre" value="' . $Step['ordre'] . '">
+                </div>
+                <hr>
             </div>
-            <hr>
-        </div>
-        <section class="etape-display presentation">
-            <div class="txt-etape">
-                <p class="accent">jour <input type="num" class="form-control d-inline w-25 titre2" name="jourArrivee" value="' . $Step['jourArrivee'] . '"> à jour <input type="num" class="form-control d-inline w-25 titre2" name="jourDepart" value="' . $Step['jourDepart'] . '"></p>
-                <p contenteditable="true">' . $Step['descriptionEtape'] . '</p>
-                <p class="accent" contenteditable="true">' . $Step['nom'] . '</p>
-                <p contenteditable="true">' . $Step['type'] . '</p>
-                <p contenteditable="true">' . $Step['descriptionHebergement'] . '</p>
-            </div>';
-            
-            echo'
-            <div class="img-presentation">
-                <div id="carouselExample" class="carousel slide">
-                    <div class="carousel-inner">
-                    
-                        <div class="carousel-item active">
-                            <img src="' .GetImagePath($Step['photoVille']) . '" class="" alt="...">
+            <div class="etape-display">
+                <div class="txt-etape">
+                    <p class="accent">jour <input type="num" class="form-control d-inline w-25 titre2" name="jourArrivee" value="' . $Step['jourArrivee'] . '"> à jour <input type="num" class="form-control d-inline w-25 titre2" name="jourDepart" value="' . $Step['jourDepart'] . '"></p>
+                    <p contenteditable="true">' . $Step['descriptionEtape'] . '</p>
+                    <p class="accent" contenteditable="true">' . $Step['nom'] . '</p>
+                    <p contenteditable="true">' . $Step['type'] . '</p>
+                    <p contenteditable="true">' . $Step['descriptionHebergement'] . '</p>
+                </div>';
+
+                echo '
+                <div class="img-presentation">
+                    <div id="carouselExample" class="carousel slide">
+                        <div class="carousel-inner">
+                        
+                            <div class="carousel-item active">
+                                <img src="' . GetImagePath($Step['photoVille']) . '" class="" alt="...">
+                            </div>
+                            <div class="carousel-item">
+                                <img src="' . GetImagePath($Step['photo1']) . '" class="" alt="photo de ' . $Step['nom'] . '">
+                            </div>
+                            <div class="carousel-item">
+                                <img src="' . GetImagePath($Step['photo2']) . '" class="" alt="' . $Step['nom'] . '">
+                            </div>
                         </div>
-                        <div class="carousel-item">
-                            <img src="' . GetImagePath($Step['photo1']) . '" class="" alt="photo de ' . $Step['nom'] . '">
-                        </div>
-                        <div class="carousel-item">
-                            <img src="' . GetImagePath($Step['photo2']) . '" class="" alt="' . $Step['nom'] . '">
-                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
                     </div>
-                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Previous</span>
-                    </button>
-                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Next</span>
-                    </button>
                 </div>
             </div>
-        </section>';
-        } ?>
+        ';
+            } ?>
+        </section>
     </main>
     <?php include_once('./components/footer.php') ?>
     <script>
@@ -187,8 +196,8 @@ $SelectedSteps = $NewConnection->select_etape("etape_circuit", "hebergement", "i
          * */
         [...document.querySelectorAll('*[contenteditable="true"]')]
         .concat([...document.querySelectorAll('.image-selector')])
-            .concat([...document.querySelectorAll('.form-control')])
-                .concat([...document.querySelectorAll('#Categorie')])
+            .concat([...document.querySelectorAll('input')])
+            .concat([...document.querySelectorAll('#Categorie')])
             .forEach(Each => {
 
                 if (!Each) return;

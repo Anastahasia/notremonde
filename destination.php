@@ -10,9 +10,15 @@ $CurrentCategorieID = isset($_GET['categorie']) ? $_GET['categorie'] : 0;
 $SelectedCategorie = $NewConnection->select("categorie", "id_categorie", $CurrentCategorieID);
 
 if ($CurrentDestinationID) {
-    $circuits = $NewConnection->select_visible("circuit", "continent", $CurrentDestinationID);
+    $circuits = $NewConnection->select_multi_conditions("circuit", array(
+        'visible'=> 1,
+        'continent'=>$CurrentDestinationID,
+    ));
 } elseif ($CurrentCategorieID) {
-    $circuits = $NewConnection->select_visible("circuit", "categorie", $CurrentCategorieID);
+    $circuits = $NewConnection->select_multi_conditions("circuit", array(
+        'visible'=> 1,
+        'continent'=>$CurrentCategorieID,
+    ));
 } else {
     $circuits = $NewConnection->select("circuit", "visible");
 }
@@ -98,7 +104,7 @@ var_dump($_SESSION, $_POST);
                     echo '
                 <div class="card circuit-card">
                     <div class="img-wrapper">
-                        <img src="' . $Value['photo'] . '" class="card-img-top" alt="' . $Value['alt'] . '">
+                        <img src="' . GetImagePath($Value['photo']) . '" class="card-img-top" alt="' . $Value['alt'] . '">
                     </div>
                     <div class="card-body">
                         <div>

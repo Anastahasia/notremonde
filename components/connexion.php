@@ -42,48 +42,21 @@ class MaConnexion
             return false;
         }
     }
-    
-    public function select_visible($Table, $Column, $ConditionField)
+
+    public function select_multi_conditions($Table, $ConditionField)
     {
         try {
-            $SQLQueryString = "SELECT * FROM `$Table` WHERE visible = 1 AND $Column = :condition ";
+            $SQLQueryString = "SELECT * FROM `$Table` WHERE <?>";
+
+            $ConditionAsString = "";
+            foreach ($ConditionField as $EachColumn => $EachValue) {
+                $ConditionAsString .= ("`$EachColumn` = " . $this->Connection->quote($EachValue) . " AND ");
+            }
+            $ConditionAsString = rtrim($ConditionAsString, ' AND');
+
+            $SQLQueryString = str_replace("<?>", $ConditionAsString, $SQLQueryString);
+
             $query = $this->Connection->prepare($SQLQueryString);
-
-            $query->bindParam(':condition', $ConditionField, PDO::PARAM_INT);
-
-            $query->execute();
-            return $query->fetchAll(PDO::FETCH_ASSOC);
-        } catch (PDOException $e) {
-            echo "Erreur: " . $e->getMessage();
-
-            return false;
-        }
-    }
-    // $SQLQueryString = "SELECT * FROM `$Table` WHERE $ConditionField";
-
-    // $ConditionAsString = "";
-    // foreach ($ConditionField as $EachColumn => $EachValue) {
-    //     $ConditionAsString .= ("`$EachColumn` = " . $this->Connection->quote($EachValue) . " AND ");
-    // }
-    // $ConditionAsString = rtrim($ConditionAsString, ' AND');
-
-    // $SQLQueryString = str_replace("<? >", $ConditionAsString, $SQLQueryString);
-
-    // $query = $this->Connection->prepare($SQLQueryString);
-    // $query->execute();
-    // return $query->fetchAll(PDO::FETCH_ASSOC);
-
-    public function two_conditions_select($Table, $Column1, $Column2, $ConditionField1, $ConditionField2)
-    {
-        // $SQLQueryString = 'SELECT * FROM `users` WHERE (`mail` = "superuser@local" AND `password` = "pass")';
-        // $SQLQueryString = "SELECT $Column FROM `$Table` WHERE 1";
-        try {
-            $SQLQueryString = "SELECT * FROM `$Table` WHERE $Column1 = :condition1 AND $Column2 = :condition2 ";
-            $query = $this->Connection->prepare($SQLQueryString);
-
-            $query->bindParam(':condition1', $ConditionField1, PDO::PARAM_INT);
-            $query->bindParam(':condition2', $ConditionField2, PDO::PARAM_INT);
-
             $query->execute();
             return $query->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {

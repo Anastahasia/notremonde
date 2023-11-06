@@ -4,9 +4,12 @@ require_once('./components/connexion.php');
 require_once("./components/communs.php");
 
 $CurrentCircuitID = isset($_GET['circuit']) ? $_GET['circuit'] : 0;
-$SelectedCircuit = $NewConnection->select_visible("circuit", "id_circuit", $CurrentCircuitID);
+$SelectedCircuit = $NewConnection->select_multi_conditions("circuit", array(
+    "id_circuit" => $CurrentCircuitID,
+    "visible" => 1
+));
 $IdCategorie = $SelectedCircuit[0]['categorie'];
-$SelectedCategorie = $NewConnection->select("categorie", "id_categorie", $IdCategorie );
+$SelectedCategorie = $NewConnection->select("categorie", "id_categorie", $IdCategorie);
 // var_dump($SelectedCircuit);
 if (empty($SelectedCircuit)) {
     header("Location: " . "./destination.php");
@@ -15,7 +18,7 @@ $SelectedSteps = $NewConnection->select_etape("etape_circuit", "hebergement", "i
 
 $circuits = $NewConnection->select_random("circuit", "NOT id_circuit", $CurrentCircuitID);
 //  var_dump($IdCategorie, $SelectedCategorie);
- ?>
+?>
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -51,7 +54,7 @@ $circuits = $NewConnection->select_random("circuit", "NOT id_circuit", $CurrentC
         <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item accent"><a href="index.php">Accueil</a></li>
-                <li class="breadcrumb-item accent"><a href="destination.php?categorie=<?php echo $IdCategorie?>"><?php echo $SelectedCategorie[0]['nom']?></a></li>
+                <li class="breadcrumb-item accent"><a href="destination.php?categorie=<?php echo $IdCategorie ?>"><?php echo $SelectedCategorie[0]['nom'] ?></a></li>
                 <li class="breadcrumb-item accent active" aria-current="page"><?php echo $CircuitsName ?></li>
             </ol>
         </nav>
@@ -61,7 +64,7 @@ $circuits = $NewConnection->select_random("circuit", "NOT id_circuit", $CurrentC
 
                 echo '
             <div class="img-presentation">
-                <img src="' . $Circuit['photo'] . '" alt="' . $Circuit['alt'] . '">
+                <img src="' . GetImagePath($Circuit['photo']) . '" alt="' . $Circuit['alt'] . '">
             </div>
             <div class="txt-presentation">
                 <h1 class="titre1">' . $Circuit['titre'] . '</h1>
@@ -75,47 +78,49 @@ $circuits = $NewConnection->select_random("circuit", "NOT id_circuit", $CurrentC
             </div>';
             } ?>
         </header>
-        <h2 class="titre1">Circuit</h2>
-        <?php foreach ($SelectedSteps as $Step) {
-            echo '
-        <div class="flex-etape">
-            <hr>
-            <h3 class="titre2 etape">étape ' . $Step['ordre'] . '</h3>
-            <hr>
-        </div>
-        <section class="etape-display presentation">
-            <div class="txt-etape">
-                <p class="accent">jour ' . $Step['jourArrivee'] . ' à jour ' . $Step['jourDepart'] . '</p>
-                <p>' . $Step['descriptionEtape'] . '</p>
-                <p class="accent">' . $Step['nom'] . '</p>
-                <p>' . $Step['type'] . '</p>
-                <p>' . $Step['descriptionHebergement'] . '</p>
+        <section>
+            <h2 class="titre1">Circuit</h2>
+            <?php foreach ($SelectedSteps as $Step) {
+                echo '
+            <div class="flex-etape">
+                <hr>
+                <h3 class="titre2 etape">étape ' . $Step['ordre'] . '</h3>
+                <hr>
             </div>
-            <div class="img-presentation">
-                <div id="carouselExample" class="carousel slide">
-                    <div class="carousel-inner">
-                        <div class="carousel-item active">
-                            <img src="' . $Step['photoVille'] . '" class="" alt="...">
-                        </div>
-                        <div class="carousel-item">
-                            <img src="' . $Step['photo1'] . '" class="" alt="photo de ' . $Step['nom'] . '">
-                        </div>
-                        <div class="carousel-item">
-                            <img src="' . $Step['photo2'] . '" class="" alt="' . $Step['nom'] . '">
-                        </div>
-                    </div>
-                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Previous</span>
-                    </button>
-                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Next</span>
-                    </button>
+            <div class="etape-display">
+                <div class="txt-etape">
+                    <p class="accent">jour ' . $Step['jourArrivee'] . ' à jour ' . $Step['jourDepart'] . '</p>
+                    <p>' . $Step['descriptionEtape'] . '</p>
+                    <p class="accent">' . $Step['nom'] . '</p>
+                    <p>' . $Step['type'] . '</p>
+                    <p>' . $Step['descriptionHebergement'] . '</p>
                 </div>
-            </div>
-        </section>';
-        } ?>
+                <div class="img-presentation">
+                    <div id="carouselExample" class="carousel slide">
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <img src="' . GetImagePath($Step['photoVille']) . '" class="" alt="...">
+                            </div>
+                            <div class="carousel-item">
+                                <img src="' . GetImagePath($Step['photo1']) . '" class="" alt="photo de ' . $Step['nom'] . '">
+                            </div>
+                            <div class="carousel-item">
+                                <img src="' . GetImagePath($Step['photo2']) . '" class="" alt="' . $Step['nom'] . '">
+                            </div>
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                    </div>
+                </div>
+            </div>';
+            } ?>
+        </section>
         <section>
             <div class="flex-bouton">
                 <a href="" class="btn btn-success">Demandez un devis</a>
@@ -130,7 +135,7 @@ $circuits = $NewConnection->select_random("circuit", "NOT id_circuit", $CurrentC
                     echo '
                 <div class="card circuit-card">
                     <div class="img-wrapper">
-                        <img src="' . $Value['photo'] . '" class="card-img-top" alt="' . $Value['alt'] . '">
+                        <img src="' . GetImagePath($Value['photo']) . '" class="card-img-top" alt="' . $Value['alt'] . '">
                     </div>
                     <div class="card-body">
                         <div class="card-text">

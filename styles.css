@@ -14,26 +14,31 @@ footer {
     }
 
     /* NAVBAR */
-    .navbar{
-        background-color:#fff;
+    .navbar {
+        background-color: #fff;
     }
-    .navbar .container{
+
+    .navbar .container {
         margin: 0;
         padding: 0;
     }
-    ul{
+
+    ul {
         list-style: none;
     }
-    .navbar-brand img{
-      
-            width: 25%;
-            height: auto;
-            display: block;       
-    
+
+    .navbar-brand img {
+
+        width: 25%;
+        height: auto;
+        display: block;
+
     }
-.dropdown-toggle::after{
-    display: none;
-}
+
+    .dropdown-toggle::after {
+        display: none;
+    }
+
     /* footer */
     footer {
         display: flex;
@@ -116,6 +121,9 @@ footer {
 
     .etape-display {
         height: 100%;
+        display: grid;
+        grid-template-columns: 48% 48%;
+        justify-content: space-between;
     }
 
     .img-presentation {
