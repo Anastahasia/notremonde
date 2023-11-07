@@ -3,7 +3,12 @@ session_start();
 require_once('./components/connexion.php');
 require_once("./components/fonctions.php");
 // Redirect unregistered users
-// if (!isset($_SESSION['UserRole']) || $_SESSION['UserRole'] != 'admin')
+// if (!isset($_SESSION['UserRole']) )
+//     {
+//         header("Location: " . 'login.php');
+//         die();
+//     }
+// if (isset($_SESSION['UserRole'] || $_SESSION['UserRole']!='admin') )
 //     {
 //         header("Location: " . 'index.php');
 //         die();
@@ -74,20 +79,18 @@ $SelectedSteps = $NewConnection->select_etape("etape_circuit", "hebergement", "i
 
 
                 echo '
-            <div class="img-presentation"> <form enctype="multipart/form-data" action="./controllers/gestion.php" method="post">';
-                $ImageSource = $Circuit['photo'] != '' ?
-                    GetImagePath($Circuit['photo'])
-                    : '<i class="fa-solid fa-circle-plus" style="color: #1b512d;"></i>';
+            <div class="img-presentation"> <form enctype="multipart/form-data" action="./traitements/gestion.php" method="post">';
+
                 echo '
                 <div class="mb-3">
                     <label for="photo">Sélectionnez une image :</label>
                     <input type="file" class="form-control image-selector" name="photo" accept="image/png, image/jpeg">
                 
-                    <img  class="image-preview" src="' . $ImageSource . '" alt="' . $Circuit['alt'] . '">
+                    <img  class="image-preview" src="' . GetImagePath($Circuit['photo']) . '" alt="' . $Circuit['alt'] . '">
                 </div>
             </div>
             <div class="txt-presentation">
-                <h1 class="titre1" name="title" contenteditable="true">' . $Circuit['titre'] . '</h1>
+                <h1 class="titre1" name="titre" contenteditable="true">' . $Circuit['titre'] . '</h1>
                 <p name="description" contenteditable="true">' . $Circuit['description'] . '</p>';
                 GenerateCategorieSelector($AllCategories, 'categorie', $Circuit['categorie']);
                 echo '
@@ -100,7 +103,6 @@ $SelectedSteps = $NewConnection->select_etape("etape_circuit", "hebergement", "i
                     <input type="text" class="form-control d-inline w-25 soustitre" name="prix_estimatif" value="' . $Circuit['prix_estimatif'] . '">
                 </div>
 
-                <input type="hidden" name="token"  value="' . $_SESSION['csrf_token'] . '">
                 <input type="hidden" name="circuit_id" value="' . $CurrentCircuitID . '">
             </div></form>';
             }
@@ -178,6 +180,10 @@ $SelectedSteps = $NewConnection->select_etape("etape_circuit", "hebergement", "i
             return <?php echo '"' . $CurrentCategorieID . '"'; ?>;
         }
 
+        function GetCurrentSessionToken() {
+            return <?php echo '"' . $_SESSION['csrf_token'] . '"'; ?>;
+        }
+
 
         /* Image previewing: aesthetic */
         [...document.getElementsByClassName('image-selector')].forEach(Each => {
@@ -205,9 +211,10 @@ $SelectedSteps = $NewConnection->select_etape("etape_circuit", "hebergement", "i
 
                 async function SendUpdateCircuitField(Event) {
 
-                    let url = "./controllers/gestion.php";
+                    let url = "./traitements/gestion.php";
 
                     let form_data = new FormData();
+                    form_data.append('token', GetCurrentSessionToken());
                     form_data.append('Intention', 'UpdateCircuit');
                     form_data.append('id_circuit', GetCurrentCircuitID());
                     form_data.append('id_categorie', GetCurrentCategorieID());

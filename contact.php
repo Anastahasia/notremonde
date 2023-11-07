@@ -2,7 +2,7 @@
 session_start();
 
 require_once('./components/connexion.php');
-require_once("./components/communs.php");
+require_once("./components/fonctions.php");
 
 $circuits = $NewConnection->select("circuit", "visible");
 // var_dump($circuits);
@@ -58,7 +58,7 @@ $categorie = $NewConnection->select("categorie", "NOT id_categorie", "1");
                 <?php else : ?>
                     <h4 class="titre2">Votre futur voyage</h4>
                     <div class="form-container">
-                        <form class="contactForms" method="post" action="./controllers/user.php">
+                        <form class="contactForms" method="post" action="./traitements/user.php">
                             <div class="mb-3">
                                 <label for="arrivalDate" class="form-label soustitre">Quand souhaitez-vous voyager ? </label>
                                 <input type="date" name="arrivalDate" id="" placeholder="Votre date d'arrivée">
@@ -106,6 +106,8 @@ $categorie = $NewConnection->select("categorie", "NOT id_categorie", "1");
                             </div>';
                                 } ?>
                             </div>
+
+                            <!-- informations de contact de l'utilisateur -->
                             <?php if (isset($_SESSION['CurrentUser'])) :
                                 $nom = $_SESSION['CurrentUserSurname'];
                                 $prenom = $_SESSION['CurrentUserName'];
@@ -141,22 +143,23 @@ $categorie = $NewConnection->select("categorie", "NOT id_categorie", "1");
                                 <textarea class="form-control" name="message" rows="4" required></textarea>
                             </div>
                             <div>
+                                <input type="hidden" name="token" value="<?php echo $_SESSION['csrf_token'] ?>">
                                 <button type="submit" name="AskQuotation" class="btn btn-success">Submit</button>
                             </div>
                         </form>
                     </div>
                 <?php endif ?>
             </div>
-        
 
-        <!-- Formulaire de contact -->
+
+            <!-- Formulaire de contact -->
             <div class="tab-pane fade show" id="Email">
                 <?php if (isset($_POST['SendEmail']) && $MessageSent) : ?>
                     <h4>Merci pour votre message. Nous revenons vers vous dans les plus brefs délais</h4>
                 <?php else : ?>
                     <h4 class="titre2">Envoyez nous un message</h4>
                     <div class="form-container">
-                        <form class="contactForms" method="post" action="./controllers/user.php">
+                        <form class="contactForms" method="post" action="./traitements/user.php">
                             <?php if (isset($_SESSION['CurrentUser'])) :
                                 $nom = $_SESSION['CurrentUserSurname'];
                                 $prenom = $_SESSION['CurrentUserName'];
@@ -196,6 +199,7 @@ $categorie = $NewConnection->select("categorie", "NOT id_categorie", "1");
                                 <textarea class="form-control" name="message" rows="4" required></textarea>
                             </div>
                             <div>
+                                <input type="hidden" name="token" value="<?php echo $_SESSION['csrf_token'] ?>">
                                 <button type="submit" name="SendEmail" class="btn btn-success">Submit</button>
                             </div>
                         </form>

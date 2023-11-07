@@ -46,7 +46,7 @@ if (isset($_SESSION['CurrentUser'])) {
             }
             ?>
 
-            <form action="./controllers/user.php" method="POST">
+            <form action="./traitements/user.php" method="POST">
                 <div class="mb-3">
                     <label for="email">Adresse e-mail :</label>
                     <input type="email" class="form-control" name="email" required>

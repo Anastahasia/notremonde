@@ -1,7 +1,7 @@
 <?php
 session_start();
 require_once('./components/connexion.php');
-require_once("./components/communs.php");
+require_once("./components/fonctions.php");
 
 $CurrentDestinationID = isset($_GET['destination']) ? $_GET['destination'] : 0;
 $SelectedDestination = $NewConnection->select("continent", "id_continent", $CurrentDestinationID);
@@ -151,7 +151,7 @@ var_dump($_SESSION, $_POST);
                     console.log(user_id)
 
                     $.ajax({
-                        url: './controllers/user.php',
+                        url: './traitements/user.php',
                         type: "POST",
                         data: formData,
                         dataType: 'json',

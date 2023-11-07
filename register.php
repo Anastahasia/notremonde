@@ -46,7 +46,7 @@ require_once("./components/communs.php");
                 unset($_SESSION['HasFailedSignedUp']);
             }
             ?>
-            <form action="./controllers/user.php" method="POST">
+            <form action="./traitements/user.php" method="POST">
                 <div class="input-group">
                     <label for="nom">Nom </label>
                     <input type="text" name="nom" required>

@@ -8,7 +8,7 @@ session_start();
 //     }
 
 require_once('./components/connexion.php');
-require_once("./components/communs.php");
+require_once("./components/fonctions.php");
 
 
 
@@ -88,7 +88,7 @@ $favoris = $NewConnection->inner_join("favoris", "utilisateur", "id_utilisateur"
                                                     <h3 class="card-title soustitre">' . $Value['titre'] . '</h3>
                                                     <p class="paragraphe">' . $Value['duree'] . ' jours | ' . $Value['prix_estimatif'] . '€</p>
                                                 </div>
-                                                <form method="get" action="./controllers/user.php">
+                                                <form method="get" action="./traitements/user.php">
                                                 <input type="hidden" name="voyage" value="' . $Value['id_circuit'] . '">
                                                 <button type="submit" id="favoris" name="Intention" value="AddFavorite" style="border-style: none;"><i class="fa-solid fa-heart" style="color: #8a817c;"></i></button>
                                                 </form>
@@ -117,7 +117,7 @@ $favoris = $NewConnection->inner_join("favoris", "utilisateur", "id_utilisateur"
                 <p><?php echo $nom ?></p>
                 <p><?php echo $prenom ?></p>
                 <div class="mt-3">
-                    <form class="d-flex justify-content-between" action="./controllers/user.php" method="POST">
+                    <form class="d-flex justify-content-between" action="./traitements/user.php" method="POST">
                         <input type="text" value="<?php echo $email ?>" name="email">
                         <!-- hidden button for token verifMdpication -->
                         <input type="hidden" name="token" value="<?php echo $_SESSION['csrf_token'] ?>">
@@ -128,7 +128,7 @@ $favoris = $NewConnection->inner_join("favoris", "utilisateur", "id_utilisateur"
                     </form>
                 </div>
                 <div class="mt-3">
-                    <form class="d-flex justify-content-between" action="./controllers/user.php" method="POST">
+                    <form class="d-flex justify-content-between" action="./traitements/user.php" method="POST">
                         <input type="text" value="<?php echo $phone ?>" name="phone">
                         <!-- hidden button for token verifMdpication -->
                         <input type="hidden" name="token" value="<?php echo $_SESSION['csrf_token'] ?>">
@@ -173,7 +173,7 @@ $favoris = $NewConnection->inner_join("favoris", "utilisateur", "id_utilisateur"
                             <h5 class="modal-title fs-5" id="exampleModalLabel">Modifiez votre mot de passe</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        <form action="./controllers/user.php" method="POST">
+                        <form action="./traitements/user.php" method="POST">
                             <div class="modal-body">
 
                                 <div class="mb-3">

@@ -2,7 +2,7 @@
 
 require_once("../components/connexion.php");
 require_once("../components/fonctions.php");
-if (token_verify()) {
+// if (token_verify()) {
 
     if (isset($_POST['Intention'])) {
         extract($_POST);
@@ -144,4 +144,4 @@ if (token_verify()) {
                 break;
         }
     }
-}
+// }

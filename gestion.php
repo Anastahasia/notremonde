@@ -68,7 +68,7 @@ $AllUsers = $NewConnection->select("utilisateur");
                 </div>
 
                 <div id="CircuitsViewerBox" class="card-container">
-                    <form action="./controllers/gestion.php" method="post" class="card gestion">
+                    <form action="./traitements/gestion.php" method="post" class="card gestion">
                         <div class=""></div>
                         <div class="card-text">
                             <input type="hidden" name="token" value="<?php echo $_SESSION['csrf_token'] ?>">
@@ -82,7 +82,7 @@ $AllUsers = $NewConnection->select("utilisateur");
                     foreach ($AllCircuits as $Key => $Value) {
                         $CircuitPageRedirectionWithParameters = './FormulaireCircuit.php?circuit=' . $Value['id_circuit'];
 
-                        echo '<form action="./controllers/gestion.php" method="post" class="card gestion">';
+                        echo '<form action="./traitements/gestion.php" method="post" class="card gestion">';
                         echo '<input type="hidden" name="id_circuit" value="' . $Value['id_circuit'] . '">';
                         echo '<input type="hidden" name="token" value="' . $_SESSION['csrf_token'] . '">';
                         echo '<button name="Intention" value="DeleteCircuit" data-bs-toggle="modal" data-bs-target="#DeleteModal" type="button" class="floating"><i class="fa-solid fa-circle-xmark" style="color: #ff0000;"></i></button>';
@@ -102,7 +102,7 @@ $AllUsers = $NewConnection->select("utilisateur");
                 </div>
 
                 <div id="ItinerairesViewerBox" class="card-container">
-                    <form action="./controllers/gestion.php" method="post" class="card gestion">
+                    <form action="./traitements/gestion.php" method="post" class="card gestion">
                         <div class="card-image-container">
                             <img id="AddNewIcon" src="./images/icons_plus.png" alt="New Circuit picture">
                         </div>
@@ -118,7 +118,7 @@ $AllUsers = $NewConnection->select("utilisateur");
                     foreach ($AllItineraires as $Key => $Value) {
                         $ItinerairePageRedirectionWithParameters = './circuit.php?edit=true&id_itineraire=' . $Value['id_itineraire'];
 
-                        echo '<form action="./controllers/gestion.php" method="post" class="card gestion">';
+                        echo '<form action="./traitements/gestion.php" method="post" class="card gestion">';
                         echo '<input type="hidden" name="id_itineraire" value="' . $Value['id_itineraire'] . '">';
                         echo '<input type="hidden" name="token" value="' . $_SESSION['csrf_token'] . '">';
                         echo '<button name="Intention" value="DeleteItineraire" data-bs-toggle="modal" data-bs-target="#DeleteModal" type="button" class="floating"></button>';
@@ -143,7 +143,7 @@ $AllUsers = $NewConnection->select("utilisateur");
                         <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#InsertModal">Cliquer ici</button>
                     </div>
                     <!-- Modal d'insertion -->
-                    <form action="./controllers/gestion.php" method="POST">
+                    <form action="./traitements/gestion.php" method="POST">
                         <div class="modal fade" id="InsertModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog">
                                 <div class="modal-content">
@@ -220,7 +220,7 @@ $AllUsers = $NewConnection->select("utilisateur");
                             <?php
                             foreach ($AllUsers as $Key => $Value) {
 
-                                echo '<tr><form action="./controllers/gestion.php" method="post" >';
+                                echo '<tr><form action="./traitements/gestion.php" method="post" >';
                                 echo '<input type="hidden" name="id_utilisateur" value="' . $Value['id_utilisateur'] . '">';
                                 echo '<input type="hidden" name="token" value="' . $_SESSION['csrf_token'] . '">';
                                 echo '<td><input type="text" name="surname" value="' . $Value['nom'] . '"></td>';
