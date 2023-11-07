@@ -1,7 +1,7 @@
 <?php
 session_start();
 require_once('./components/connexion.php');
-require_once("./components/communs.php");
+require_once("./components/fonctions.php");
 // Redirect unregistered users
 // if (!isset($_SESSION['UserRole']) || $_SESSION['UserRole'] != 'admin')
 //     {
@@ -62,11 +62,12 @@ $SelectedSteps = $NewConnection->select_etape("etape_circuit", "hebergement", "i
                 }
 
                 echo '
-                    <label for="Categorie">Choisissez une categorie:</label>
-                    <select name="' . $Name . '" id="Categorie" class="form-select d-inline w-25 titre2">'
+                <div class="mb-3">
+                    <label class="soustitre" for="Categorie">Choisissez une categorie:</label>
+                    <select name="' . $Name . '" id="Categorie" class="form-select d-inline w-50 soustitre">'
                     . $Options .
                     '</select>
-                                ';
+                              </div>  ';
             }
 
             foreach ($SelectedCircuit as $Circuit) {
@@ -91,12 +92,12 @@ $SelectedSteps = $NewConnection->select_etape("etape_circuit", "hebergement", "i
                 GenerateCategorieSelector($AllCategories, 'categorie', $Circuit['categorie']);
                 echo '
                 <div class="mb-3">
-                    <label class="soutitre" for="duree">Durée (en jours):</label>
-                    <input type="text" class="form-control d-inline w-25 titre2" name="duree" value="' . $Circuit['duree'] . '"> 
+                    <label class="soustitre" for="duree">Durée (en jours):</label>
+                    <input type="text" class="form-control d-inline w-25 soustitre" name="duree" value="' . $Circuit['duree'] . '"> 
                 </div>
                 <div class="mb-3">
-                    <label class="soutitre" for="prix_estimatif">Prix (en euros):</label>
-                    <input type="text" class="form-control d-inline w-25 titre2" name="prix_estimatif" value="' . $Circuit['prix_estimatif'] . '">
+                    <label class="soustitre" for="prix_estimatif">Prix (en euros):</label>
+                    <input type="text" class="form-control d-inline w-25 soustitre" name="prix_estimatif" value="' . $Circuit['prix_estimatif'] . '">
                 </div>
 
                 <input type="hidden" name="token"  value="' . $_SESSION['csrf_token'] . '">
@@ -113,7 +114,7 @@ $SelectedSteps = $NewConnection->select_etape("etape_circuit", "hebergement", "i
             <div class="flex-etape">
                 <hr>
                 <div class="mb-3">
-                    <label class="titre2 etape" for="ordre">étape <label>
+                    <label class="titre2 etape" for="ordre">étape </label>
                     <input type="num" class="form-control d-inline w-25 titre2" name="ordre" value="' . $Step['ordre'] . '">
                 </div>
                 <hr>

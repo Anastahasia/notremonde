@@ -12,15 +12,14 @@ require_once("./components/communs.php");
 
 
 
-// $CurrentUserID = $_SESSION['UserID'];
+$CurrentUserID = $_SESSION['UserID'];
 // var_dump($CurrentUserID);
 
-$CurrentUserID = 19;
+// $CurrentUserID = 19;
 
 $favoris = $NewConnection->inner_join("favoris", "utilisateur", "id_utilisateur", "circuit", "id_circuit", $CurrentUserID);
 // var_dump($favoris);
-$itineraire = $NewConnection->select_join('utilisateur', 'id_utilisateur', 'itineraire', $CurrentUserID);
-// var_dump($itineraire);
+
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -67,31 +66,6 @@ $itineraire = $NewConnection->select_join('utilisateur', 'id_utilisateur', 'itin
     <main>
         <section>
             <div class="accordion" id="accordionExample">
-                <div class="accordion-item">
-                    <h2 class="accordion-header titre1">
-                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-                            Accordion Item #1
-                        </button>
-                    </h2>
-                    <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
-                        <div class="accordion-body">
-                            <div class="card mb-3">
-                                <div class="row g-0">
-                                    <div class="col-md-4">
-                                        <img src="..." class="img-fluid rounded-start" alt="...">
-                                    </div>
-                                    <div class="col-md-8">
-                                        <div class="card-body">
-                                            <h5 class="card-title">Card title</h5>
-                                            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                                            <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
                 <div class="accordion-item">
                     <h2 class="accordion-header">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">

@@ -1,7 +1,7 @@
 <?php
 session_start();
 require_once("../components/connexion.php");
-require_once("../components/communs.php");
+require_once("../components/fonctions.php");
 
 require_once("../vendor/autoload.php");
 
@@ -14,7 +14,7 @@ if (token_verify()) {
         extract($_POST);
         switch ($_POST['Intention']) {
             case 'Signup':
-
+                // if (!empty($mot_de_passe) || $mot_de_passe == $verif_mot_de_passe) {
                 $surname = valid_data($nom);
                 $name = valid_data($prenom);
                 $num = valid_data($num);
@@ -36,7 +36,7 @@ if (token_verify()) {
                     header("Location: " . '../register.php');
                     die();
                 }
-
+                // }
 
                 // NOTE: we let fall through from signup to login, so it automatically logs in
                 //break;
@@ -56,9 +56,14 @@ if (token_verify()) {
                     $_SESSION['CurrentUserPhone'] = $UniqueUser[0]['num'];
                     $_SESSION['UserRole'] = $UniqueUser[0]['role'];
                     $_SESSION['UserID'] = $UniqueUser[0]['id_utilisateur'];
-
-                    header("Location: " . '../index.php');
-                    die();
+                    if ($_SESSION['UserRole'] == 'admin') {
+                        header("Location: " . '../gestion.php');
+                        die();
+                    }
+                    if ($_SESSION['UserRole'] == 'guest') {
+                        header("Location: " . '../profil.php');
+                        die();
+                    }
                 } else {
                     $_SESSION['HasFailedLogin'] = true;
 

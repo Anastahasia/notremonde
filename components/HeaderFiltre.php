@@ -20,7 +20,7 @@ $categories = $NewConnection->select("categorie");
                     <h1 class="display-5 fw-bolder text-white mb-2 header">LE VOYAGE QUI VOUS RESSEMBLE</h1>
                     <form method="get" action="../destination.php">
                         <div class="d-grid gap-3 d-sm-flex justify-content-sm-center">
-                            <div class="label-container">
+                            <div class="label-container d-grid">
                                 <select name="destination" class="form-select btn-light px-4" aria-label="Default select example">
                                     <option selected>Où ?</option>
                                         <?php 
@@ -29,10 +29,10 @@ $categories = $NewConnection->select("categorie");
                                         }
                                         ?>
                                 </select>
-                                <label for="destination">Destination</label>
+                                <label class="accent" for="destination">Destination</label>
                             </div>
 
-                            <div class="label-container w-2">
+                            <div class="label-container d-grid w-2">
                                 <select name="categorie" class="form-select btn-light px-4" aria-label="Default select example">
                                     <option selected>Catégorie</option>
                                     <?php 
@@ -41,22 +41,22 @@ $categories = $NewConnection->select("categorie");
                                         }
                                         ?>
                                 </select>
-                                <label for="categorie">Type de voyage</label>
+                                <label class="accent" for="categorie">Type de voyage</label>
                             </div>
 
-                            <div class="label-container">
-                                <select class="form-select btn-light px-4" aria-label="Default select example">
+                            <div class="label-container d-grid">
+                                <select class="form-select btn-light px-4" name="prix" aria-label="Default select example">
                                     <option selected>Prix</option>
                                     <option min="0" max="100" value="">0 - 100 €</option>
                                     <option value="2">Two</option>
                                     <option value="3">Three</option>
                                 </select>
-                                <label for="participant"></label>
+                                <label class="accent" for="prix">Prix</label>
                             </div>
 
                             <div class="label-container">
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                                    <label class="form-check-label" for="flexCheckDefault">
+                                    <input class="form-check-input" type="checkbox" value="" name="enfant" id="flexCheckDefault">
+                                    <label class="accent" class="form-check-label" for="enfant">
                                         Avec enfants (-12ans)
                                     </label>
                             </div>

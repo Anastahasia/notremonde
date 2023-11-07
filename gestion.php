@@ -10,7 +10,7 @@ session_start();
 //     }
 
 require_once('./components/connexion.php');
-require_once("./components/communs.php");
+require_once("./components/fonctions.php");
 
 $AllCircuits = $NewConnection->select("circuit");
 $AllItineraires = $NewConnection->select("itineraire");
@@ -48,52 +48,55 @@ $AllUsers = $NewConnection->select("utilisateur");
         <!-- Le menu du Dashbord -->
         <div>
             <ul class="nav nav-tabs" role="tablist">
-                <li class="nav-item">
+                <li class="nav-item soustitre">
                     <a class="nav-link active" aria-current="page" data-bs-target="#Circuits" data-bs-toggle="tab" type="button" role="tab" aria-selected="true">Circuits</a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item soustitre">
                     <a class="nav-link" aria-current="page" data-bs-target="#Hebergements" data-bs-toggle="tab" type="button" role="tab" aria-selected="false">Hébergements</a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item soustitre">
                     <a class="nav-link" data-bs-target="#Comptes" data-bs-toggle="tab" type="button" role="tab" aria-selected="false">Comptes</a>
                 </li>
             </ul>
         </div>
 
 
-        <div class="tab-content">
-            <div class="tab-pane fade show active" id="Circuits">
+        <div class="tab-content serveur-section">
+            <div class="tab-pane fade show active tab-pane-content border-top-0 rounded-bottom tab-pane-content" id="Circuits">
                 <div class="entete">
                     <h2 class="titre">Tous les circuits</h2>
                 </div>
 
                 <div id="CircuitsViewerBox" class="card-container">
                     <form action="./controllers/gestion.php" method="post" class="card gestion">
+                        <div class=""></div>
                         <div class="card-text">
+                            <input type="hidden" name="token" value="<?php echo $_SESSION['csrf_token'] ?>">
                             <h3 class="soustitre">Pour créer un nouveau circuit:</h3>
-                            <button name="Intention" value="AddCircuit" type="submit">Cliquer ici</button>
+                            <button class="btn btn-success vert-pomme" name="Intention" value="AddCircuit" type="submit">Cliquer ici</button>
                         </div>
                         <!-- href="./Circuit.php?edit=true&id_Circuit=0" -->
                     </form>
 
                     <?php
                     foreach ($AllCircuits as $Key => $Value) {
-                        $CircuitPageRedirectionWithParameters = './circuit.php?edit=true&id_Circuit=' . $Value['id_circuit'];
+                        $CircuitPageRedirectionWithParameters = './FormulaireCircuit.php?circuit=' . $Value['id_circuit'];
 
                         echo '<form action="./controllers/gestion.php" method="post" class="card gestion">';
                         echo '<input type="hidden" name="id_circuit" value="' . $Value['id_circuit'] . '">';
+                        echo '<input type="hidden" name="token" value="' . $_SESSION['csrf_token'] . '">';
                         echo '<button name="Intention" value="DeleteCircuit" data-bs-toggle="modal" data-bs-target="#DeleteModal" type="button" class="floating"><i class="fa-solid fa-circle-xmark" style="color: #ff0000;"></i></button>';
                         echo '<div class="card-image-container"><img src="' . GetImagePath($Value['photo']) . '" alt="' . $Value['alt'] . '"></div>';
-                        echo '<div class="card-text"><h3>' . $Value['titre'] . '</h3>';
+                        echo '<div class="card-text"><h3 class="soustitre">' . $Value['titre'] . '</h3>';
                         // echo '<button name="Intention" value="UpdateCircuit" type="button">Modifier</button>';
-                        echo '<a href="' . $CircuitPageRedirectionWithParameters . '" class="btn" >Modifier</a></div>';
+                        echo '<a href="' . $CircuitPageRedirectionWithParameters . '" class="btn btn-success" >Modifier</a></div>';
                         echo '</form>';
                     }
                     ?>
                 </div>
             </div>
 
-            <div class="tab-pane fade show" id="Hebergement">
+            <div class="tab-pane fade show tab-pane-content border-top-0 rounded-bottom tab-pane-content" id="Hebergement">
                 <div class="entete">
                     <h2 class="titre">Tous les hébergements</h2>
                 </div>
@@ -104,6 +107,7 @@ $AllUsers = $NewConnection->select("utilisateur");
                             <img id="AddNewIcon" src="./images/icons_plus.png" alt="New Circuit picture">
                         </div>
                         <div class="card-text">
+                            <input type="hidden" name="token" value="<?php echo $_SESSION['csrf_token'] ?>">
                             <h3 class="soustitre">Pour créer un nouvel itinéraire:</h3 class="soustitre">
                             <button name="Intention" value="AddItineraire" type="submit">Cliquer ici</button>
                         </div>
@@ -116,17 +120,18 @@ $AllUsers = $NewConnection->select("utilisateur");
 
                         echo '<form action="./controllers/gestion.php" method="post" class="card gestion">';
                         echo '<input type="hidden" name="id_itineraire" value="' . $Value['id_itineraire'] . '">';
+                        echo '<input type="hidden" name="token" value="' . $_SESSION['csrf_token'] . '">';
                         echo '<button name="Intention" value="DeleteItineraire" data-bs-toggle="modal" data-bs-target="#DeleteModal" type="button" class="floating"></button>';
                         echo '<div class="card-image-container"><img src="' . GetImagePath($Value['photo']) . '" alt="' . $Value['alt'] . '"></div>';
-                        echo '<div class="card-text"><h3>' . $Value['titre'] . '</h3>';
+                        echo '<div class="card-text"><h3 class="soustitre">' . $Value['titre'] . '</h3>';
                         // echo '<button name="Intention" value="UpdateCircuit" type="button">Modifier</button>';
-                        echo '<a href="' . $ItinerairePageRedirectionWithParameters . '" class="btn">Modifier</a></div>';
+                        echo '<a href="' . $ItinerairePageRedirectionWithParameters . '" class="btn btn-success">Modifier</a></div>';
                         echo '</form>';
                     }
                     ?>
                 </div>
             </div>
-   
+
             <div class="tab-pane fade show" id="Comptes">
                 <div class="entete">
                     <h2 class="titre">Tous les comptes</h2>
@@ -181,7 +186,10 @@ $AllUsers = $NewConnection->select("utilisateur");
                                                         </select>
                                                     </div>
 
+                                                    <input type="hidden" name="token" value="<?php echo $_SESSION['csrf_token'] ?>">
+
                                                     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                                         <button name="Intention" value="AddUser" type="submit" class="btn btn-success">Envoyer</button>
                                                     </div>
                                                 </div>
@@ -214,6 +222,7 @@ $AllUsers = $NewConnection->select("utilisateur");
 
                                 echo '<tr><form action="./controllers/gestion.php" method="post" >';
                                 echo '<input type="hidden" name="id_utilisateur" value="' . $Value['id_utilisateur'] . '">';
+                                echo '<input type="hidden" name="token" value="' . $_SESSION['csrf_token'] . '">';
                                 echo '<td><input type="text" name="surname" value="' . $Value['nom'] . '"></td>';
                                 echo '<td><input type="text" name="name" value="' . $Value['prenom'] . '"></td>';
                                 echo '<td><input type="text" name="phone" value="' . $Value['num'] . '"></td>';
@@ -239,12 +248,12 @@ $AllUsers = $NewConnection->select("utilisateur");
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <p>Êtes vous sûr de vouloir supprimer ?</p>
+                        <p>Êtes vous sûr de vouloir procéder à la suppression ?</p>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                         <button type="button" id="DeleteModalSubmitButton" class="btn btn-primary">Save changes</button>
-                        <?php var_dump($Value) ?>
+
                     </div>
                 </div>
             </div>

@@ -1,9 +1,105 @@
+@import url('https://fonts.googleapis.com/css2?family=Inconsolata:wght@300&family=Merriweather+Sans:wght@300&display=swap');
+
 footer {
     color: white
+}
+.vert-pomme{
+    background-color: #B1CF5F;
+    border-color: #B1CF5F;
+}
+header{
+    display: grid;
+    align-items: center;
+    align-content: center;
+    justify-content :center;
+}
+/* FONTS */
+.h1 {
+    font-family: 'Inconsolata', monospace;
+    font-size: 30px;
+    font-weight: 600;
+    text-transform: uppercase;
+    text-align: center;
+}
+
+.titre {
+    font-family: 'Inconsolata', monospace;
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.titre2 {
+    font-family: 'Inconsolata', monospace;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.soustitre {
+    font-family: 'Inconsolata', monospace;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.soustitre2 {
+    font-family: 'Merriweather Sans', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    text-decoration-line: underline;
+}
+
+p {
+    font-family: 'Merriweather Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 300;
+}
+
+.accent,
+.btn-success {
+    font-family: 'Merriweather Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
 }
 
 @media (min-width: 768px) {
     /* toutes les pages */
+    /* FONT */
+
+    h1 {
+        font-size: 40px;
+        text-transform: uppercase;
+    }
+
+    .titre {
+        font-size: 30px;
+        text-transform: uppercase;
+    }
+
+    .titre2 {
+        font-size: 24px;
+        text-transform: uppercase;
+    }
+
+    .soustitre {
+        font-size: 18px;
+    }
+
+    .sousitre2 {
+        font-size: 18px;
+    }
+
+    p {
+        font-size: 14px;
+        line-height: 27px;
+        /* 168.75% */
+        letter-spacing: 0.48px;
+    }
+
+    .accent,
+    .btn-success {
+        font-size: 14px;
+    }
+
+    /* FIN DES FONTS */
 
     img {
         object-fit: cover;
@@ -160,23 +256,32 @@ footer {
 
     /* END CIRCUIT CARDS*/
     /* GESTION */
-    
-    .serveurSection {
-        padding: 1% 10%;
+
+    .serveur-section {
+        padding: 0% 9%;
     }
 
     .nav-tabs {
         display: flex;
         justify-content: center;
-        margin: 0 7%;
+        margin: 0 9%;
+        border-color: #B1CF5F;
     }
 
-    .tab-content {
-        padding: 1% 2%;
-        margin: 0 3%;
+    .nav-tabs .nav-link.active{
+        border-top-color: #B1CF5F;
+        border-right-color: #B1CF5F;
+        border-left-color: #B1CF5F;
     }
-/* FORMULAIRE DE MODIFICATION */
-/* .update-edit{
+
+    .tab-pane-content {
+        padding: 0 3%;
+        border: solid 1.5px #B1CF5F;
+    }
+
+
+    /* FORMULAIRE DE MODIFICATION */
+    /* .update-edit{
 position: absolute;
 left: 45%;
 } */
@@ -197,6 +302,7 @@ left: 45%;
     .gestion {
         display: grid;
         justify-items: center;
+        align-content: space-between ;
         width: 30%;
         background-color: #fff;
         margin-bottom: 3%;
@@ -204,44 +310,36 @@ left: 45%;
 
     /* Card : Gestion specific */
 
+    form.card{
+        height: 315px;
+        position: relative;
+    }
     form.card.gestion button,
     form.card.gestion a {
         cursor: pointer;
     }
 
     form.card.gestion button.floating {
-        background-image: url('./images/icons_cross_deletion.png');
-        background-size: cover;
         width: 2em;
         height: 2em;
 
         border-radius: 16px;
-
+        padding: 0;
         float: right;
-
-        /* using a fixed position would allow for the height of the button to be ignored
-     * but then the positioning would be off, when resizing the page
-     * setting a negative margin-top kinda fix the issue
-     */
-        position: relative;
-        left: 50%;
-        top: 100%;
-
-        margin: -1.8em 0 0 0;
+        position: absolute;
+        left: 95%;
+        top: -5%;
         border: 0;
     }
 
     /* form.card-gestion button:last-of-type { */
     form.card.gestion a {
-        background-color: transparent;
-
         text-decoration: none;
     }
 
     form.card.gestion img {
         width: 100%;
     }
-
 
     section.card-container #AddNewIcon {
         width: 50%;
@@ -265,6 +363,10 @@ left: 45%;
 
     #Users {
         padding-left: 6%;
+    }
+
+    .fa-circle-xmark{
+        font-size: 35px;
     }
 
     table td:last-child {
