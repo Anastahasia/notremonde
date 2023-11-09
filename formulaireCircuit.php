@@ -1,5 +1,4 @@
 <?php
-session_start();
 require_once('./components/connexion.php');
 require_once("./components/fonctions.php");
 // Redirect unregistered users
@@ -26,7 +25,7 @@ if (empty($SelectedCircuit)) {
 }
 $SelectedSteps = $NewConnection->select_etape("etape_circuit", "hebergement", "id_hebergement", "ville", "id_ville", $CurrentCircuitID);
 
-
+// echo ($_SESSION['csrf_token']);
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -36,7 +35,14 @@ $SelectedSteps = $NewConnection->select_etape("etape_circuit", "hebergement", "i
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title> Accueil | Notre Monde</title>
+    <title>
+        <?php
+        $CircuitsName = "";
+        foreach ($SelectedCircuit as $Key => $Circuit) {
+            $CircuitsName = $Circuit['titre'];
+        }
+        echo $CircuitsName;
+        ?> | Notre Monde</title>
     <!-- Bootstrap icons-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet" />
     <!-- Core theme CSS (includes Bootstrap)-->
@@ -52,10 +58,10 @@ $SelectedSteps = $NewConnection->select_etape("etape_circuit", "hebergement", "i
     include_once('./components/nav.php');
     ?>
     <main>
-        <header class="presentation pb-0" id="vif">
+        <header class="pb-0" id="vif">
 
             <?php
-            function GenerateCategorieSelector($Categories, $Name, $SelectedId)
+            function GenerateSelector($Categories, $Name, $SelectedId, $TableID)
             {
                 $SelectedId--; //zero-based vs one-based
 
@@ -63,53 +69,58 @@ $SelectedSteps = $NewConnection->select_etape("etape_circuit", "hebergement", "i
                 foreach ($Categories as $Key => $Value) {
                     $SelectState = ($Key == ($SelectedId)) ? 'selected="true' : '';
 
-                    $Options .= '<option ' . $SelectState . ' value="' . $Value['id_categorie'] . '">' . $Value['nom'] . '</option>';
+                    $Options .= '<option ' . $SelectState . ' value="' . $Value[$TableID] . '">' . $Value['nom'] . '</option>';
                 }
 
                 echo '
                 <div class="mb-3">
                     <label class="soustitre" for="Categorie">Choisissez une categorie:</label>
-                    <select name="' . $Name . '" id="Categorie" class="form-select d-inline w-50 soustitre">'
+                    <select name="' . $Name . '" id="Categorie" class="form-select d-inline w-50 paragraphe">'
                     . $Options .
                     '</select>
-                              </div>  ';
+                </div>  ';
             }
 
             foreach ($SelectedCircuit as $Circuit) {
 
 
                 echo '
-            <div class="img-presentation"> <form enctype="multipart/form-data" action="./traitements/gestion.php" method="post">';
+            <form enctype="multipart/form-data" action="./traitements/gestion.php" method="post" class="presentation pb-0">
+                <div class="img-presentation">';
+                    echo '
+                    <div class="mb-3">
+                        <label for="photo">Sélectionnez une image :</label>
+                        <input type="file" class="form-control image-selector" name="photo" accept="image/png, image/jpeg">
+                    
+                        <img  class="image-preview" src="' . GetImagePath($Circuit['photo']) . '" alt="' . $Circuit['alt'] . '">
+                    </div>
+                    <div class="mb-3">
+                        <label class="soustitre" for="alt">Description de la photo:</label>
+                        <input type="text" class="form-control d-inline paragraphe" name="alt" value="' . $Circuit['alt'] . '"> 
+                    </div>
+                </div>
+                <div class="txt-presentation">
+                    <h1 class="titre1" name="titre" contenteditable="true">' . $Circuit['titre'] . '</h1>
+                    <p name="description" contenteditable="true">' . $Circuit['description'] . '</p>';
+                    GenerateSelector($AllCategories, 'categorie', $Circuit['categorie'], 'id_categorie');
+                    echo '
+                    <div class="mb-3">
+                        <label class="soustitre" for="duree">Durée (en jours):</label>
+                        <input type="text" class="form-control d-inline w-25 paragraphe" name="duree" value="' . $Circuit['duree'] . '"> 
+                    </div>
+                    <div class="mb-3">
+                        <label class="soustitre" for="prix_estimatif">Prix (en euros):</label>
+                        <input type="text" class="form-control d-inline w-25 paragraphe" name="prix_estimatif" value="' . $Circuit['prix_estimatif'] . '">
+                    </div>
 
-                echo '
-                <div class="mb-3">
-                    <label for="photo">Sélectionnez une image :</label>
-                    <input type="file" class="form-control image-selector" name="photo" accept="image/png, image/jpeg">
-                
-                    <img  class="image-preview" src="' . GetImagePath($Circuit['photo']) . '" alt="' . $Circuit['alt'] . '">
+                    <input type="hidden" name="token" value="' . $_SESSION['csrf_token'] . '">
                 </div>
-            </div>
-            <div class="txt-presentation">
-                <h1 class="titre1" name="titre" contenteditable="true">' . $Circuit['titre'] . '</h1>
-                <p name="description" contenteditable="true">' . $Circuit['description'] . '</p>';
-                GenerateCategorieSelector($AllCategories, 'categorie', $Circuit['categorie']);
-                echo '
-                <div class="mb-3">
-                    <label class="soustitre" for="duree">Durée (en jours):</label>
-                    <input type="text" class="form-control d-inline w-25 soustitre" name="duree" value="' . $Circuit['duree'] . '"> 
-                </div>
-                <div class="mb-3">
-                    <label class="soustitre" for="prix_estimatif">Prix (en euros):</label>
-                    <input type="text" class="form-control d-inline w-25 soustitre" name="prix_estimatif" value="' . $Circuit['prix_estimatif'] . '">
-                </div>
-
-                <input type="hidden" name="circuit_id" value="' . $CurrentCircuitID . '">
-            </div></form>';
+            </form>';
             }
             ?>
         </header>
         <section>
-            <h2 class="titre1 pt-5">Circuit</h2>
+            <h2 class="titre1 pt-2">Circuit</h2>
             <?php foreach ($SelectedSteps as $Step) {
                 echo '
         
@@ -165,10 +176,10 @@ $SelectedSteps = $NewConnection->select_etape("etape_circuit", "hebergement", "i
         /* Variables */
 
         // We're using the same button for all ajax submit
-        let UpdateButton = document.createElement('button');
-        UpdateButton.innerHTML = "Modifier";
-        UpdateButton.className = 'update-edit btn btn-success';
-        UpdateButton.type = 'button';
+        let UpdateCircuitButton = document.createElement('button');
+        UpdateCircuitButton.innerHTML = "Modifier";
+        UpdateCircuitButton.className = 'update-edit btn btn-success';
+        UpdateCircuitButton.type = 'button';
 
         /* Transmitting informations in between PHP and JS */
 
@@ -214,8 +225,8 @@ $SelectedSteps = $NewConnection->select_etape("etape_circuit", "hebergement", "i
                     let url = "./traitements/gestion.php";
 
                     let form_data = new FormData();
+                    form_data.append('UpdateCircuit',1);
                     form_data.append('token', GetCurrentSessionToken());
-                    form_data.append('Intention', 'UpdateCircuit');
                     form_data.append('id_circuit', GetCurrentCircuitID());
                     form_data.append('id_categorie', GetCurrentCategorieID());
                     form_data.append('Column', Each.getAttribute('name'));
@@ -237,26 +248,25 @@ $SelectedSteps = $NewConnection->select_etape("etape_circuit", "hebergement", "i
                         })
                         .then(function(Response) {
 
-                            UpdateButton.remove();
-                            UpdateButton.removeEventListener('click', SendUpdateCircuitField, true);
+                            UpdateCircuitButton.remove();
+                            UpdateCircuitButton.removeEventListener('click', SendUpdateCircuitField, true);
 
                             return Response.text();
                         })
-                    // .then(function (ResponseText) {
-                    //     console.log(ResponseText);
-                    // })
-                    ;
+                        // .then(function(ResponseText) {
+                        //     console.log(ResponseText);
+                        // });
 
                     return true;
                 }
 
                 //Hooking up the button to appear below the edited field
                 Each.addEventListener('focus', (Event) => {
-                    Event.target.insertAdjacentElement('afterend', UpdateButton);
+                    Event.target.insertAdjacentElement('afterend', UpdateCircuitButton);
 
-                    UpdateButton.addEventListener('click', SendUpdateCircuitField);
+                    UpdateCircuitButton.addEventListener('click', SendUpdateCircuitField);
 
-                    UpdateButton.style.display = 'block';
+                    UpdateCircuitButton.style.display = 'block';
                 });
 
                 // Hiding the button on blur, but see notes below

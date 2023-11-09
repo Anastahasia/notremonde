@@ -68,7 +68,7 @@ $thematiques = $NewConnection->select("categorie", "NOT nom", "brouillon");
             ?>
                 <div class="d-grid">
                     <a class="nav-link" href="./profil.php"><img src=<?php echo '"' . $UserIcon . '"'; ?> alt="User Role Image" style="width: 32px; height: 32px;"></a>
-                    <form method="POST" action="./controllers/user.php"><button type="submit" name="Intention" value="Logout" class="btn p-0">Deconnexion</button><input type="hidden" name="token" value="<?php echo $_SESSION['csrf_token'] ?>"></form>
+                    <form method="POST" action="./traitements/user.php"><button type="submit" name="Intention" value="Logout" class="btn p-0">Deconnexion</button><input type="hidden" name="token" value="<?php echo $_SESSION['csrf_token'] ?>"></form>
                 </div>
             <?php else : ?>
                 <a class="nav-link d-grid" href="./login.php"><img src="./images/icons_user.png" alt="User Role Image" style="width: 32px; height: 32px;"><span class="mx-auto" >Connexion</span></a>

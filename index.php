@@ -1,5 +1,4 @@
-<?php 
-session_start();
+<?php
 require_once('./components/connexion.php');
 require_once("./components/fonctions.php");
 
@@ -21,7 +20,7 @@ $circuits = $NewConnection->select_random("circuit", "categorie");
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 
-    <link rel="icon" href="./images/favicon.png" type="image/x-icon" >
+    <link rel="icon" href="./images/favicon.png" type="image/x-icon">
 
     <link href="styles.css" rel="stylesheet" />
 </head>
@@ -41,24 +40,24 @@ $circuits = $NewConnection->select_random("circuit", "categorie");
             </div>
             <div id="carouselExampleAutoplaying" class="carousel">
                 <div class="carousel-inner card-carousel-inner">
-            
-                <?php 
-                foreach ($destinations as $Value){
 
-                    echo 
-                    '
+                    <?php
+                    foreach ($destinations as $Value) {
+
+                        echo
+                        '
                         <div class="carousel-item card-carousel-item">
                             <div class="card card-carousel">
                                 <div class="img-wrapper">
-                                    <img src="' . GetImagePath($Value['illustration']) .'" class="card-img-top" alt="...">
+                                    <img src="' . GetImagePath($Value['illustration']) . '" class="card-img-top" alt="...">
                                 </div>
                                 <div class="card-body carousel-card-body">
-                                    <h3 class="card-title soustitre">'. $Value['nom'] .'</h3>
-                                    <a href="./destination.php?destination='. $Value['id_continent'] .'" class="btn btn-success">Explorer</a>
+                                    <h3 class="card-title soustitre">' . $Value['nom'] . '</h3>
+                                    <a href="./destination.php?destination=' . $Value['id_continent'] . '" class="btn btn-success">Explorer</a>
                                 </div>
                             </div>
                         </div>';
-                }?>
+                    } ?>
                 </div>
                 <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -94,17 +93,21 @@ $circuits = $NewConnection->select_random("circuit", "categorie");
             <div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel">
                 <div class="carousel-inner">
                     <?php
-                    foreach($circuits as $Value){
-                     echo 
-                     '<div class="carousel-item active">
+                    foreach ($circuits as $Value) {
+                        echo
+                        '<div class="carousel-item active">
                         <div class="carousel-img-wrapper">
-                            <img src="'.GetImagePath($Value['photo']).'" class="d-block w-100" alt="'.$Value['alt'].'">
+                            <img src="' . GetImagePath($Value['photo']) . '" class="d-block w-100" alt="' . $Value['alt'] . '">
                         </div>
                         <div class="carousel-caption d-none d-md-block">
-                            <h3 class="soustitre">'.$Value['titre'].'</h3>
-                            <a href="./circuit.php?circuit='.$Value['id_circuit'].'" class="btn btn-success accent">Explorer</a>
+                            <div class="autour position">
+                                <h3 class="soustitre">' . $Value['titre'] . '</h3>
+                            </div>
+                            <div class="autour">
+                                <a href="./circuit.php?circuit=' . $Value['id_circuit'] . '" class="btn btn-success accent">Explorer</a>
+                            </div>
                         </div>
-                    </div>';   
+                    </div>';
                     }
                     ?>
                 </div>
@@ -122,15 +125,21 @@ $circuits = $NewConnection->select_random("circuit", "categorie");
             <div class="why-us">
                 <div class="why-us-items">
                     <div class="why-us-item">
-                        <img src="" alt="">
+                        <div class="icon-wrapper">
+                            <img src="images/original.png" alt="logo avec l'inscription originale">
+                        </div>
                         <p class="accent">Expérience Authentique</p>
                     </div>
                     <div class="why-us-item">
-                        <img src="" alt="">
+                        <div class="icon-wrapper">
+                            <img src="images/la-flexibilite" alt="Des fleches qui prennent plusieurs chemins différents">
+                        </div>
                         <p class="accent">Flexibilité Totale</p>
                     </div>
                     <div class="why-us-item">
-                        <img src="" alt="">
+                        <div class="icon-wrapper">
+                            <img src="images/trust.png" alt="Personnage qui croise les bras">
+                        </div>
                         <p class="accent">Professionnalisme</p>
                     </div>
                 </div>
@@ -145,4 +154,5 @@ $circuits = $NewConnection->select_random("circuit", "categorie");
     <?php include_once('./components/footer.php') ?>
 
 </body>
+
 </html>

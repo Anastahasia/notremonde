@@ -1,7 +1,6 @@
 <?php
-session_start();
 require_once('./components/connexion.php');
-require_once("./components/communs.php");
+require_once("./components/fonctions.php");
 
 $CurrentCircuitID = isset($_GET['circuit']) ? $_GET['circuit'] : 0;
 $SelectedCircuit = $NewConnection->select_multi_conditions("circuit", array(

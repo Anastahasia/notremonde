@@ -1,5 +1,4 @@
 <?php
-session_start();
 // Redirect unregistered users
 // if (!isset($_SESSION['CurrentUser']))
 //     {
@@ -122,7 +121,7 @@ $favoris = $NewConnection->inner_join("favoris", "utilisateur", "id_utilisateur"
                         <!-- hidden button for token verifMdpication -->
                         <input type="hidden" name="token" value="<?php echo $_SESSION['csrf_token'] ?>">
                         <!-- Button trigger modal -->
-                        <button type="button" name="modifyEmail" class="soustitre2" data-bs-toggle="modal" data-bs-target="#Modal">
+                        <button type="button" name="modifyEmail" class="soustitre2" data-bs-toggle="modal" data-bs-target="#UpdateModal">
                             Modifier
                         </button>
                     </form>
@@ -133,7 +132,7 @@ $favoris = $NewConnection->inner_join("favoris", "utilisateur", "id_utilisateur"
                         <!-- hidden button for token verifMdpication -->
                         <input type="hidden" name="token" value="<?php echo $_SESSION['csrf_token'] ?>">
                         <!-- Button trigger modal -->
-                        <button type="button" name="modifyPhone" class="soustitre2" data-bs-toggle="modal" data-bs-target="#Modal">
+                        <button type="button" name="modifyPhone" class="soustitre2" data-bs-toggle="modal" data-bs-target="#UpdateModal">
                             Modifier
                         </button>
                     </form>
@@ -148,7 +147,7 @@ $favoris = $NewConnection->inner_join("favoris", "utilisateur", "id_utilisateur"
             </div>
 
             <!-- Modal de Update-->
-            <div class="modal fade" id="Modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal fade" id="UpdateModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -203,7 +202,7 @@ $favoris = $NewConnection->inner_join("favoris", "utilisateur", "id_utilisateur"
     </main>
     <?php include_once('./components/footer.php'); ?>
     <script>
-        let myModal = document.getElementById('Modal');
+        let myModal = document.getElementById('UpdateModal');
 
         // Puisque la page recharge à chaque fois, y'a pas besoin de removeEventListener
         myModal.addEventListener('shown.bs.modal', function(event) {

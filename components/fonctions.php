@@ -1,4 +1,5 @@
 <?php
+session_start();
 require_once("connexion.php");
 
 if (!isset($_SESSION['csrf_token'])) {
@@ -24,9 +25,9 @@ function token_verify()
         if ($_SESSION['csrf_token'] == $_POST['token']) {
             return true;
         } else {
-            echo 'La session présente est périmée';
+            echo 'La session présente est périmée '. $_POST['token'] .'</br>'. $_SESSION['csrf_token'];
         }
-    }
+    }else echo $_POST['token'];
 }
 
 //réalise les envois des formulaires de contact

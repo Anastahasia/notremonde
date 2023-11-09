@@ -43,7 +43,6 @@ if (token_verify()) {
 
             case 'Login':
 
-
                 $Condition = $email;
                 $UniqueUser = $NewConnection->select('utilisateur', "email", $Condition);
                 // var_dump($UniqueUser[0]);
@@ -70,9 +69,6 @@ if (token_verify()) {
                     header("Location: " . '../login.php');
                     die();
                 }
-
-                // var_dump($_SESSION);
-
                 break;
 
             case 'Logout':

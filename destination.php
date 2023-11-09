@@ -1,5 +1,5 @@
 <?php
-session_start();
+
 require_once('./components/connexion.php');
 require_once("./components/fonctions.php");
 

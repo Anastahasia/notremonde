@@ -14,14 +14,16 @@ header{
     justify-content :center;
 }
 /* FONTS */
-.h1 {
+h1 {
     font-family: 'Inconsolata', monospace;
     font-size: 30px;
     font-weight: 600;
     text-transform: uppercase;
     text-align: center;
 }
-
+.titre1{
+    text-align:left ;
+}
 .titre {
     font-family: 'Inconsolata', monospace;
     font-size: 24px;
@@ -47,7 +49,7 @@ header{
     text-decoration-line: underline;
 }
 
-p {
+p, .paragraphe {
     font-family: 'Merriweather Sans', sans-serif;
     font-size: 13px;
     font-weight: 300;
@@ -87,7 +89,7 @@ p {
         font-size: 18px;
     }
 
-    p {
+    p, .paragraphe {
         font-size: 14px;
         line-height: 27px;
         /* 168.75% */
@@ -98,9 +100,10 @@ p {
     .btn-success {
         font-size: 14px;
     }
-
+}
     /* FIN DES FONTS */
 
+    @media (min-width: 768px) {
     img {
         object-fit: cover;
     }
@@ -153,18 +156,26 @@ p {
         display: grid;
         justify-content: center;
     }
+    }
 
+    .card-carousel{
+
+    }
     /* INDEX */
+    /* Index Card Carousel */
+    .card-carousel {
+        position: relative;
+        border-top-right-radius: 40%;
+        border-top-left-radius: 40%;
+    }
+
+    @media (min-width: 768px) {
     /* Index Card Carousel */
 
     .card-carousel-inner {
         display: flex;
         overflow: hidden;
         justify-content: space-around;
-    }
-
-    .card-carousel {
-        position: relative;
     }
 
     .carousel-card-body {
@@ -203,11 +214,11 @@ p {
         justify-content: center;
         gap: 2%;
     }
-
+    }
     /* END INDEX STYLES */
 
     /* CIRCUIT DISPLAY  */
-
+    @media (min-width: 768px) {
     .presentation {
         padding: 3% 10%;
         display: grid;
