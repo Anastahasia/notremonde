@@ -6,15 +6,15 @@ img {
     height: 100%;
 }
 
+ul {
+    list-style-type: none;
+}
+
 header {
     display: grid;
     align-items: center;
     align-content: center;
     justify-content: center;
-}
-
-footer {
-    color: white
 }
 
 .vert-pomme {
@@ -74,7 +74,7 @@ p,
 .btn-success {
     font-family: 'Merriweather Sans', sans-serif;
     font-size: 13px;
-    font-weight: 500;
+    font-weight: 600;
 }
 
 @media (min-width: 992px) {
@@ -124,6 +124,16 @@ section {
     display: grid;
 }
 
+/* FOOTER */
+
+footer {
+    color: white
+}
+
+footer a{
+    text-decoration: none;
+    color: #000000;
+}
 @media (min-width: 768px) {
     section {
         padding: 1% 10% 4%;
@@ -155,24 +165,38 @@ section {
         display: none;
     }
 
+    /* FIN NAVBAR */
+
     /* footer */
     footer {
         display: flex;
     }
 
-    .footer {
+    .footer-links {
         display: flex;
-
     }
 
-    .footer ul {
-        list-style-type: none;
+    .footer-links img {
+        height: 3rem;
     }
 
-    .footer ul:last-child {
-        display: grid;
-        justify-content: center;
+    .containerfooter {
+        flex: 40% 0 0;
     }
+
+    .footer-logo {
+        width: 110%;
+        object-fit: scale-down;
+    }
+
+    footer .img-wrapper {
+        height: 7rem;
+    }
+
+    footer ul:last-child{
+        text-align: center;
+    }
+    /* FIN FOOTER */
 }
 
 /* INDEX */
@@ -206,20 +230,23 @@ section {
     width: 100%;
     background-color: #FFFFFFB5;
 }
+
 /* Gros caroussel des circuits */
-#carouselDark .carousel-img-wrapper{
+#carouselDark .carousel-img-wrapper {
     height: 21rem;
 }
 
-.autour{
+.autour {
     padding: 4%;
     background-color: #FFFFFFB5;
     border-radius: 0.65rem;
 }
-.autour .soustitre{
+
+.autour .soustitre {
     margin-bottom: 0;
 }
-#carouselDark .position{
+
+#carouselDark .position {
     display: grid;
     justify-items: center;
 }
@@ -236,6 +263,17 @@ section {
 #sur-mesure span,
 #sur-mesure b {
     display: none;
+}
+
+/* WHY US */
+.why-us {
+    text-align: center;
+}
+
+.why-us-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 3% 0;
 }
 
 @media (min-width: 768px) {
@@ -280,32 +318,36 @@ section {
         border-radius: inherit;
     }
 
-/* Gros caroussel des circuits */
-#carouselDark .carousel-img-wrapper {
+    /* Gros caroussel des circuits */
+    #carouselDark .carousel-img-wrapper {
         max-width: 100%;
         height: 35vw;
     }
 
-#carouselDark .carousel-caption{
-    position: absolute;
-    top: 3%;
-    left: 60%;
-    width: 30%;
-}
-.autour{
-    padding: 4%;
-    background-color: #FFFFFFB5;
-    border-radius: 0.65rem;
-}
-.autour .soustitre{
-    margin-bottom: 0;
-}
-#carouselDark .position{
-    position: absolute;
-    bottom: 3%;
-    left: 45%;
-    padding: 1.8% 2.5%;
-}
+    #carouselDark .carousel-caption {
+        position: absolute;
+        top: 3%;
+        left: 66%;
+        width: 30%;
+    }
+
+    .autour {
+        padding: 4%;
+        background-color: #FFFFFFB5;
+        border-radius: 0.65rem;
+    }
+
+    .autour .soustitre {
+        margin-bottom: 0;
+    }
+
+    #carouselDark .position {
+        position: absolute;
+        bottom: 10%;
+        left: 6%;
+        padding: 1.8% 2.5%;
+    }
+
     /* TEXT SUR MESURE */
     #sur-mesure {
         display: flex;
@@ -345,13 +387,24 @@ section {
 
     .why-us {
         text-align: center;
+        margin-top: 4%;
+    }
+
+    .why-us-item {
+        padding: 0;
+        display: block;
     }
 
     .why-us-items {
         display: flex;
         justify-content: center;
-        gap: 2%;
+        gap: 5%;
+        margin: 2% 15%;
+        padding-top: 2%;
+        border: solid 1px #000000;
     }
+
+    .icon-wrapper {}
 }
 
 @media (min-width : 992px) {
@@ -395,9 +448,10 @@ section {
     .flex-bouton {
         text-align: center;
     }
-
+}
 
     /* END CIRCUIT DISPLAY */
+    @media (min-width: 768px) {
     /* CIRCUIT CARDS */
     .circuit-card {
         flex: 0 0 31%;

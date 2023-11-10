@@ -121,7 +121,9 @@ $circuits = $NewConnection->select_random("circuit", "categorie");
             </div>
 
             <div class="why-us">
+            <h3 class="titre2">Partir avec nous</h3>
                 <div class="why-us-items">
+                    
                     <div class="why-us-item">
                         <div class="icon-wrapper">
                             <img src="images/original.png" alt="logo avec l'inscription originale">
@@ -141,7 +143,7 @@ $circuits = $NewConnection->select_random("circuit", "categorie");
                         <p class="accent">Professionnalisme</p>
                     </div>
                 </div>
-                <button type="button" class="btn btn-success">Explorer</button>
+                <button type="button" class="btn btn-success">Contacter</button>
                 <p>
                     N’hésitez plus ! Si vous avez des questions...
                 </p>
