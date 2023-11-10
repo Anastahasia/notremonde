@@ -1,18 +1,31 @@
 @import url('https://fonts.googleapis.com/css2?family=Inconsolata:wght@300&family=Merriweather+Sans:wght@300&display=swap');
 
-footer {
-    color: white
+
+img {
+    object-fit: cover;
+    height: 100%;
 }
-.vert-pomme{
-    background-color: #B1CF5F;
-    border-color: #B1CF5F;
-}
-header{
+
+header {
     display: grid;
     align-items: center;
     align-content: center;
-    justify-content :center;
+    justify-content: center;
 }
+
+footer {
+    color: white
+}
+
+.vert-pomme {
+    background-color: #B1CF5F;
+    border-color: #B1CF5F;
+}
+
+.btn-success {
+    background-color: #1B512D;
+}
+
 /* FONTS */
 h1 {
     font-family: 'Inconsolata', monospace;
@@ -21,13 +34,14 @@ h1 {
     text-transform: uppercase;
     text-align: center;
 }
-.titre1{
-    text-align:left ;
-}
+
+.titre1 {}
+
 .titre {
     font-family: 'Inconsolata', monospace;
     font-size: 24px;
     font-weight: 600;
+    text-align: left;
 }
 
 .titre2 {
@@ -49,7 +63,8 @@ h1 {
     text-decoration-line: underline;
 }
 
-p, .paragraphe {
+p,
+.paragraphe {
     font-family: 'Merriweather Sans', sans-serif;
     font-size: 13px;
     font-weight: 300;
@@ -62,13 +77,12 @@ p, .paragraphe {
     font-weight: 500;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 992px) {
     /* toutes les pages */
     /* FONT */
 
     h1 {
         font-size: 40px;
-        text-transform: uppercase;
     }
 
     .titre {
@@ -89,7 +103,8 @@ p, .paragraphe {
         font-size: 18px;
     }
 
-    p, .paragraphe {
+    p,
+    .paragraphe {
         font-size: 14px;
         line-height: 27px;
         /* 168.75% */
@@ -101,15 +116,17 @@ p, .paragraphe {
         font-size: 14px;
     }
 }
-    /* FIN DES FONTS */
 
-    @media (min-width: 768px) {
-    img {
-        object-fit: cover;
-    }
+/* FIN DES FONTS */
 
+section {
+    padding: 4% 2%;
+    display: grid;
+}
+
+@media (min-width: 768px) {
     section {
-        padding: 1% 10%;
+        padding: 1% 10% 4%;
     }
 
     /* NAVBAR */
@@ -156,53 +173,174 @@ p, .paragraphe {
         display: grid;
         justify-content: center;
     }
-    }
+}
 
-    .card-carousel{
+/* INDEX */
+/* Index Card Carousel */
+/* #features{
+    display: grid;
+}
+#carouselAutoplaying {
+    width: 95%;
+    justify-self: center;
+} */
+.card-carousel {
+    position: relative;
+    border: none;
+    border-radius: 3%;
+}
 
-    }
-    /* INDEX */
+.card-carousel .img-wrapper,
+.card-carousel img {
+    width: 100%;
+    height: 28rem;
+    border-radius: 3%;
+}
+
+.carousel-card-body {
+    position: absolute;
+    bottom: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    background-color: #FFFFFFB5;
+}
+/* Gros caroussel des circuits */
+#carouselDark .carousel-img-wrapper{
+    height: 21rem;
+}
+
+.autour{
+    padding: 4%;
+    background-color: #FFFFFFB5;
+    border-radius: 0.65rem;
+}
+.autour .soustitre{
+    margin-bottom: 0;
+}
+#carouselDark .position{
+    display: grid;
+    justify-items: center;
+}
+
+/* TEXT SUR MESURE */
+.rectangle {
+    width: 100%;
+}
+
+.rectangle img {
+    width: 100%;
+}
+
+#sur-mesure span,
+#sur-mesure b {
+    display: none;
+}
+
+@media (min-width: 768px) {
+
     /* Index Card Carousel */
-    .card-carousel {
+    #features {
         position: relative;
-        border-top-right-radius: 40%;
-        border-top-left-radius: 40%;
     }
 
-    @media (min-width: 768px) {
-    /* Index Card Carousel */
+    #carouselAutoplaying {
+        position: static;
+        padding-left: 4%;
+        width: 95%;
+        justify-self: center;
+    }
 
     .card-carousel-inner {
         display: flex;
         overflow: hidden;
-        justify-content: space-around;
-    }
-
-    .carousel-card-body {
-        position: absolute;
-        bottom: 0;
-        padding-left: 0;
-        padding-right: 0;
-        display: flex;
-        justify-content: space-evenly;
-        align-items: center;
-        width: 100%;
+        justify-content: space-between;
     }
 
     .card-carousel-item {
         margin-right: 0;
-        flex: 0 0 30%;
+        flex: 0 0 29%;
         display: block;
     }
 
-    .img-wrapper {
-        width: 100%;
-        height: 400px;
+
+    .card-carousel {
+        position: relative;
+        border-top-right-radius: 40%;
+        border-top-left-radius: 40%;
+        border-bottom-right-radius: 0%;
+        border-bottom-left-radius: 0%;
     }
 
-    .carousel-img-wrapper {
+    .card-carousel .img-wrapper,
+    .card-carousel img {
+        width: 100%;
+        height: 29vw;
+        border-radius: inherit;
+    }
+
+/* Gros caroussel des circuits */
+#carouselDark .carousel-img-wrapper {
         max-width: 100%;
-        height: 500px;
+        height: 35vw;
+    }
+
+#carouselDark .carousel-caption{
+    position: absolute;
+    top: 3%;
+    left: 60%;
+    width: 30%;
+}
+.autour{
+    padding: 4%;
+    background-color: #FFFFFFB5;
+    border-radius: 0.65rem;
+}
+.autour .soustitre{
+    margin-bottom: 0;
+}
+#carouselDark .position{
+    position: absolute;
+    bottom: 3%;
+    left: 45%;
+    padding: 1.8% 2.5%;
+}
+    /* TEXT SUR MESURE */
+    #sur-mesure {
+        display: flex;
+        gap: 3%;
+        margin-left: 2%;
+    }
+
+    #sur-mesure .rectangle {
+        width: 100%;
+        flex: 35% 0;
+        position: relative;
+        background-color: #1B512D;
+        margin-top: 3%;
+    }
+
+    #sur-mesure .rectangle img {
+        width: 95%;
+        height: 100%;
+        position: absolute;
+        top: -10%;
+        left: -5%;
+        border: solid 1px #000000;
+    }
+
+    #sur-mesure .text {
+        flex: 65% 0;
+    }
+
+    #sur-mesure p {
+        white-space: pre-line;
+        margin-bottom: 0;
+    }
+
+    #sur-mesure b {
+        font-weight: bold;
     }
 
     .why-us {
@@ -214,11 +352,20 @@ p, .paragraphe {
         justify-content: center;
         gap: 2%;
     }
-    }
-    /* END INDEX STYLES */
+}
 
-    /* CIRCUIT DISPLAY  */
-    @media (min-width: 768px) {
+@media (min-width : 992px) {
+
+    #sur-mesure span,
+    #sur-mesure b {
+        display: block;
+    }
+}
+
+/* END INDEX STYLES */
+
+/* CIRCUIT DISPLAY  */
+@media (min-width: 768px) {
     .presentation {
         padding: 3% 10%;
         display: grid;
@@ -279,7 +426,7 @@ p, .paragraphe {
         border-color: #B1CF5F;
     }
 
-    .nav-tabs .nav-link.active{
+    .nav-tabs .nav-link.active {
         border-top-color: #B1CF5F;
         border-right-color: #B1CF5F;
         border-left-color: #B1CF5F;
@@ -313,7 +460,7 @@ left: 45%;
     .gestion {
         display: grid;
         justify-items: center;
-        align-content: space-between ;
+        align-content: space-between;
         width: 30%;
         background-color: #fff;
         margin-bottom: 3%;
@@ -321,10 +468,11 @@ left: 45%;
 
     /* Card : Gestion specific */
 
-    form.card{
+    form.card {
         height: 315px;
         position: relative;
     }
+
     form.card.gestion button,
     form.card.gestion a {
         cursor: pointer;
@@ -376,7 +524,7 @@ left: 45%;
         padding-left: 6%;
     }
 
-    .fa-circle-xmark{
+    .fa-circle-xmark {
         font-size: 35px;
     }
 

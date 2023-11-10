@@ -34,11 +34,11 @@ $circuits = $NewConnection->select_random("circuit", "categorie");
     ?>
     <main>
         <!-- Features section-->
-        <section class="py-5 border-bottom" id="features">
+        <section class="" id="features">
             <div class="wrapper">
-                <h2 class="titre1">Nos destinations<h2>
+                <h2 class="titre pb-4">Nos destinations</h2>
             </div>
-            <div id="carouselExampleAutoplaying" class="carousel">
+            <div id="carouselAutoplaying" class="carousel" data-bs-ride="carousel">
                 <div class="carousel-inner card-carousel-inner">
 
                     <?php
@@ -46,12 +46,12 @@ $circuits = $NewConnection->select_random("circuit", "categorie");
 
                         echo
                         '
-                        <div class="carousel-item card-carousel-item">
+                        <div class="carousel-item card-carousel-item active">
                             <div class="card card-carousel">
                                 <div class="img-wrapper">
                                     <img src="' . GetImagePath($Value['illustration']) . '" class="card-img-top" alt="...">
                                 </div>
-                                <div class="card-body carousel-card-body">
+                                <div class="card-body carousel-card-body px-2">
                                     <h3 class="card-title soustitre">' . $Value['nom'] . '</h3>
                                     <a href="./destination.php?destination=' . $Value['id_continent'] . '" class="btn btn-success">Explorer</a>
                                 </div>
@@ -59,65 +59,63 @@ $circuits = $NewConnection->select_random("circuit", "categorie");
                         </div>';
                     } ?>
                 </div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Previous</span>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselAutoplaying" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon prev-icon"></span>
                 </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span>Next</span>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselAutoplaying" data-bs-slide="next">
+                    <span class="carousel-control-next-icon prev-icon"></span>
                 </button>
             </div>
         </section>
 
         <section>
             <div id="sur-mesure">
-                <img src="" alt="">
+                <div class="rectangle">
+                    <img src="images/San Miguell di allende MEXICO.jpg" alt="The fairy glen">
+                </div>
                 <div class="text">
                     <h3 class="titre2">
                         Partir avec nous
                     </h3>
-                    <p>
-                        Tous nos circuits sont modifiables pour répondre à vos besoins spécifiques. Vous pouvez ajuster l'itinéraire, la durée et les activités pour créer une expérience de voyage sur mesure.
-                        Laissez-vous guider par notre agence de voyage dédiée au slow travel pour une aventure qui vous permettra de savourer chaque moment de votre voyage. Explorez les destinations avec une perspective différente, en prenant le temps de vous connecter avec les habitants et de vous imprégner de la beauté du voyage lui-même.
-
-                        N’hésitez plus !
-                        Tous les circuits sont adaptables ....
+                    <p>Tous nos circuits sont modifiables pour répondre à vos besoins spécifiques. Vous pouvez ajuster l'itinéraire, la durée et les activités pour créer une expérience de voyage sur mesure.
+                        <span> Laissez-vous guider par notre agence de voyage dédiée au slow travel pour une aventure qui vous permettra de savourer chaque moment de votre voyage. Explorez les destinations avec une perspective différente, en prenant le temps de vous connecter avec les habitants et de vous imprégner de la beauté du voyage lui-même.</span> 
+                        <b> N’hésitez plus !
+                            Tous les circuits sont adaptables ....</b>
                     </p>
                     <button type="button" class="btn btn-success">Explorer</button>
                 </div>
             </div>
         </section>
 
-        <section>
-            <div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel">
+        <section class="">
+            <div id="carouselDark" class="carousel carousel-dark slide" data-bs-ride="carousel">
                 <div class="carousel-inner">
                     <?php
                     foreach ($circuits as $Value) {
                         echo
-                        '<div class="carousel-item active">
+                    '<div class="carousel-item active">
                         <div class="carousel-img-wrapper">
                             <img src="' . GetImagePath($Value['photo']) . '" class="d-block w-100" alt="' . $Value['alt'] . '">
                         </div>
                         <div class="carousel-caption d-none d-md-block">
-                            <div class="autour position">
+                            <div class="autour">
                                 <h3 class="soustitre">' . $Value['titre'] . '</h3>
                             </div>
-                            <div class="autour">
-                                <a href="./circuit.php?circuit=' . $Value['id_circuit'] . '" class="btn btn-success accent">Explorer</a>
-                            </div>
+                        </div>
+                        <div class="autour position">
+                            <a href="./circuit.php?circuit=' . $Value['id_circuit'] . '" class="btn btn-success accent">Explorer</a>
                         </div>
                     </div>';
                     }
                     ?>
                 </div>
 
-                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselDark" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon"></span>
                     <span class="visually-hidden">Previous</span>
                 </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselDark" data-bs-slide="next">
+                    <span class="carousel-control-next-icon"></span>
                     <span class="visually-hidden">Next</span>
                 </button>
             </div>
