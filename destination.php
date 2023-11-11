@@ -11,13 +11,13 @@ $SelectedCategorie = $NewConnection->select("categorie", "id_categorie", $Curren
 
 if ($CurrentDestinationID) {
     $circuits = $NewConnection->select_multi_conditions("circuit", array(
-        'visible'=> 1,
-        'continent'=>$CurrentDestinationID,
+        'visible' => 1,
+        'continent' => $CurrentDestinationID,
     ));
 } elseif ($CurrentCategorieID) {
     $circuits = $NewConnection->select_multi_conditions("circuit", array(
-        'visible'=> 1,
-        'continent'=>$CurrentCategorieID,
+        'visible' => 1,
+        'continent' => $CurrentCategorieID,
     ));
 } else {
     $circuits = $NewConnection->select("circuit", "visible");
@@ -29,7 +29,7 @@ if (isset($_SESSION['UserID'])) {
 } else {
     $session = "";
 }
-var_dump($_SESSION, $_POST);
+var_dump($_SESSION, $_GET);
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -78,11 +78,27 @@ var_dump($_SESSION, $_POST);
     ?>
     <main>
         <section>
-            <div class="flex-text">
-                <h2 class="titre1">ça pourrait vous plaire...</h2>
-                <a href="destination.php" class="soustitre2">Tous les circuits</a>
-            </div>
+
             <?php
+            if ($CurrentDestinationID) {
+                echo '
+                   <div id="haut" class="flex-text">
+                        <h2 class="titre">' . $SelectedDestination[0]['nom'] . '</h2>
+                        <a href="destination.php" class="soustitre2">Tous les circuits</a>
+                   </div>';
+                echo '<p>' . $SelectedDestination[0]['description'] . '</p>';
+            } elseif ($CurrentCategorieID) {
+                echo '
+                    <div id="haut" class="flex-text">
+                        <h2 class="titre">' . $SelectedCategorie[0]['nom'] . '</h2>
+                        <a href="destination.php" class="soustitre2">Tous les circuits</a>
+                    </div>';
+                echo '<p>' . $SelectedCategorie[0]['description'] . '</p>';
+            } else {
+                echo '<div id="haut" class="flex-text">
+                    <h2 class="titre">Tous nos circuits disponibles.</h2></div>';
+            }
+
             if (isset($_SESSION['Failed']) && $_SESSION['Failed']) {
                 echo '<h4 class="animate__animated animate__shakeX" >Connectez vous pour ajouter des favoris</h4>';
 
@@ -92,11 +108,11 @@ var_dump($_SESSION, $_POST);
 
             <div class="card-container">
                 <?php
-                if (empty($circuits)&&$CurrentDestinationID) {
-                   echo'<p class="animate__animated animate__shakeX" >Pas de circuits disponible sur cette destination pour le moment...</p>
+                if (empty($circuits) && $CurrentDestinationID) {
+                    echo '<p class="animate__animated animate__shakeX" >Pas de circuits disponible sur cette destination pour le moment...</p>
                    <a href="destination.php">Voir tous les circuits.</a>';
-                }elseif (empty($circuits)&&$CurrentCategorieID) {
-                    echo'<p class="animate__animated animate__shakeX">Pas de circuits disponible dans cette thématique pour le moment...</p>
+                } elseif (empty($circuits) && $CurrentCategorieID) {
+                    echo '<p class="animate__animated animate__shakeX">Pas de circuits disponible dans cette thématique pour le moment...</p>
                     <a href="destination.php">Voir tous les circuits.</a>';
                 }
                 foreach ($circuits as $Value) {
@@ -106,8 +122,8 @@ var_dump($_SESSION, $_POST);
                         <img src="' . GetImagePath($Value['photo']) . '" class="card-img-top" alt="' . $Value['alt'] . '">
                     </div>
                     <div class="card-body">
-                        <div>
-                            <div class="card-text">
+                        <div class="card-text">
+                            <div>
                                 <h3 class="card-title soustitre">' . $Value['titre'] . '</h3>
                                 <p class="paragraphe">' . $Value['duree'] . ' jours | ' . $Value['prix_estimatif'] . '€</p>
                             </div>
@@ -115,7 +131,7 @@ var_dump($_SESSION, $_POST);
                                 <input type="hidden" name="voyage" id="voyage" value="' . $Value['id_circuit'] . '">
                                 <input type="hidden" name="token" id="csrf_token" value="' . $_SESSION['csrf_token'] . '">
                                 <input type="hidden" name="user_id" id="user_id" value="' . $session . '">
-                                <button id="favoris" name="AddFavorite" style="border-style: none; background-color:#ffffff;"><i class="fa-solid fa-heart" style="color: #8a817c;"></i></button>
+                                <button id="favoris" name="AddFavorite" style="border-style: none;"><i class="fa-regular fa-heart" style="color: #000000;"></i></button>
                             </form>
                         </div>
                         <a href="./circuit.php?circuit=' . $Value['id_circuit'] . '" class="btn btn-success">Explorer</a>
@@ -124,11 +140,11 @@ var_dump($_SESSION, $_POST);
                 }
                 ?>
             </div>
-            <div class="flex-bouton">
-                <a href="" class="btn btn-success">Demandez un devis</a>
-                <a href="">fleche</a>
-            </div>
         </section>
+        <div class="flex-bouton">
+            <a href="" class="btn btn-success">Demandez un devis</a>
+            <a href="haut"><i class="fa-solid fa-circle-arrow-up" style="color: #1b512d9b;"></i></a>
+        </div>
     </main>
 
     <?php include_once('./components/footer.php') ?>
@@ -157,12 +173,12 @@ var_dump($_SESSION, $_POST);
                         dataType: 'json',
                         cache: false,
                         success: function(data) {
-                        console.log(formData);
-                    },
-                    error: function(data) {
-                        console.log(data)
-                        alert("erreur lors de l'envoi des données")
-                    }
+                            console.log(formData);
+                        },
+                        error: function(data) {
+                            console.log(data)
+                            alert("erreur lors de l'envoi des données")
+                        }
                     });
                 };
             });

@@ -1,6 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Inconsolata:wght@300&family=Merriweather+Sans:wght@300&display=swap');
 
-
+a{
+    text-decoration: none;
+    color: inherit;
+}
 img {
     object-fit: cover;
     height: 100%;
@@ -130,13 +133,13 @@ footer {
     color: white
 }
 
-footer a{
-    text-decoration: none;
+footer a {
     color: #000000;
 }
+
 @media (min-width: 768px) {
     section {
-        padding: 1% 10% 4%;
+        padding: 1% 10% 3%;
     }
 
     /* NAVBAR */
@@ -193,9 +196,10 @@ footer a{
         height: 7rem;
     }
 
-    footer ul:last-child{
+    footer ul:last-child {
         text-align: center;
     }
+
     /* FIN FOOTER */
 }
 
@@ -450,22 +454,106 @@ footer a{
     }
 }
 
-    /* END CIRCUIT DISPLAY */
-    @media (min-width: 768px) {
+/* END CIRCUIT DISPLAY */
+/* PAGE DESTINATION */
+.flex-text{
+    display: flex;
+    justify-content: space-between;
+}
+.circuit-card{
+    margin-top: 3%;
+}
+.circuit-card .img-wrapper {
+    height: 23rem;
+}
+.circuit-card form button{
+    background-color: #ffffff00;
+}
+.circuit-card form{
+    margin: 0;
+}
+.circuit-card .card-body {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background-color: #FFFFFFB5;
+    text-align: center;
+    padding: 2%;
+    display: flex;
+    align-items: center;
+}
+.circuit-card .card-body .card-text {
+    display: flex;
+    align-items: center;
+    gap: 0%;
+    text-align: left;
+}
+.circuit-card .card-text p{
+    margin: 0;
+}
+.fa-heart {
+    font-size: 150%;
+}
+
+.fa-heart.active {
+    font-size: 180%;
+    color: #ff0000;
+}
+.flex-bouton{
+    padding: 7%;
+    background-color: #EFEFEF;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 30%;
+    margin-bottom: 4%;
+}
+
+.flex-bouton i{
+    font-size: 300%;
+}
+@media (min-width: 768px) {
+
+    /*PAGE DESTINATION */
+.flex-text{
+    margin-bottom: 1%;
+}
     /* CIRCUIT CARDS */
     .circuit-card {
         flex: 0 0 31%;
+        margin: 0;
+    }
+    
+    .circuit-card .img-wrapper {
+        height: 23vw;
+    }
+    .circuit-card .card-body {
+        text-align: center;
+        padding: 2%;
+        display: block;
+    }
+    .circuit-card .card-body .card-text {
+        justify-content: space-between;
+        gap: 1%;
+        height: 4rem;
     }
 
-    .fa-heart {
-        font-size: 150%;
+    .circuit-card .card-text p,
+    .circuit-card .card-text h3 {
+        margin: 0;
+        line-height: 110%;
     }
-
-    .fa-heart.active {
-        font-size: 180%;
-        color: #ff0000;
+    .flex-bouton{
+        padding: 3%;
+        background-color: #EFEFEF;
+        gap: 36%;
     }
-
+    .flex-bouton .btn-success{
+        padding: 1%;
+        }
+    .flex-bouton i{
+        font-size: 350%;
+    }
     /* END CIRCUIT CARDS*/
     /* GESTION */
 
@@ -546,9 +634,6 @@ left: 45%;
     }
 
     /* form.card-gestion button:last-of-type { */
-    form.card.gestion a {
-        text-decoration: none;
-    }
 
     form.card.gestion img {
         width: 100%;
