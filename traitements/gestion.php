@@ -25,9 +25,11 @@ if (token_verify()) {
         ));
 
         if ($CircuitID) {
-            header("Location: " . "../circuit.php?edit=true&id_circuit=$CircuitID");
+            header("Location: " . "../FormulaireCircuit.php?circuit=$CircuitID");
             die();
-        }
+        }else{
+        echo"Une erreur s'est produite veuillez réessayer";
+    }
     }
 
 
@@ -39,6 +41,8 @@ if (token_verify()) {
         if ($Success) {
             header("Location: " . '../gestion.php');
             die();
+        }else{
+            echo"Une erreur s'est produite veuillez réessayer";
         }
     }
     if (isset($_POST['AddAccomodation'])) {
@@ -60,6 +64,8 @@ if (token_verify()) {
         if ($AccomodationID) {
             header("Location: " . "../circuit.php?edit=true&id_itineraire=$ItineraireID");
             die();
+        }else{
+            echo"Une erreur s'est produite veuillez réessayer";
         }
     }
 
@@ -71,6 +77,8 @@ if (token_verify()) {
         if ($Success) {
             header("Location: " . '../gestion.php');
             die();
+        }else{
+            echo"Une erreur s'est produite veuillez réessayer";
         }
     }
 
@@ -87,6 +95,8 @@ if (token_verify()) {
         if ($UserID) {
             header("Location: " . "../gestion.php");
             die();
+        }else{
+            echo"Une erreur s'est produite veuillez réessayer";
         }
     }
 
@@ -107,6 +117,8 @@ if (token_verify()) {
         if ($UserID) {
             header("Location: " . "../gestion.php");
             die();
+        }else{
+            echo"Une erreur s'est produite veuillez réessayer";
         }
     }
     if (isset($_POST['DeleteUser'])) {
@@ -117,6 +129,8 @@ if (token_verify()) {
         if ($Success) {
             header("Location: " . '../gestion.php');
             die();
+        }else{
+            echo"Une erreur s'est produite veuillez réessayer";
         }
     }
 

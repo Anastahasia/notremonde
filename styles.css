@@ -20,15 +20,15 @@ header {
     justify-content: center;
 }
 
-.vert-pomme {
-    background-color: #B1CF5F;
-    border-color: #B1CF5F;
-}
+
 
 .btn-success {
     background-color: #1B512D;
 }
-
+.vert-pomme {
+    background-color: #B1CF5F;
+    border-color: #B1CF5F;
+}
 /* FONTS */
 h1 {
     font-family: 'Inconsolata', monospace;
@@ -594,16 +594,17 @@ left: 45%;
         padding: 1% 0;
     }
 
-    .card-image-container {
+    .gestion .img-wrapper {
         text-align: center;
         align-self: center;
+        height: 100%;
     }
 
     .gestion {
         display: grid;
         justify-items: center;
-        align-content: space-between;
-        width: 30%;
+        gap: 1%;
+        width: 32%;
         background-color: #fff;
         margin-bottom: 3%;
     }
@@ -611,7 +612,7 @@ left: 45%;
     /* Card : Gestion specific */
 
     form.card {
-        height: 315px;
+        height: 28vw;
         position: relative;
     }
 

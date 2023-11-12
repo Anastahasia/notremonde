@@ -68,12 +68,14 @@ $AllUsers = $NewConnection->select("utilisateur");
                 </div>
 
                 <div id="CircuitsViewerBox" class="card-container">
-                    <form action="./traitements/gestion.php" method="post" class="card gestion">
-                        <div class=""></div>
+                    <form action="./traitements/gestion.php" method="POST" class="card gestion">
+                        <div class="img-wrapper">
+                            <img id="AddNewIcon" src="./images/icons_plus.png" alt="New Circuit picture">
+                        </div>
                         <div class="card-text">
                             <input type="hidden" name="token" value="<?php echo $_SESSION['csrf_token'] ?>">
                             <h3 class="soustitre">Pour créer un nouveau circuit:</h3>
-                            <button class="btn btn-success vert-pomme" name="Intention" value="AddCircuit" type="submit">Cliquer ici</button>
+                            <button class="btn btn-success vert-pomme" name="AddCircuit" type="submit">Cliquer ici</button>
                         </div>
                         <!-- href="./Circuit.php?edit=true&id_Circuit=0" -->
                     </form>
@@ -86,7 +88,7 @@ $AllUsers = $NewConnection->select("utilisateur");
                         echo '<input type="hidden" name="id_circuit" value="' . $Value['id_circuit'] . '">';
                         echo '<input type="hidden" name="token" value="' . $_SESSION['csrf_token'] . '">';
                         echo '<button name="DeleteCircuit" data-bs-toggle="modal" data-bs-target="#DeleteModal" type="button" class="floating"><i class="fa-solid fa-circle-xmark" style="color: #ff0000;"></i></button>';
-                        echo '<div class="card-image-container"><img src="' . GetImagePath($Value['photo']) . '" alt="' . $Value['alt'] . '"></div>';
+                        echo '<div class="img-wrapper"><img src="' . GetImagePath($Value['photo']) . '" alt="' . $Value['alt'] . '"></div>';
                         echo '<div class="card-text"><h3 class="soustitre">' . $Value['titre'] . '</h3>';
                         // echo '<button name="Intention" value="UpdateCircuit" type="button">Modifier</button>';
                         echo '<a href="' . $CircuitPageRedirectionWithParameters . '" class="btn btn-success" >Modifier</a></div>';
@@ -96,20 +98,20 @@ $AllUsers = $NewConnection->select("utilisateur");
                 </div>
             </div>
 
-            <div class="tab-pane fade show tab-pane-content border-top-0 rounded-bottom tab-pane-content" id="Hebergement">
+            <div class="tab-pane fade show tab-pane-content border-top-0 rounded-bottom tab-pane-content" id="Hebergements">
                 <div class="entete">
                     <h2 class="titre">Tous les hébergements</h2>
                 </div>
 
                 <div id="AccomodationsViewerBox" class="card-container">
                     <form action="./traitements/gestion.php" method="post" class="card gestion">
-                        <div class="card-image-container">
+                        <div class="img-wrapper">
                             <img id="AddNewIcon" src="./images/icons_plus.png" alt="New Circuit picture">
                         </div>
                         <div class="card-text">
                             <input type="hidden" name="token" value="<?php echo $_SESSION['csrf_token'] ?>">
                             <h3 class="soustitre">Pour créer un nouvel hebergement:</h3 class="soustitre">
-                            <button name="AddAccomodation" type="submit">Cliquer ici</button>
+                            <button class="btn btn-success vert-pomme" name="AddAccomodation" type="submit">Cliquer ici</button>
                         </div>
                         <!-- href="./Circuit.php?edit=true&id_Circuit=0" -->
                     </form>
@@ -121,9 +123,9 @@ $AllUsers = $NewConnection->select("utilisateur");
                         echo '<form action="./traitements/gestion.php" method="post" class="card gestion">';
                         echo '<input type="hidden" name="id_hebergement" value="' . $Value['id_hebergement'] . '">';
                         echo '<input type="hidden" name="token" value="' . $_SESSION['csrf_token'] . '">';
-                        echo '<button name="DeleteAccomodation" data-bs-toggle="modal" data-bs-target="#DeleteModal" type="button" class="floating"></button>';
-                        echo '<div class="card-image-container"><img src="' . GetImagePath($Value['photo']) . '" alt="' . $Value['alt'] . '"></div>';
-                        echo '<div class="card-text"><h3 class="soustitre">' . $Value['titre'] . '</h3>';
+                        echo '<button name="DeleteAccomodation" data-bs-toggle="modal" data-bs-target="#DeleteModal" type="button" class="floating"><i class="fa-solid fa-circle-xmark" style="color: #ff0000;"></i></button>';
+                        echo '<div class="img-wrapper"><img src="' . GetImagePath($Value['photo1']) . '" alt="photo de ' . $Value['nom'] . '"></div>';
+                        echo '<div class="card-text"><h3 class="soustitre">' . $Value['nom'] . '</h3>';
                         // echo '<button name="Intention" value="UpdateCircuit" type="button">Modifier</button>';
                         echo '<a href="' . $AccomodationPageRedirectionWithParameters . '" class="btn btn-success">Modifier</a></div>';
                         echo '</form>';
@@ -228,7 +230,7 @@ $AllUsers = $NewConnection->select("utilisateur");
                                 echo '<td><input type="text" name="phone" value="' . $Value['num'] . '"></td>';
                                 echo '<td><input type="text" name="mail" value="' . $Value['email'] . '"></td>';
                                 echo '<td><input type="text" name="role" value="' . $Value['role'] . '"></td>';
-                                echo '<td><button name="Intention" value="UpdateUser" type="submit" class="btn btn-success">Modifier</button>';
+                                echo '<td><button name="UpdateUser" type="submit" class="btn btn-success">Modifier</button>';
                                 echo '<button name="DeleteUser" data-bs-toggle="modal" data-bs-target="#DeleteModal" type="button" class="btn btn-success">Supprimer</button></td>';
                                 echo '</form></tr>';
                             }
