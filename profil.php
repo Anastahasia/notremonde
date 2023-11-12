@@ -12,7 +12,7 @@ require_once("./components/fonctions.php");
 
 
 $CurrentUserID = $_SESSION['UserID'];
-// var_dump($CurrentUserID);
+ var_dump($_SESSION);
 
 // $CurrentUserID = 19;
 

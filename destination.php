@@ -143,7 +143,7 @@ var_dump($_SESSION, $_GET);
         </section>
         <div class="flex-bouton">
             <a href="" class="btn btn-success">Demandez un devis</a>
-            <a href="haut"><i class="fa-solid fa-circle-arrow-up" style="color: #1b512d9b;"></i></a>
+            <a href="#haut"><i class="fa-solid fa-circle-arrow-up" style="color: #1b512d9b;"></i></a>
         </div>
     </main>
 

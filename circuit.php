@@ -39,6 +39,8 @@ $circuits = $NewConnection->select_random("circuit", "NOT id_circuit", $CurrentC
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
     <link rel="icon" href="./images/favicon.png" type="image/x-icon">
 
     <link href="styles.css" rel="stylesheet" />
@@ -58,7 +60,7 @@ $circuits = $NewConnection->select_random("circuit", "NOT id_circuit", $CurrentC
             </ol>
         </nav>
 
-        <header class="presentation">
+        <header class="presentation" id="top">
             <?php foreach ($SelectedCircuit as $Circuit) {
 
                 echo '
@@ -66,12 +68,12 @@ $circuits = $NewConnection->select_random("circuit", "NOT id_circuit", $CurrentC
                 <img src="' . GetImagePath($Circuit['photo']) . '" alt="' . $Circuit['alt'] . '">
             </div>
             <div class="txt-presentation">
-                <h1 class="titre1">' . $Circuit['titre'] . '</h1>
+                <h1 class="titre">' . $Circuit['titre'] . '</h1>
                 <p>' . $Circuit['description'] . '</p>
                 <p class="soutitre">Catégorie: ' . $Circuit['categorie'] . '</p>
                 <p class="soutitre">Durée: ' . $Circuit['duree'] . ' jours</p>
                 <p class="titre2">À partir de: ' . $Circuit['prix_estimatif'] . '€</p>
-                <div class="flex-bouton">
+                <div style="text-align:center;">
                     <a href="" class="btn btn-success">Demandez un devis</a>
                 </div>
             </div>';
@@ -120,11 +122,11 @@ $circuits = $NewConnection->select_random("circuit", "NOT id_circuit", $CurrentC
             </div>';
             } ?>
         </section>
+        <div class="flex-bouton">
+            <a href="" class="btn btn-success">Demandez un devis</a>
+            <a href="#top"><i class="fa-solid fa-circle-arrow-up" style="color: #1b512d9b;"></i></a>
+        </div>
         <section>
-            <div class="flex-bouton">
-                <a href="" class="btn btn-success">Demandez un devis</a>
-                <a href="">fleche</a>
-            </div>
             <div class="flex-text">
                 <h2 class="titre1">ça pourrait vous plaire...</h2>
                 <a href="destination.php" class="soustitre2">Tous les circuits</a>

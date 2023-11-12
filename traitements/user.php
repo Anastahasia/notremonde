@@ -1,5 +1,4 @@
 <?php
-session_start();
 require_once("../components/connexion.php");
 require_once("../components/fonctions.php");
 
@@ -72,7 +71,6 @@ if (token_verify()) {
                 break;
 
             case 'Logout':
-                session_start();
 
                 session_unset();
                 session_destroy();
@@ -123,12 +121,14 @@ if (token_verify()) {
         if ($Values['email'] != false) {
             $NewEmail = $NewConnection->update('utilisateur', $Condition, $Values);
             $NewEmail = $NewConnection->select('utilisateur', 'id_utilisateur', $_SESSION['UserID']);
-            $NewEmail = $NewEmail[0]['email'];
-
-            $_SESSION['CurrentUser'] = $NewEmail;
-            // var_dump($_SESSION);
-            header("Location: " . "../profil.php");
-            die();
+            if (!empty($NewEmail)) {
+                $NewEmail = $NewEmail[0]['email'];
+                $_SESSION['CurrentUser'] = $NewEmail;
+                $_SESSION['SuccessfulUpdate'] = true;
+                // var_dump($_SESSION);
+                header("Location: " . "../profil.php");
+                die();
+            }
         } else {
             $_SESSION['FailedUpdate'] = true;
             header("Location: " . "../profil.php");
@@ -145,8 +145,11 @@ if (token_verify()) {
         $Condition = array('id_utilisateur' => $_SESSION['UserID']);
 
         $NewPhone = $NewConnection->update('utilisateur', $Condition, $Values);
+        $NewPhone = $NewConnection->select('utilisateur', 'id_utilisateur', $_SESSION['UserID']);
 
-        if ($NewPhone) {
+        if (!empty($NewPhone)) {
+            $_SESSION['CurrentUserPhone'] = $NewPhone[0]['num'];
+            $_SESSION['SuccessfulUpdate'] = true;
             header("Location: " . "../profil.php");
             die();
         } else {
@@ -170,8 +173,9 @@ if (token_verify()) {
                 $Values = array('mot_de_passe' => password_hash($newMdp, PASSWORD_ARGON2ID, ['memory_cost' => 1 << 17, 'time_cost' => 4, 'threads' => 2]));
 
                 $NewMdp = $NewConnection->update('utilisateur', $Condition, $Values);
-
-                if ($NewMdp) {
+                $NewMdp = $NewConnection->select('utilisateur', 'id_utilisateur', $_SESSION['UserID']);
+                if (!empty($NewMdp)) {
+                    $_SESSION['CurrentUserPhone'] = $NewMdp[0]['mot_de_passe'];
                     $_SESSION['SuccessfulUpdate'] = true;
                     header("Location: " . "../profil.php");
                     die();
