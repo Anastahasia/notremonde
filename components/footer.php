@@ -1,16 +1,16 @@
     <!-- Footer-->
-    <footer class="py-5 bg-dark">
+    <footer class="py-5">
         <div class="img-wrapper">
             <img src="images/notreMondeLogo.png" alt="" class="footer-logo">
         </div>
         <div class="containerfooter px-3">
-            <h3 class="titre2" class="accent">À propos</h3>
-            <p class="m-0 text-justify text-white">Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui id facilis soluta incidunt voluptatibus quas alias minima nulla possimus, odit, perferendis provident excepturi sunt distinctio consequuntur sapiente eius blanditiis aspernatur?</p>
+            <h3 class="titre2 phone">À propos</h3>
+            <p class="m-0 text-justify">Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui id facilis soluta incidunt voluptatibus quas alias minima nulla possimus, odit, perferendis provident excepturi sunt distinctio consequuntur sapiente eius blanditiis aspernatur?</p>
         </div>
         <div class="container footer-links p-0">
             <ul>
                 <li class="m-0 accent">
-                    <h3 class="titre2">Menu</h3>
+                    <h3 class="titre2 phone">Menu</h3>
                 </li>
                 <li class="text-white"><a class="accent" href="">Accueil</a></li>
                 <li class="text-white"><a class="accent" href="">Circuit</a></li>
@@ -18,14 +18,14 @@
                 <li class="text-white"><a class="accent" href="">Se connecter</a></li>
             </ul>
             <ul>
-                <li class="m-0 accent">
+                <li class="m-0 accent phone">
                     <h3 class="titre2">Liens utiles</h3>
                 </li>
                 <li class="text-white"><a class="accent" href="">Obtenir un devis</a></li>
                 <li class="text-white"><a class="accent" href="">Conditions générales de vente</a></li>
                 <li class="text-white"><a class="accent" href="">Mentions légales</a></li>
             </ul>
-            <ul>
+            <ul class="SocialMedia">
                 <li class="m-0 text-center accent">
                     <h3 class="titre2">Nos réseaux sociaux</h3>
                 </li>

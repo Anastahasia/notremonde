@@ -70,11 +70,8 @@ class MaConnexion
     public function select_random($Table, $Column, $ConditionField = 1)
     {
         try {
-            // NOTE: we cannot wrap Column in `` because it could be a regex like '*'
-            $SQLQueryString = "SELECT * FROM `$Table` WHERE visible=1 AND NOT $Column = :condition ORDER BY rand() LIMIT 3";
+            $SQLQueryString = "SELECT * FROM `$Table` WHERE visible=1 ORDER BY rand() LIMIT 3";
             $query = $this->Connection->prepare($SQLQueryString);
-
-            $query->bindParam(':condition', $ConditionField, PDO::PARAM_INT);
 
             $query->execute();
 

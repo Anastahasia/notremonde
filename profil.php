@@ -79,7 +79,7 @@ $favoris = $NewConnection->inner_join("favoris", "utilisateur", "id_utilisateur"
                                     echo '
                                     <div class="card circuit-card">
                                         <div class="img-wrapper">
-                                            <img src="' . $Value['photo'] . '" class="card-img-top" alt="' . $Value['alt'] . '">
+                                            <img src="' . GetImagePath($Value['photo']) . '" class="card-img-top" alt="' . $Value['alt'] . '">
                                         </div>
                                         <div class="card-body">
                                             <div>
@@ -88,8 +88,9 @@ $favoris = $NewConnection->inner_join("favoris", "utilisateur", "id_utilisateur"
                                                     <p class="paragraphe">' . $Value['duree'] . ' jours | ' . $Value['prix_estimatif'] . '€</p>
                                                 </div>
                                                 <form method="get" action="./traitements/user.php">
-                                                <input type="hidden" name="voyage" value="' . $Value['id_circuit'] . '">
-                                                <button type="submit" id="favoris" name="Intention" value="AddFavorite" style="border-style: none;"><i class="fa-solid fa-heart" style="color: #8a817c;"></i></button>
+                                                    <input type="hidden" name="voyage" value="' . $Value['id_circuit'] . '">
+                                                    <input type="hidden" name="token" id="csrf_token" value="' . $_SESSION['csrf_token'] . '">
+                                                    <button type="submit" id="favoris" name="Intention" value="AddFavorite" style="border-style: none;"><i class="fa-solid fa-heart" style="color: #8a817c;"></i></button>
                                                 </form>
                                             </div>
                                             <a href="./circuit.php?circuit=' . $Value['id_circuit'] . '" class="btn btn-success">Explorer</a>

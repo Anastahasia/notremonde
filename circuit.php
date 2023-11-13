@@ -51,7 +51,7 @@ $circuits = $NewConnection->select_random("circuit", "NOT id_circuit", $CurrentC
     include_once('./components/nav.php');
     ?>
 
-    <main>
+    <main id="Circuit">
         <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item accent"><a href="index.php">Accueil</a></li>
@@ -97,7 +97,7 @@ $circuits = $NewConnection->select_random("circuit", "NOT id_circuit", $CurrentC
                     <p>' . $Step['descriptionHebergement'] . '</p>
                 </div>
                 <div class="img-presentation">
-                    <div id="carouselExample" class="carousel slide">
+                    <div id="carouselExample" class="carousel slide w-100">
                         <div class="carousel-inner">
                             <div class="carousel-item active">
                                 <img src="' . GetImagePath($Step['photoVille']) . '" class="" alt="...">

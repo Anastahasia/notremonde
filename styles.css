@@ -26,7 +26,8 @@ header {
 .btn-success {
     background-color: #1B512D;
 }
-.btn-light{
+
+.btn-light {
     background-color: #ffffff;
 }
 
@@ -133,24 +134,42 @@ section {
     display: grid;
 }
 
-/* FOOTER */
-
-footer {
-    color: white
+/* NAVBAR */
+.navbar-brand {
+    width: 70%;
 }
 
-footer a {
-    color: #000000;
+.navbar {
+    background-color: #fff;
 }
 
-@media (min-width: 768px) {
-    section {
-        padding: 1% 10% 3%;
-    }
+.navbar .container-fluid {
+    margin: 0;
+    padding: 0;
+}
 
-    /* NAVBAR */
-    .navbar {
-        background-color: #fff;
+.navbar-brand img {
+    width: 45%;
+    height: auto;
+    display: block;
+}
+
+.float-login {
+    flex-direction: column-reverse;
+    align-items: flex-start;
+}
+
+.float-login span {
+    display: none;
+}
+
+.float-login .nav-link {
+    padding: 0 2%;
+}
+
+@media (min-width: 992px) {
+    .navbar-brand {
+        width: auto;
     }
 
     .navbar .container {
@@ -158,23 +177,71 @@ footer a {
         padding: 0;
     }
 
+    .navbar-brand img {
+        width: 30%;
+    }
+
     ul {
         list-style: none;
     }
 
-    .navbar-brand img {
+    #navbarSupportedContent {
+        display: flex;
+        justify-content: space-between;
+    }
 
-        width: 25%;
-        height: auto;
+    .float-login {
+        align-items: end;
+        flex-direction: row;
+    }
+.float-login .btn{
+    align-self: center;
+}
+    .float-login span {
         display: block;
-
+    }
+    .float-login .nav-link{
+        justify-items: center;
     }
 
-    .dropdown-toggle::after {
+
+
+    /* .dropdown-toggle::after {
         display: none;
-    }
+    } */
+}
 
-    /* FIN NAVBAR */
+/* FIN NAVBAR */
+/* FOOTER */
+
+footer {
+    background-color: #8a817cb9;
+}
+
+footer a {
+    color: #000000;
+}
+
+footer .img-wrapper {
+    height: 4rem;
+}
+
+.footer-links img {
+    height: 3rem;
+}
+
+.SocialMedia li {
+    margin: 2% 0;
+}
+
+footer .titre2{
+    color: #1B512D;
+}
+
+@media (min-width: 768px) {
+    section {
+        padding: 1% 10% 3%;
+    }
 
     /* footer */
     footer {
@@ -183,10 +250,6 @@ footer a {
 
     .footer-links {
         display: flex;
-    }
-
-    .footer-links img {
-        height: 3rem;
     }
 
     .containerfooter {
@@ -210,14 +273,16 @@ footer a {
 }
 
 /* HEADER filtre*/
-.filtre{
+.filtre {
     padding: 4% 2%;
 }
-.supp{
+
+.supp {
     display: none;
 }
+
 /* HEADER connecte */
-.serveurSection{
+.serveurSection {
     background-image: url(images/neonlight.jpg);
     background-repeat: no-repeat;
     background-position: center;
@@ -225,10 +290,13 @@ footer a {
     padding: 10%;
     box-shadow: 0px 1440px 4px 0px rgba(217, 217, 217, 0.49) inset;
 }
+
 @media (min-width: 768px) {
-    .supp{
+    .supp {
         display: grid;
-}}
+    }
+}
+
 /* FIN HEADER */
 
 /* INDEX */
@@ -304,12 +372,14 @@ footer a {
 /* WHY US */
 .why-us {
     text-align: center;
+    margin-top: 10%;
 }
 
 .why-us-item {
     display: flex;
     justify-content: space-between;
-    padding: 3% 0;
+    align-items: baseline;
+    padding: 6% 0;
 }
 
 @media (min-width: 768px) {
@@ -420,6 +490,7 @@ footer a {
     #sur-mesure b {
         font-weight: bold;
     }
+
     #sur-mesure .btn {
         display: block;
     }
@@ -457,6 +528,13 @@ footer a {
 /* END INDEX STYLES */
 
 /* CIRCUIT DISPLAY  */
+.img-presentation, #Circuit .carousel-item{
+    height: 13rem;
+}
+#Circuit header{
+    padding: 0 2%;
+}
+
 @media (min-width: 768px) {
     .presentation {
         padding: 3% 10%;
@@ -556,7 +634,8 @@ footer a {
 .flex-bouton i {
     font-size: 300%;
 }
-.flex-bouton .btn{
+
+.flex-bouton .btn {
     justify-self: center;
 }
 
@@ -782,6 +861,7 @@ left: 45%;
         margin: 7% 0;
     }
 }
-form.input-group input.form-control{
+
+form.input-group input.form-control {
     border-color: #f8f9fa;
 }

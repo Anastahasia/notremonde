@@ -14,27 +14,27 @@ if (token_verify()) {
         switch ($_POST['Intention']) {
             case "M'inscrire":
                 if (!empty($mot_de_passe) || $mot_de_passe == $verif_mot_de_passe) {
-                $surname = valid_data($nom);
-                $name = valid_data($prenom);
-                $num = valid_data($num);
-                $email = filter_var($email, FILTER_VALIDATE_EMAIL);
-                $mdp = valid_data($mot_de_passe);
-                // $HashedPassword = password_hash($_POST['mot_de_passe'], PASSWORD_DEFAULT);
-                $HashedPassword = password_hash($mdp, PASSWORD_ARGON2ID, ['memory_cost' => 1 << 17, 'time_cost' => 4, 'threads' => 2]);
+                    $surname = valid_data($nom);
+                    $name = valid_data($prenom);
+                    $num = valid_data($num);
+                    $email = filter_var($email, FILTER_VALIDATE_EMAIL);
+                    $mdp = valid_data($mot_de_passe);
+                    // $HashedPassword = password_hash($_POST['mot_de_passe'], PASSWORD_DEFAULT);
+                    $HashedPassword = password_hash($mdp, PASSWORD_ARGON2ID, ['memory_cost' => 1 << 17, 'time_cost' => 4, 'threads' => 2]);
 
-                var_dump($email);
-                $EmailVerify = $NewConnection->select('utilisateur', "email", $email);
+                    var_dump($email);
+                    $EmailVerify = $NewConnection->select('utilisateur', "email", $email);
 
-                if (empty($EmailVerify)) {
-                    $Success = $NewConnection->insert_user($surname, $name, $num, $email, $HashedPassword); #inserts a new user if the email adress doesn't exist in the DB
-                } else {
-                    session_start();
+                    if (empty($EmailVerify)) {
+                        $Success = $NewConnection->insert_user($surname, $name, $num, $email, $HashedPassword); #inserts a new user if the email adress doesn't exist in the DB
+                    } else {
+                        session_start();
 
-                    $_SESSION['HasFailedSignedUp'] = true;
+                        $_SESSION['HasFailedSignedUp'] = true;
 
-                    header("Location: " . '../register.php');
-                    die();
-                }
+                        header("Location: " . '../register.php');
+                        die();
+                    }
                 }
 
                 // NOTE: we let fall through from signup to login, so it automatically logs in
