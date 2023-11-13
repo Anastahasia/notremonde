@@ -2,8 +2,6 @@
 require_once("../components/connexion.php");
 require_once("../components/fonctions.php");
 
-require_once("../vendor/autoload.php");
-
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 
@@ -13,7 +11,7 @@ if (token_verify()) {
         extract($_POST);
         switch ($_POST['Intention']) {
             case "M'inscrire":
-                if (!empty($mot_de_passe) || $mot_de_passe == $verif_mot_de_passe) {
+                if (!empty($mot_de_passe) && $mot_de_passe == $verif_mot_de_passe) {
                     $surname = valid_data($nom);
                     $name = valid_data($prenom);
                     $num = valid_data($num);
@@ -35,6 +33,13 @@ if (token_verify()) {
                         header("Location: " . '../register.php');
                         die();
                     }
+                } else {
+                    session_start();
+
+                    $_SESSION['MatchPassword'] = true;
+
+                    header("Location: " . '../register.php');
+                    die();
                 }
 
                 // NOTE: we let fall through from signup to login, so it automatically logs in
@@ -95,17 +100,19 @@ if (token_verify()) {
             $prenom = $_POST['prenom'];
         }
         if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            $to = "anasthasia.assani@gmail.com";
+            $to = "licetiesta@gmail.com";
             $body .= "De: " . $nom . " " . $prenom . "\r\n";
             $body .= "Email: " . $email . "\r\n";
             $body .= "Message: " . $message . "\r\n";
             mail($to, $sujet, $body);
             $MessageSent = true;
+            header("Location: " . '../contact.php');
         }
     }
     if (isset($_POST['AskQuotation'])) {
         $MessageSent = false;
         extract($_POST);
+        var_dump($email);
         if (isset($_SESSION['CurrentUser'])) {
             $email = $_SESSION['CurrentUser'];
             $prenom = $_SESSION['CurrentUserName'];
@@ -114,10 +121,10 @@ if (token_verify()) {
             $prenom = $_POST['prenom'];
         }
         if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            $to = "anasthasia.assani@gmail.com";
+            $to = "licetiesta@gmail.com";
             $body .= "De: " . $nom . " " . $prenom . "\r\n";
             $body .= "Email: " . $email . "\r\n";
-            $body .= "Date d'arrivée" . $arrivalDate . "  ";
+            $body .= "Date d'arrivée: " . $arrivalDate . " \r\n ";
             $body .= "Date de retour: " . $departureDate . "\r\n";
             $body .= "Nombre de voyageurs: " . $adults . " adultes et " . $adults . " enfants \r\n";
             $body .= "À partir du circuit: " . $inspi . "\r\n";
@@ -126,6 +133,9 @@ if (token_verify()) {
             $body .= "Message: " . $message . "\r\n";
             mail($to, "Demande de devis", $body);
             $MessageSent = true;
+            header("Location: " . '../contact.php');
+        }else{
+            echo'Votre email est invalide veuillez réessayer.';
         }
     }
 
@@ -181,7 +191,7 @@ if (token_verify()) {
 
     if (isset($_POST['modifyMDP'])) {
         extract($_POST);
-        if ($newMdp == $verifMdp) {
+        if ($newMdp == $verif_mot_de_passe) {
 
             $Condition = $_SESSION['UserID'];
             $UniqueUser = $NewConnection->select('utilisateur', "id_utilisateur", $Condition);

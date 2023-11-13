@@ -186,21 +186,23 @@ section {
     }
 
     #navbarSupportedContent {
-        display: flex;
         justify-content: space-between;
     }
 
     .float-login {
-        align-items: end;
         flex-direction: row;
+        margin-right: 1%;
     }
-.float-login .btn{
-    align-self: center;
-}
+
+    .float-login .btn {
+        align-self: center;
+    }
+
     .float-login span {
         display: block;
     }
-    .float-login .nav-link{
+
+    .float-login .nav-link {
         justify-items: center;
     }
 
@@ -234,7 +236,7 @@ footer .img-wrapper {
     margin: 2% 0;
 }
 
-footer .titre2{
+footer .titre2 {
     color: #1B512D;
 }
 
@@ -308,6 +310,9 @@ footer .titre2{
     width: 95%;
     justify-self: center;
 } */
+.prev-icon{
+    color: #000000;
+}
 .card-carousel {
     position: relative;
     border: none;
@@ -528,10 +533,12 @@ footer .titre2{
 /* END INDEX STYLES */
 
 /* CIRCUIT DISPLAY  */
-.img-presentation, #Circuit .carousel-item{
+.img-presentation,
+#Circuit .carousel-item {
     height: 13rem;
 }
-#Circuit header{
+
+#Circuit header {
     padding: 0 2%;
 }
 
@@ -677,7 +684,6 @@ footer .titre2{
     .flex-bouton {
         padding: 3%;
         background-color: #EFEFEF;
-        gap: 36%;
     }
 
     .flex-bouton .btn-success {
@@ -723,7 +729,8 @@ left: 45%;
 
     .card-container {
         display: flex;
-        justify-content: space-between;
+        justify-content: flex-start;
+        gap: 2%;
         flex-wrap: wrap;
         padding: 1% 0;
     }

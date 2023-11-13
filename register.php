@@ -44,8 +44,13 @@ if (isset($_SESSION['CurrentUser'])) {
 
                         unset($_SESSION['HasFailedSignedUp']);
                     }
+                    if (isset($_SESSION['MatchPassword']) && $_SESSION['MatchPassword']) {
+                        echo '<h4 class="animate__animated animate__shakeX" >Les mots de passe ne correspondent pas veuillez réessayer.<a>';
+
+                        unset($_SESSION['MatchPassword']);
+                    }
                     ?>
-                    <form class="text-white" action="./traitements/user.php" method="POST">
+                    <form id="registrationForm" class="text-white" action="./traitements/user.php" method="POST">
                         <div class="mb-3">
                             <label class="accent" for="nom">Nom </label>
                             <input class="form-control" type="text" name="nom" required>
@@ -68,12 +73,12 @@ if (isset($_SESSION['CurrentUser'])) {
 
                         <div class="mb-3">
                             <label class="accent" for="mot_de_passe">Mot de passe </label>
-                            <input class="form-control" type="password" name="mot_de_passe" required>
+                            <input class="form-control" type="password" name="mot_de_passe" id="mot_de_passe" required>
                         </div>
 
                         <div class="mb-3">
                             <label class="accent" for="verif_mot_de_passe">Confirmer le mot de passe </label>
-                            <input class="form-control" type="password" name="verif_mot_de_passe" required>
+                            <input class="form-control" type="password" name="verif_mot_de_passe" id="verif_mot_de_passe" required>
                         </div>
 
                         <input class="form-control" type="hidden" name="token" value="<?php echo $_SESSION['csrf_token'] ?>">

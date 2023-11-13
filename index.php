@@ -20,6 +20,8 @@ $circuits = $NewConnection->select_random("circuit", "categorie");
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
     <link rel="icon" href="./images/favicon.png" type="image/x-icon">
 
     <link href="styles.css" rel="stylesheet" />
@@ -60,10 +62,10 @@ $circuits = $NewConnection->select_random("circuit", "categorie");
                     } ?>
                 </div>
                 <button class="carousel-control-prev" type="button" data-bs-target="#carouselAutoplaying" data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon prev-icon"></span>
+                    <span class="carousel-control-prev-icon"><i class="fa-solid fa-angle-left" style="color: #000000;"></i></span>
                 </button>
                 <button class="carousel-control-next" type="button" data-bs-target="#carouselAutoplaying" data-bs-slide="next">
-                    <span class="carousel-control-next-icon prev-icon"></span>
+                    <span class="carousel-control-next-icon"><i class="fa-solid fa-angle-right" style="color: #000000;"></i></span>
                 </button>
             </div>
         </section>
@@ -116,7 +118,6 @@ $circuits = $NewConnection->select_random("circuit", "categorie");
                 </button>
                 <button class="carousel-control-next" type="button" data-bs-target="#carouselDark" data-bs-slide="next">
                     <span class="carousel-control-next-icon"></span>
-                    <span class="visually-hidden">Next</span>
                 </button>
             </div>
 

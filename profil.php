@@ -185,8 +185,8 @@ $favoris = $NewConnection->inner_join("favoris", "utilisateur", "id_utilisateur"
                                     <input type="password" class="form-control" name="newMdp" id="newMdp">
                                 </div>
                                 <div class="mb-3">
-                                    <label for="verifMdp" class="col-form-label">Confirmation du mot de passe</label>
-                                    <input type="password" class="form-control" name="verifMdp" id="verifMdp">
+                                    <label for="verif_mot_de_passe" class="col-form-label">Confirmation du mot de passe</label>
+                                    <input type="password" class="form-control" name="verif_mot_de_passe" id="verif_mot_de_passe">
                                 </div>
                                 <input type="hidden" name="token" value="<?php echo $_SESSION['csrf_token'] ?>">
 
