@@ -86,29 +86,48 @@ if (token_verify()) {
 
     if (isset($_POST['SendEmail'])) {
         $MessageSent = false;
-
         extract($_POST);
-
-        contact_form($message);
+        if (isset($_SESSION['CurrentUser'])) {
+            $email = $_SESSION['CurrentUser'];
+            $prenom = $_SESSION['CurrentUserName'];
+        } else {
+            $email = $_POST['email'];
+            $prenom = $_POST['prenom'];
+        }
+        if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $to = "anasthasia.assani@gmail.com";
+            $body .= "De: " . $nom . " " . $prenom . "\r\n";
+            $body .= "Email: " . $email . "\r\n";
+            $body .= "Message: " . $message . "\r\n";
+            mail($to, $sujet, $body);
+            $MessageSent = true;
+        }
     }
-
-
     if (isset($_POST['AskQuotation'])) {
         $MessageSent = false;
-
         extract($_POST);
-
-        $body .= "Date d'arrivée" . $arrivalDate . "  ";
-        $body .= "Date de retour: " . $departureDate . "\r\n";
-        $body .= "Nombre de voyageurs: " . $adults . " adultes et " . $adults . " enfants \r\n";
-        $body .= "À partir du circuit: " . $inspi . "\r\n";
-        $body .= "Interessé(e) par: " . $categorie . "\r\n";
-        $body .= "Où: " . $pays . "\r\n";
-        $body .= "Message: " . $message . "\r\n";
-
-        contact_form($body);
+        if (isset($_SESSION['CurrentUser'])) {
+            $email = $_SESSION['CurrentUser'];
+            $prenom = $_SESSION['CurrentUserName'];
+        } else {
+            $email = $_POST['email'];
+            $prenom = $_POST['prenom'];
+        }
+        if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $to = "anasthasia.assani@gmail.com";
+            $body .= "De: " . $nom . " " . $prenom . "\r\n";
+            $body .= "Email: " . $email . "\r\n";
+            $body .= "Date d'arrivée" . $arrivalDate . "  ";
+            $body .= "Date de retour: " . $departureDate . "\r\n";
+            $body .= "Nombre de voyageurs: " . $adults . " adultes et " . $adults . " enfants \r\n";
+            $body .= "À partir du circuit: " . $inspi . "\r\n";
+            $body .= "Interessé(e) par: " . $categorie . "\r\n";
+            $body .= "Où: " . $pays . "\r\n";
+            $body .= "Message: " . $message . "\r\n";
+            mail($to, "Demande de devis", $body);
+            $MessageSent = true;
+        }
     }
-
 
     //modification du profil par l'utilisateur
 
