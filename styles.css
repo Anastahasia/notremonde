@@ -1,9 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Inconsolata:wght@300&family=Merriweather+Sans:wght@300&display=swap');
 
-a{
+a {
     text-decoration: none;
     color: inherit;
 }
+
 img {
     object-fit: cover;
     height: 100%;
@@ -25,10 +26,15 @@ header {
 .btn-success {
     background-color: #1B512D;
 }
+.btn-light{
+    background-color: #ffffff;
+}
+
 .vert-pomme {
     background-color: #B1CF5F;
     border-color: #B1CF5F;
 }
+
 /* FONTS */
 h1 {
     font-family: 'Inconsolata', monospace;
@@ -203,6 +209,28 @@ footer a {
     /* FIN FOOTER */
 }
 
+/* HEADER filtre*/
+.filtre{
+    padding: 4% 2%;
+}
+.supp{
+    display: none;
+}
+/* HEADER connecte */
+.serveurSection{
+    background-image: url(images/neonlight.jpg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    padding: 10%;
+    box-shadow: 0px 1440px 4px 0px rgba(217, 217, 217, 0.49) inset;
+}
+@media (min-width: 768px) {
+    .supp{
+        display: grid;
+}}
+/* FIN HEADER */
+
 /* INDEX */
 /* Index Card Carousel */
 /* #features{
@@ -221,7 +249,7 @@ footer a {
 .card-carousel .img-wrapper,
 .card-carousel img {
     width: 100%;
-    height: 28rem;
+    height: 25rem;
     border-radius: 3%;
 }
 
@@ -253,6 +281,9 @@ footer a {
 #carouselDark .position {
     display: grid;
     justify-items: center;
+    position: absolute;
+    bottom: 4%;
+    left: 40%;
 }
 
 /* TEXT SUR MESURE */
@@ -265,7 +296,8 @@ footer a {
 }
 
 #sur-mesure span,
-#sur-mesure b {
+#sur-mesure b,
+#sur-mesure .btn {
     display: none;
 }
 
@@ -388,6 +420,9 @@ footer a {
     #sur-mesure b {
         font-weight: bold;
     }
+    #sur-mesure .btn {
+        display: block;
+    }
 
     .why-us {
         text-align: center;
@@ -456,22 +491,27 @@ footer a {
 
 /* END CIRCUIT DISPLAY */
 /* PAGE DESTINATION */
-.flex-text{
+.flex-text {
     display: flex;
     justify-content: space-between;
 }
-.circuit-card{
+
+.circuit-card {
     margin-top: 3%;
 }
+
 .circuit-card .img-wrapper {
     height: 23rem;
 }
-.circuit-card form button{
+
+.circuit-card form button {
     background-color: #ffffff00;
 }
-.circuit-card form{
+
+.circuit-card form {
     margin: 0;
 }
+
 .circuit-card .card-body {
     position: absolute;
     bottom: 0;
@@ -482,15 +522,18 @@ footer a {
     display: flex;
     align-items: center;
 }
+
 .circuit-card .card-body .card-text {
     display: flex;
     align-items: center;
     gap: 0%;
     text-align: left;
 }
-.circuit-card .card-text p{
+
+.circuit-card .card-text p {
     margin: 0;
 }
+
 .fa-heart {
     font-size: 150%;
 }
@@ -499,39 +542,47 @@ footer a {
     font-size: 180%;
     color: #ff0000;
 }
-.flex-bouton{
+
+.flex-bouton {
     padding: 7%;
     background-color: #EFEFEF;
-    display: flex;
+    display: grid;
     justify-content: flex-end;
     align-items: center;
-    gap: 30%;
+    grid-template-columns: 85% 15%;
     margin-bottom: 4%;
 }
 
-.flex-bouton i{
+.flex-bouton i {
     font-size: 300%;
 }
+.flex-bouton .btn{
+    justify-self: center;
+}
+
 @media (min-width: 768px) {
 
     /*PAGE DESTINATION */
-.flex-text{
-    margin-bottom: 1%;
-}
+    .flex-text {
+        margin-bottom: 1%;
+    }
+
     /* CIRCUIT CARDS */
     .circuit-card {
         flex: 0 0 31%;
         margin: 0;
     }
-    
+
     .circuit-card .img-wrapper {
         height: 23vw;
     }
+
     .circuit-card .card-body {
         text-align: center;
         padding: 2%;
         display: block;
     }
+
     .circuit-card .card-body .card-text {
         justify-content: space-between;
         gap: 1%;
@@ -543,17 +594,21 @@ footer a {
         margin: 0;
         line-height: 110%;
     }
-    .flex-bouton{
+
+    .flex-bouton {
         padding: 3%;
         background-color: #EFEFEF;
         gap: 36%;
     }
-    .flex-bouton .btn-success{
+
+    .flex-bouton .btn-success {
         padding: 1%;
-        }
-    .flex-bouton i{
+    }
+
+    .flex-bouton i {
         font-size: 350%;
     }
+
     /* END CIRCUIT CARDS*/
     /* GESTION */
 
@@ -564,7 +619,7 @@ footer a {
     .nav-tabs {
         display: flex;
         justify-content: center;
-        margin: 0 9%;
+        margin: 1% 9%;
         border-color: #B1CF5F;
     }
 
@@ -678,18 +733,55 @@ left: 45%;
         margin: -1.8em 1.5em 0 0;
     }
 }
+
 /* FORMULAIRE D'INSCRIPTION ET DE CONNEXION */
-.loginForm{
+.loginForm {
     display: grid;
-   width: 45%;
-    padding: 1% 8%;
     background-color: #8A817C;
     border-radius: 2%;
+    width: 95%;
+    padding: 10%;
 }
-.signInForm{
+
+.signInForm {
     justify-items: center;
 }
-.loginForm input{
+
+.loginForm form {
+    display: grid;
+    margin: 10%;
+}
+
+.loginForm input {
     background-color: #1b512d79;
-    border: solid #ffffff;
+    border: solid 1px #ffffff;
+}
+
+.loginForm .btn-success,
+.loginForm p {
+    justify-self: center;
+    text-align: center;
+}
+
+.loginForm .btn-success {
+    background-color: #1b512d;
+    margin-top: 6%;
+}
+
+.loginForm a {
+    text-decoration: underline;
+}
+
+@media (min-width: 768px) {
+    .loginForm {
+        width: 40%;
+        padding: 4% 8%;
+    }
+
+    .loginForm form {
+        margin: 7% 0;
+    }
+}
+form.input-group input.form-control{
+    border-color: #f8f9fa;
 }

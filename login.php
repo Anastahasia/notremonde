@@ -3,10 +3,10 @@ require_once("./components/connexion.php");
 require_once("./components/fonctions.php");
 // var_dump($_SESSION);
 
-// if (isset($_SESSION['CurrentUser'])) {
-//     header("Location: " . 'index.php');
-//     die();
-// }
+if (isset($_SESSION['CurrentUser'])) {
+    header("Location: " . 'index.php');
+    die();
+}
 
 
 
@@ -59,9 +59,9 @@ require_once("./components/fonctions.php");
 
                     <input type="hidden" name="token" value="<?php echo $_SESSION['csrf_token'] ?>">
 
-                    <input name="Intention" class="btn btn-success" value="Login" type="submit">
+                    <input name="Intention" class="btn btn-success" value="Me connecter" type="submit">
                 </form>
-                <p class="text-white accent">Pas encore de compte ? Créez le <span>ici</span></p>
+                <p class="text-white accent">Pas encore de compte ? Créez le <a href="./register.php">ici</a></p>
             </div>
         </section>
     </main>

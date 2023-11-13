@@ -12,8 +12,8 @@ if (token_verify()) {
 
         extract($_POST);
         switch ($_POST['Intention']) {
-            case 'Signup':
-                // if (!empty($mot_de_passe) || $mot_de_passe == $verif_mot_de_passe) {
+            case "M'inscrire":
+                if (!empty($mot_de_passe) || $mot_de_passe == $verif_mot_de_passe) {
                 $surname = valid_data($nom);
                 $name = valid_data($prenom);
                 $num = valid_data($num);
@@ -35,12 +35,12 @@ if (token_verify()) {
                     header("Location: " . '../register.php');
                     die();
                 }
-                // }
+                }
 
                 // NOTE: we let fall through from signup to login, so it automatically logs in
                 //break;
 
-            case 'Login':
+            case 'Me connecter':
 
                 $Condition = $email;
                 $UniqueUser = $NewConnection->select('utilisateur', "email", $Condition);

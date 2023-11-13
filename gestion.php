@@ -40,7 +40,7 @@ $AllUsers = $NewConnection->select("utilisateur");
 
 <body>
     <?php include_once('./components/nav.php'); ?>
-    <header>
+    <header class="serveurSection">
         <h1>Tableau de bord</h1>
         <p class="soustitre">Gérez les circuits en quelques clics!</p>
     </header>

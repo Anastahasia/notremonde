@@ -36,7 +36,7 @@ $circuits = $NewConnection->select_random("circuit", "categorie");
         <!-- Features section-->
         <section class="" id="features">
             <div class="wrapper">
-                <h2 class="titre pb-4">Nos destinations</h2>
+                <h2 class="titre pb-3">Nos destinations</h2>
             </div>
             <div id="carouselAutoplaying" class="carousel" data-bs-ride="carousel">
                 <div class="carousel-inner card-carousel-inner">

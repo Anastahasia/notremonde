@@ -12,7 +12,7 @@ require_once("./components/fonctions.php");
 
 
 $CurrentUserID = $_SESSION['UserID'];
- var_dump($_SESSION);
+//  var_dump($_SESSION);
 
 // $CurrentUserID = 19;
 
@@ -68,7 +68,7 @@ $favoris = $NewConnection->inner_join("favoris", "utilisateur", "id_utilisateur"
                 <div class="accordion-item">
                     <h2 class="accordion-header">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                            Accordion Item #2
+                            Mes favoris
                         </button>
                     </h2>
                     <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
@@ -116,23 +116,23 @@ $favoris = $NewConnection->inner_join("favoris", "utilisateur", "id_utilisateur"
                 <p><?php echo $nom ?></p>
                 <p><?php echo $prenom ?></p>
                 <div class="mt-3">
-                    <form class="d-flex justify-content-between" action="./traitements/user.php" method="POST">
-                        <input type="text" value="<?php echo $email ?>" name="email">
+                    <form class="d-flex justify-content-between input-group" action="./traitements/user.php" method="POST">
+                        <input type="text" class="form-control" value="<?php echo $email ?>" name="email">
                         <!-- hidden button for token verifMdpication -->
                         <input type="hidden" name="token" value="<?php echo $_SESSION['csrf_token'] ?>">
                         <!-- Button trigger modal -->
-                        <button type="button" name="modifyEmail" class="soustitre2" data-bs-toggle="modal" data-bs-target="#UpdateModal">
+                        <button type="button" name="modifyEmail" class="soustitre2 btn btn-light" data-bs-toggle="modal" data-bs-target="#UpdateModal">
                             Modifier
                         </button>
                     </form>
                 </div>
                 <div class="mt-3">
-                    <form class="d-flex justify-content-between" action="./traitements/user.php" method="POST">
-                        <input type="text" value="<?php echo $phone ?>" name="phone">
+                    <form class="d-flex justify-content-between input-group" action="./traitements/user.php" method="POST">
+                        <input type="text" class="form-control" value="<?php echo $phone ?>" name="phone">
                         <!-- hidden button for token verifMdpication -->
                         <input type="hidden" name="token" value="<?php echo $_SESSION['csrf_token'] ?>">
                         <!-- Button trigger modal -->
-                        <button type="button" name="modifyPhone" class="soustitre2" data-bs-toggle="modal" data-bs-target="#UpdateModal">
+                        <button type="button" name="modifyPhone" class="soustitre2 btn btn-light" data-bs-toggle="modal" data-bs-target="#UpdateModal">
                             Modifier
                         </button>
                     </form>
@@ -140,7 +140,7 @@ $favoris = $NewConnection->inner_join("favoris", "utilisateur", "id_utilisateur"
                 <div class="d-flex justify-content-between mt-3">
                     <p>Mot de passe</p>
                     <!-- Button trigger modal -->
-                    <button type="button" class="soustitre2" data-bs-toggle="modal" data-bs-target="#PasswordModal">
+                    <button type="button" class="soustitre2 btn btn-light" data-bs-toggle="modal" data-bs-target="#PasswordModal">
                         Modifier
                     </button>
                 </div>

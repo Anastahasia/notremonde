@@ -23,13 +23,13 @@ if ($CurrentDestinationID) {
     $circuits = $NewConnection->select("circuit", "visible");
 }
 
-$_SESSION['UserID'] = 1;
+
 if (isset($_SESSION['UserID'])) {
     $session = $_SESSION['UserID'];
 } else {
     $session = "";
 }
-var_dump($_SESSION, $_GET);
+// var_dump($_SESSION, $_GET);
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -80,6 +80,13 @@ var_dump($_SESSION, $_GET);
         <section>
 
             <?php
+            if (empty($circuits) && $CurrentDestinationID) {
+                echo '<p class="animate__animated animate__shakeX" >Pas de circuits disponible sur cette destination pour le moment...</p>
+                               ';
+            } elseif (empty($circuits) && $CurrentCategorieID) {
+                echo '<p class="animate__animated animate__shakeX">Pas de circuits disponible dans cette thématique pour le moment...</p>
+                                ';
+            }
             if ($CurrentDestinationID) {
                 echo '
                    <div id="haut" class="flex-text">
@@ -108,13 +115,6 @@ var_dump($_SESSION, $_GET);
 
             <div class="card-container">
                 <?php
-                if (empty($circuits) && $CurrentDestinationID) {
-                    echo '<p class="animate__animated animate__shakeX" >Pas de circuits disponible sur cette destination pour le moment...</p>
-                   <a href="destination.php">Voir tous les circuits.</a>';
-                } elseif (empty($circuits) && $CurrentCategorieID) {
-                    echo '<p class="animate__animated animate__shakeX">Pas de circuits disponible dans cette thématique pour le moment...</p>
-                    <a href="destination.php">Voir tous les circuits.</a>';
-                }
                 foreach ($circuits as $Value) {
                     echo '
                 <div class="card circuit-card">
