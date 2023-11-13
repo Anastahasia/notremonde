@@ -34,10 +34,10 @@ require_once("./components/fonctions.php");
 
 <body>
     <?php include_once('./components/nav.php'); ?>
-    <main class="signInForm">
-        <section>
+    <main >
+        <section class="signInForm">
             <div class="loginForm">
-                <h1>Connexion</h1>
+                <h1 class="text-white">Connexion</h1>
                 <?php
                 if (isset($_SESSION['HasFailedLogin']) && $_SESSION['HasFailedLogin']) {
                     echo '<h4 class="animate__animated animate__shakeX" >Email ou mot de passe incorrect.</h4>';
@@ -46,14 +46,14 @@ require_once("./components/fonctions.php");
                 }
                 ?>
 
-                <form action="./traitements/user.php" method="POST">
+                <form class="text-white" action="./traitements/user.php" method="POST">
                     <div class="mb-3">
-                        <label for="email">Adresse e-mail :</label>
+                        <label for="email" class="accent">Adresse e-mail :</label>
                         <input type="email" class="form-control" name="email" required>
                     </div>
 
                     <div class="mb-3">
-                        <label for="mot_de_passe">Mot de passe :</label>
+                        <label for="mot_de_passe" class="accent">Mot de passe :</label>
                         <input type="password" class="form-control" name="mot_de_passe" required>
                     </div>
 
@@ -61,6 +61,7 @@ require_once("./components/fonctions.php");
 
                     <input name="Intention" class="btn btn-success" value="Login" type="submit">
                 </form>
+                <p class="text-white accent">Pas encore de compte ? Créez le <span>ici</span></p>
             </div>
         </section>
     </main>

@@ -681,11 +681,15 @@ left: 45%;
 /* FORMULAIRE D'INSCRIPTION ET DE CONNEXION */
 .loginForm{
     display: grid;
-    justify-items: center;
-    width: 45%;
-    padding: 1%;
+   width: 45%;
+    padding: 1% 8%;
+    background-color: #8A817C;
+    border-radius: 2%;
 }
 .signInForm{
-    display: flex;
-    justify-content: center;
+    justify-items: center;
+}
+.loginForm input{
+    background-color: #1b512d79;
+    border: solid #ffffff;
 }
