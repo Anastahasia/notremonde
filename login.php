@@ -3,10 +3,10 @@ require_once("./components/connexion.php");
 require_once("./components/fonctions.php");
 // var_dump($_SESSION);
 
-if (isset($_SESSION['CurrentUser'])) {
-    header("Location: " . 'index.php');
-    die();
-}
+// if (isset($_SESSION['CurrentUser'])) {
+//     header("Location: " . 'index.php');
+//     die();
+// }
 
 
 
@@ -34,32 +34,34 @@ if (isset($_SESSION['CurrentUser'])) {
 
 <body>
     <?php include_once('./components/nav.php'); ?>
-    <main>
-        <section class="loginForm">
-            <h1>Connexion</h1>
-            <?php
-            if (isset($_SESSION['HasFailedLogin']) && $_SESSION['HasFailedLogin']) {
-                echo '<h4 class="animate__animated animate__shakeX" >Email ou mot de passe incorrect.</h4>';
+    <main class="signInForm">
+        <section>
+            <div class="loginForm">
+                <h1>Connexion</h1>
+                <?php
+                if (isset($_SESSION['HasFailedLogin']) && $_SESSION['HasFailedLogin']) {
+                    echo '<h4 class="animate__animated animate__shakeX" >Email ou mot de passe incorrect.</h4>';
 
-                unset($_SESSION['HasFailedLogin']);
-            }
-            ?>
+                    unset($_SESSION['HasFailedLogin']);
+                }
+                ?>
 
-            <form action="./traitements/user.php" method="POST">
-                <div class="mb-3">
-                    <label for="email">Adresse e-mail :</label>
-                    <input type="email" class="form-control" name="email" required>
-                </div>
+                <form action="./traitements/user.php" method="POST">
+                    <div class="mb-3">
+                        <label for="email">Adresse e-mail :</label>
+                        <input type="email" class="form-control" name="email" required>
+                    </div>
 
-                <div class="mb-3">
-                    <label for="mot_de_passe">Mot de passe :</label>
-                    <input type="password" class="form-control" name="mot_de_passe" required>
-                </div>
+                    <div class="mb-3">
+                        <label for="mot_de_passe">Mot de passe :</label>
+                        <input type="password" class="form-control" name="mot_de_passe" required>
+                    </div>
 
-                <input type="hidden" name="token" value="<?php echo $_SESSION['csrf_token'] ?>">
+                    <input type="hidden" name="token" value="<?php echo $_SESSION['csrf_token'] ?>">
 
-                <input name="Intention" class="btn btn-success" value="Login" type="submit">
-            </form>
+                    <input name="Intention" class="btn btn-success" value="Login" type="submit">
+                </form>
+            </div>
         </section>
     </main>
     <?php include_once('./components/footer.php'); ?>

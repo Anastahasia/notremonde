@@ -50,19 +50,17 @@ if (token_verify()) {
         // var_dump($CategoryID);
 
         $AccomodationID = $NewConnection->insert('hebergement', array(
-            'titre' => 'Sans titre',
-            'description' => 'Ajouter une description',
-            'photo' => '',
-            'alt' => 'Ajouter une description de la photo',
-            'arrivee' => date('Y-m-d', time()),
-            'depart' => date('Y-m-d', time()),
-            'voyageurs_adultes' => '1',
-            'voyageurs_enfants' => '1',
-            'prix_total' => '500',
+            'nom' => 'Sans titre',
+            'photo1' => 'Ajouter une photo',
+            'photo2' => 'Ajouter une photo',
+            'descriptionHebergement	' => "Ajouter une description de l'hebergment",
+            'adresse' => "Ajouter l'adresse de l'hebergemennt",
+            'telephone' => "Ajouter le numéro de téléphone",
+            'ville' => '0',
         ));
 
         if ($AccomodationID) {
-            header("Location: " . "../circuit.php?edit=true&id_itineraire=$ItineraireID");
+            header("Location: " . "../hebergement.php?id_hebergement=$AccomodationID");
             die();
         }else{
             echo"Une erreur s'est produite veuillez réessayer";
@@ -150,4 +148,17 @@ if (isset($_POST['UpdateCircuit'])) {
 
     die();
 }
+}
+if (isset($_POST['UpdateSteps'])) {
+var_dump($_POST['UpdateSteps']);
+var_dump($_POST['id_ec']);
+    $Values = array(
+        $_POST['Column'] => $_POST[$_POST['Column']]
+    );
+
+    $Condition = array('id_ec' => $_POST['id_ec']);
+
+    $Success = $NewConnection->update('etape_circuit', $Condition, $Values);
+
+    die();
 }

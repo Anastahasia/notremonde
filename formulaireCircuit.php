@@ -24,7 +24,7 @@ if (empty($SelectedCircuit)) {
     header("Location: " . "./destination.php");
 }
 $SelectedSteps = $NewConnection->select_etape("etape_circuit", "hebergement", "id_hebergement", "ville", "id_ville", $CurrentCircuitID);
-
+$AllAccomodation = $NewConnection->select('hebergement')
 // echo ($_SESSION['csrf_token']);
 ?>
 <!DOCTYPE html>
@@ -61,7 +61,7 @@ $SelectedSteps = $NewConnection->select_etape("etape_circuit", "hebergement", "i
         <header class="pb-0" id="vif">
 
             <?php
-            function GenerateSelector($Categories, $Name, $SelectedId, $TableID)
+            function GenerateSelector($Categories, $Name, $TableID, $nom, $SelectedId)
             {
                 $SelectedId--; //zero-based vs one-based
 
@@ -74,8 +74,8 @@ $SelectedSteps = $NewConnection->select_etape("etape_circuit", "hebergement", "i
 
                 echo '
                 <div class="mb-3">
-                    <label class="soustitre" for="Categorie">Choisissez une categorie:</label>
-                    <select name="' . $Name . '" id="Categorie" class="form-select d-inline w-50 paragraphe">'
+                    <label class="soustitre" for="Categorie">Choisissez '.$nom.' :</label>
+                    <select name="' . $Name . '" class="form-select d-inline w-50 paragraphe">'
                     . $Options .
                     '</select>
                 </div>  ';
@@ -100,9 +100,9 @@ $SelectedSteps = $NewConnection->select_etape("etape_circuit", "hebergement", "i
                     </div>
                 </div>
                 <div class="txt-presentation">
-                    <h1 class="titre1" name="titre" contenteditable="true">' . $Circuit['titre'] . '</h1>
+                    <h1 class="titre" name="titre" contenteditable="true">' . $Circuit['titre'] . '</h1>
                     <p name="description" contenteditable="true">' . $Circuit['description'] . '</p>';
-                    GenerateSelector($AllCategories, 'categorie', $Circuit['categorie'], 'id_categorie');
+                    GenerateSelector($AllCategories, 'categorie', 'id_categorie', 'une catégorie', $Circuit['categorie']);
                     echo '
                     <div class="mb-3">
                         <label class="soustitre" for="duree">Durée (en jours):</label>
@@ -119,11 +119,11 @@ $SelectedSteps = $NewConnection->select_etape("etape_circuit", "hebergement", "i
             }
             ?>
         </header>
-        <section>
+        <section class="etape">
             <h2 class="titre1 pt-2">Circuit</h2>
             <?php foreach ($SelectedSteps as $Step) {
                 echo '
-        
+        <form class="mes_forms" action="./traitements/gestion.php" method="post">
             <div class="flex-etape">
                 <hr>
                 <div class="mb-3">
@@ -132,47 +132,21 @@ $SelectedSteps = $NewConnection->select_etape("etape_circuit", "hebergement", "i
                 </div>
                 <hr>
             </div>
-            <div class="etape-display">
-                <div class="txt-etape">
-                    <p class="accent">jour <input type="num" class="form-control d-inline w-25 titre2" name="jourArrivee" value="' . $Step['jourArrivee'] . '"> à jour <input type="num" class="form-control d-inline w-25 titre2" name="jourDepart" value="' . $Step['jourDepart'] . '"></p>
-                    <p contenteditable="true">' . $Step['descriptionEtape'] . '</p>
-                    <p class="accent" contenteditable="true">' . $Step['nom'] . '</p>
-                    <p contenteditable="true">' . $Step['type'] . '</p>
-                    <p contenteditable="true">' . $Step['descriptionHebergement'] . '</p>
-                </div>';
-
-                echo '
-                <div class="img-presentation">
-                    <div id="carouselExample" class="carousel slide">
-                        <div class="carousel-inner">
-                        
-                            <div class="carousel-item active">
-                                <img src="' . GetImagePath($Step['photoVille']) . '" class="" alt="...">
-                            </div>
-                            <div class="carousel-item">
-                                <img src="' . GetImagePath($Step['photo1']) . '" class="" alt="photo de ' . $Step['nom'] . '">
-                            </div>
-                            <div class="carousel-item">
-                                <img src="' . GetImagePath($Step['photo2']) . '" class="" alt="' . $Step['nom'] . '">
-                            </div>
-                        </div>
-                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
-                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Previous</span>
-                        </button>
-                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
-                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Next</span>
-                        </button>
-                    </div>
-                </div>
+            
+            <div class="txt-etape">
+                <p class="accent">jour <input type="num" class="form-control d-inline w-25 titre2" name="jourArrivee" value="' . $Step['jourArrivee'] . '"> à jour <input type="num" class="form-control d-inline w-25 titre2" name="jourDepart" value="' . $Step['jourDepart'] . '"></p>
+                <p contenteditable="true" name="descriptionEtape">' . $Step['descriptionEtape'] . '</p>';
+                GenerateSelector($AllAccomodation,'hebergement', 'id_hebergement', 'un hébergement', $Step['hebergement']);
+          echo' <input type="hidden" name="token" value="' . $_SESSION['csrf_token'] . '">
+                <input type="hidden" name="id_ec" value="' . $Step['id_ec'] . '">
             </div>
-        ';
+        </form>';
             } ?>
         </section>
     </main>
     <?php include_once('./components/footer.php') ?>
     <script>
+
         /* Variables */
 
         // We're using the same button for all ajax submit
@@ -185,6 +159,10 @@ $SelectedSteps = $NewConnection->select_etape("etape_circuit", "hebergement", "i
 
         function GetCurrentCircuitID() {
             return Number(<?php echo $CurrentCircuitID; ?>);
+        }
+
+        function GetCurrentStepID() {
+            return Number(<?php echo $Step['id_ec']; ?>);
         }
 
         function GetCurrentCategorieID() {
@@ -212,10 +190,10 @@ $SelectedSteps = $NewConnection->select_etape("etape_circuit", "hebergement", "i
         /** Updating the Circuit fields:
          * The point is to hook all those elements to be able to send genericly their data to databases
          * */
-        [...document.querySelectorAll('*[contenteditable="true"]')]
+        [...document.querySelectorAll('.presentation *[contenteditable="true"]')]
         .concat([...document.querySelectorAll('.image-selector')])
-            .concat([...document.querySelectorAll('input')])
-            .concat([...document.querySelectorAll('#Categorie')])
+            .concat([...document.querySelectorAll('.presentation input')])
+            .concat([...document.querySelectorAll('.presentation select')])
             .forEach(Each => {
 
                 if (!Each) return;
@@ -265,6 +243,73 @@ $SelectedSteps = $NewConnection->select_etape("etape_circuit", "hebergement", "i
                     Event.target.insertAdjacentElement('afterend', UpdateCircuitButton);
 
                     UpdateCircuitButton.addEventListener('click', SendUpdateCircuitField);
+
+                    UpdateCircuitButton.style.display = 'block';
+                });
+
+                // Hiding the button on blur, but see notes below
+                Each.addEventListener('blur', (Event) => {
+
+                });
+            });
+
+        [...document.querySelectorAll('.etape *[contenteditable="true"]')]
+            .concat([...document.querySelectorAll('.etape input')])
+            .concat([...document.querySelectorAll('.etape select')])
+            .forEach(Each => {
+
+                if (!Each) return;
+                let test;
+                [...document.querySelectorAll('.mes_forms')]
+                    .forEach(Each => {
+                        console.log( document.querySelector('input[name="id_ec"]').value);
+                    })
+
+                async function SendUpdateStepsField(Event) {
+
+                    let url = "./traitements/gestion.php";
+
+                    let id_etape = document.querySelector('input[name="id_ec"]');
+                    let form_data = new FormData();
+                    form_data.append('UpdateSteps', test);
+                    form_data.append('token', GetCurrentSessionToken());
+                    form_data.append('id_ec', id_etape.value);
+                    form_data.append('Column', Each.getAttribute('name'));
+
+                    // We either send a file (images), the content of the form value (#Categorie), or the actual editable text content
+                    const File = Each.files ? Each.files[0] : null;
+                    form_data.append(Each.getAttribute('name'), File || Each.value || Each.innerHTML);
+console.log(form_data.id_ec);
+                    const Request = await fetch(url, {
+                            method: "POST",
+                            mode: "cors",
+                            cache: "no-cache",
+                            credentials: "same-origin",
+                            // It doesnt work with Content-Type, the WebBrowser will assess the content-type
+                            // headers: { 'Content-Type': 'multipart/form-data' },
+                            redirect: "follow",
+                            referrerPolicy: "no-referrer",
+                            body: form_data
+                        })
+                        .then(function(Response) {
+// console.log(Response)
+                            UpdateCircuitButton.remove();
+                            UpdateCircuitButton.removeEventListener('click', SendUpdateStepsField, true);
+
+                            return Response.text();
+                        })
+                        .then(function(ResponseText) {
+                            console.log(ResponseText);
+                        });
+
+                    return true;
+                }
+
+                //Hooking up the button to appear below the edited field
+                Each.addEventListener('focus', (Event) => {
+                    Event.target.insertAdjacentElement('afterend', UpdateCircuitButton);
+
+                    UpdateCircuitButton.addEventListener('click', SendUpdateStepsField);
 
                     UpdateCircuitButton.style.display = 'block';
                 });
