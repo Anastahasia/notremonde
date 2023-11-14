@@ -713,7 +713,6 @@ footer .titre2 {
         border-color: #B1CF5F;
     }
 
-    /* FORMULAIRE DE MODIFICATION */
     /* .update-edit{
 position: absolute;
 left: 45%;
@@ -824,6 +823,13 @@ left: 45%;
     padding: 0 3%;
     border: solid 1.5px #B1CF5F;
 }
+    /* FORMULAIRE DE MODIFICATION */
+    #FormCircuit .img-presentation{
+        height: 23rem;
+    }
+        #FormCircuit img{
+        width: 100%;
+        }
 /* END GESTION */
 
 /* FORMULAIRE D'INSCRIPTION ET DE CONNEXION */

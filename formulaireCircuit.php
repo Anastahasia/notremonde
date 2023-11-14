@@ -57,7 +57,7 @@ $AllAccomodation = $NewConnection->select('hebergement')
     <?php
     include_once('./components/nav.php');
     ?>
-    <main>
+    <main id="FormCircuit">
         <header class="pb-0" id="vif">
 
             <?php
@@ -256,8 +256,7 @@ $AllAccomodation = $NewConnection->select('hebergement')
 
                 });
             });
-    </script>
-    <script type="text/javascript">
+  
         $("#rowAdder").click(function() {
             newRowAdd =        
             ' <div class="mb-3">'+
