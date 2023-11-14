@@ -82,7 +82,7 @@ $AllUsers = $NewConnection->select("utilisateur");
 
                     <?php
                     foreach ($AllCircuits as $Key => $Value) {
-                        $CircuitPageRedirectionWithParameters = './FormulaireCircuit.php?circuit=' . $Value['id_circuit'];
+                        $CircuitPageRedirectionWithParameters = './formulaireCircuit.php?circuit=' . $Value['id_circuit'];
 
                         echo '<form action="./traitements/gestion.php" method="post" class="card gestion">';
                         echo '<input type="hidden" name="id_circuit" value="' . $Value['id_circuit'] . '">';

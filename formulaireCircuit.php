@@ -256,8 +256,6 @@ $AllAccomodation = $NewConnection->select('hebergement')
 
                 });
             });
-    </script>
-    <script>
         $("#rowAdder").click(function() {
             newRowAdd =
                 ' <div class="mb-3">' +
