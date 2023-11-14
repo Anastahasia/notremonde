@@ -67,7 +67,7 @@ $thematiques = $NewConnection->select("categorie", "NOT nom", "brouillon");
             <a href="" class="btn btn-success">Devis</a>
             <?php if ($IsUserLoggedIn) : $UserIcon = './images/icons_user.png';
             ?>
-                <div class="d-grid">
+                <div class="d-grid connected">
                     <a class="nav-link" href="./profil.php"><img src=<?php echo '"' . $UserIcon . '"'; ?> alt="User Role Image" style="width: 32px; height: 32px;"></a>
                     <form method="POST" action="./traitements/user.php"><button type="submit" name="Intention" value="Logout" class="btn p-0">Deconnexion</button><input type="hidden" name="token" value="<?php echo $_SESSION['csrf_token'] ?>"></form>
                 </div>

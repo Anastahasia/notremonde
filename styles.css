@@ -206,6 +206,10 @@ section {
         justify-items: center;
     }
 
+    .float-login .connected{
+        justify-items: center;
+    }
+
 
 
     /* .dropdown-toggle::after {
