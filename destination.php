@@ -17,7 +17,7 @@ if ($CurrentDestinationID) {
 } elseif ($CurrentCategorieID) {
     $circuits = $NewConnection->select_multi_conditions("circuit", array(
         'visible' => 1,
-        'continent' => $CurrentCategorieID,
+        'categorie' => $CurrentCategorieID,
     ));
 } else {
     $circuits = $NewConnection->select("circuit", "visible");
@@ -172,13 +172,13 @@ if (isset($_SESSION['UserID'])) {
                         data: formData,
                         dataType: 'json',
                         cache: false,
-                        success: function(data) {
-                            console.log(formData);
-                        },
-                        error: function(data) {
-                            console.log(data)
-                            alert("erreur lors de l'envoi des données")
-                        }
+                        // success: function(data) {
+                        //     console.log(formData);
+                        // },
+                        // error: function(data) {
+                        //     console.log(data)
+                        //     alert("erreur lors de l'envoi des données")
+                        // }
                     });
                 };
             });

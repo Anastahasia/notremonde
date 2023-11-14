@@ -74,7 +74,7 @@ $AllAccomodation = $NewConnection->select('hebergement')
 
                 echo '
                 <div class="mb-3">
-                    <label class="soustitre" for="Categorie">Choisissez '.$nom.' :</label>
+                    <label class="soustitre" for="Categorie">Choisissez ' . $nom . ' :</label>
                     <select name="' . $Name . '" class="form-select d-inline w-50 paragraphe">'
                     . $Options .
                     '</select>
@@ -87,7 +87,7 @@ $AllAccomodation = $NewConnection->select('hebergement')
                 echo '
             <form enctype="multipart/form-data" action="./traitements/gestion.php" method="post" class="presentation pb-0">
                 <div class="img-presentation">';
-                    echo '
+                echo '
                     <div class="mb-3">
                         <label for="photo">Sélectionnez une image :</label>
                         <input type="file" class="form-control image-selector" name="photo" accept="image/png, image/jpeg">
@@ -102,8 +102,8 @@ $AllAccomodation = $NewConnection->select('hebergement')
                 <div class="txt-presentation">
                     <h1 class="titre" name="titre" contenteditable="true">' . $Circuit['titre'] . '</h1>
                     <p name="description" contenteditable="true">' . $Circuit['description'] . '</p>';
-                    GenerateSelector($AllCategories, 'categorie', 'id_categorie', 'une catégorie', $Circuit['categorie']);
-                    echo '
+                GenerateSelector($AllCategories, 'categorie', 'id_categorie', 'une catégorie', $Circuit['categorie']);
+                echo '
                     <div class="mb-3">
                         <label class="soustitre" for="duree">Durée (en jours):</label>
                         <input type="text" class="form-control d-inline w-25 paragraphe" name="duree" value="' . $Circuit['duree'] . '"> 
@@ -123,7 +123,7 @@ $AllAccomodation = $NewConnection->select('hebergement')
             <h2 class="titre1 pt-2">Circuit</h2>
             <?php foreach ($SelectedSteps as $Step) {
                 echo '
-        <form class="mes_forms" action="./traitements/gestion.php" method="post">
+        <form action="./traitements/gestion.php" method="post">
             <div class="flex-etape">
                 <hr>
                 <div class="mb-3">
@@ -136,17 +136,21 @@ $AllAccomodation = $NewConnection->select('hebergement')
             <div class="txt-etape">
                 <p class="accent">jour <input type="num" class="form-control d-inline w-25 titre2" name="jourArrivee" value="' . $Step['jourArrivee'] . '"> à jour <input type="num" class="form-control d-inline w-25 titre2" name="jourDepart" value="' . $Step['jourDepart'] . '"></p>
                 <p contenteditable="true" name="descriptionEtape">' . $Step['descriptionEtape'] . '</p>';
-                GenerateSelector($AllAccomodation,'hebergement', 'id_hebergement', 'un hébergement', $Step['hebergement']);
-          echo' <input type="hidden" name="token" value="' . $_SESSION['csrf_token'] . '">
+                GenerateSelector($AllAccomodation, 'hebergement', 'id_hebergement', 'un hébergement', $Step['hebergement']);
+                echo ' <input type="hidden" name="token" value="' . $_SESSION['csrf_token'] . '">
                 <input type="hidden" name="id_ec" value="' . $Step['id_ec'] . '">
             </div>
         </form>';
             } ?>
+            <form id="newStep"></form>
         </section>
+        <button id="rowAdder" type="button" class="btn btn-success">
+            <span class="bi bi-plus-square-dotted">
+            </span> Ajouter
+        </button>
     </main>
     <?php include_once('./components/footer.php') ?>
     <script>
-
         /* Variables */
 
         // We're using the same button for all ajax submit
@@ -203,7 +207,7 @@ $AllAccomodation = $NewConnection->select('hebergement')
                     let url = "./traitements/gestion.php";
 
                     let form_data = new FormData();
-                    form_data.append('UpdateCircuit',1);
+                    form_data.append('UpdateCircuit', 1);
                     form_data.append('token', GetCurrentSessionToken());
                     form_data.append('id_circuit', GetCurrentCircuitID());
                     form_data.append('id_categorie', GetCurrentCategorieID());
@@ -231,9 +235,9 @@ $AllAccomodation = $NewConnection->select('hebergement')
 
                             return Response.text();
                         })
-                        // .then(function(ResponseText) {
-                        //     console.log(ResponseText);
-                        // });
+                    // .then(function(ResponseText) {
+                    //     console.log(ResponseText);
+                    // });
 
                     return true;
                 }
@@ -252,73 +256,25 @@ $AllAccomodation = $NewConnection->select('hebergement')
 
                 });
             });
+    </script>
+    <script type="text/javascript">
+        $("#rowAdder").click(function() {
+            newRowAdd =        
+            ' <div class="mb-3">'+
+            ' <label class="titre2 etape" for="ordre">étape </label>'+
+            '<input type="num" class="form-control d-inline w-25 titre2" name="ordre" value="0">'+
+            '</div>'+
 
-        [...document.querySelectorAll('.etape *[contenteditable="true"]')]
-            .concat([...document.querySelectorAll('.etape input')])
-            .concat([...document.querySelectorAll('.etape select')])
-            .forEach(Each => {
 
-                if (!Each) return;
-                let test;
-                [...document.querySelectorAll('.mes_forms')]
-                    .forEach(Each => {
-                        console.log( document.querySelector('input[name="id_ec"]').value);
-                    })
+            '<div class="txt-etape">'+
+            '<p class="accent">jour <input type="num" class="form-control d-inline w-25 titre2" name="jourArrivee" value="1"> à jour <input type="num" class="form-control d-inline w-25 titre2" name="jourDepart" value="1"></p>'+
+            '<p contenteditable="true" name="descriptionEtape">Ajoutez une description</p>'+
+            '</div>'
+            '<button class="btn btn-success" type="submit" name="NewStep">Créer</button>'
+            ;
 
-                async function SendUpdateStepsField(Event) {
-
-                    let url = "./traitements/gestion.php";
-
-                    let id_etape = document.querySelector('input[name="id_ec"]');
-                    let form_data = new FormData();
-                    form_data.append('UpdateSteps', test);
-                    form_data.append('token', GetCurrentSessionToken());
-                    form_data.append('id_ec', id_etape.value);
-                    form_data.append('Column', Each.getAttribute('name'));
-
-                    // We either send a file (images), the content of the form value (#Categorie), or the actual editable text content
-                    const File = Each.files ? Each.files[0] : null;
-                    form_data.append(Each.getAttribute('name'), File || Each.value || Each.innerHTML);
-console.log(form_data.id_ec);
-                    const Request = await fetch(url, {
-                            method: "POST",
-                            mode: "cors",
-                            cache: "no-cache",
-                            credentials: "same-origin",
-                            // It doesnt work with Content-Type, the WebBrowser will assess the content-type
-                            // headers: { 'Content-Type': 'multipart/form-data' },
-                            redirect: "follow",
-                            referrerPolicy: "no-referrer",
-                            body: form_data
-                        })
-                        .then(function(Response) {
-// console.log(Response)
-                            UpdateCircuitButton.remove();
-                            UpdateCircuitButton.removeEventListener('click', SendUpdateStepsField, true);
-
-                            return Response.text();
-                        })
-                        .then(function(ResponseText) {
-                            console.log(ResponseText);
-                        });
-
-                    return true;
-                }
-
-                //Hooking up the button to appear below the edited field
-                Each.addEventListener('focus', (Event) => {
-                    Event.target.insertAdjacentElement('afterend', UpdateCircuitButton);
-
-                    UpdateCircuitButton.addEventListener('click', SendUpdateStepsField);
-
-                    UpdateCircuitButton.style.display = 'block';
-                });
-
-                // Hiding the button on blur, but see notes below
-                Each.addEventListener('blur', (Event) => {
-
-                });
-            });
+            $('#newStep').append(newRowAdd);
+        });
     </script>
 </body>
 

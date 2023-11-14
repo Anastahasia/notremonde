@@ -62,7 +62,7 @@ $AllUsers = $NewConnection->select("utilisateur");
 
 
         <div class="tab-content serveur-section">
-            <div class="tab-pane fade show active tab-pane-content border-top-0 rounded-bottom tab-pane-content" id="Circuits">
+            <div class="tab-pane fade show active border-top-0 rounded-bottom tab-pane-content" id="Circuits">
                 <div class="entete">
                     <h2 class="titre">Tous les circuits</h2>
                 </div>

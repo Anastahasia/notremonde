@@ -698,27 +698,15 @@ footer .titre2 {
     /* GESTION */
 
     .serveur-section {
-        padding: 0% 9%;
+        padding: 0% 9% 2%;
     }
 
     .nav-tabs {
         display: flex;
         justify-content: center;
-        margin: 1% 9%;
+        margin: 1% 9% 0;
         border-color: #B1CF5F;
     }
-
-    .nav-tabs .nav-link.active {
-        border-top-color: #B1CF5F;
-        border-right-color: #B1CF5F;
-        border-left-color: #B1CF5F;
-    }
-
-    .tab-pane-content {
-        padding: 0 3%;
-        border: solid 1.5px #B1CF5F;
-    }
-
 
     /* FORMULAIRE DE MODIFICATION */
     /* .update-edit{
@@ -819,6 +807,19 @@ left: 45%;
         margin: -1.8em 1.5em 0 0;
     }
 }
+.nav-tabs {
+    border-color: #B1CF5F;
+}
+.nav-tabs .nav-link.active {
+    border-top-color: #B1CF5F;
+    border-right-color: #B1CF5F;
+    border-left-color: #B1CF5F;
+}
+.tab-pane-content {
+    padding: 0 3%;
+    border: solid 1.5px #B1CF5F;
+}
+/* END GESTION */
 
 /* FORMULAIRE D'INSCRIPTION ET DE CONNEXION */
 .loginForm {
@@ -871,4 +872,13 @@ left: 45%;
 
 form.input-group input.form-control {
     border-color: #f8f9fa;
+}
+/* FIN FORMULAIRE D'INSCRIPTION */
+
+/* FORMULAIRE DE CONTACT */
+.contactForms{
+    padding: 2% 3%;
+}
+#Forms{
+    padding: 1% 2%;
 }

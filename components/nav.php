@@ -37,7 +37,7 @@ $thematiques = $NewConnection->select("categorie", "NOT nom", "brouillon");
                             <a class="dropdown-item dropdown-toggle" href="#">Thématiques</a>
                             <ul>
                                 <?php foreach ($thematiques as $Value) {
-                                    echo '<li><a href="./destination.php?destination=' . $Value['id_categorie'] . '" class="dropdown-item">' . $Value['nom'] . '</a></li>';
+                                    echo '<li><a href="./destination.php?categorie=' . $Value['id_categorie'] . '" class="dropdown-item">' . $Value['nom'] . '</a></li>';
                                 }
                                 ?>
                             </ul>

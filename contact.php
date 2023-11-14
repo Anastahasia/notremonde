@@ -34,7 +34,7 @@ $categorie = $NewConnection->select("categorie", "NOT id_categorie", "1");
 
 <body>
     <?php include_once('./components/nav.php'); ?>
-    <main>
+    <main id="Forms">
         <div>
             <ul class="nav nav-tabs" role="tablist">
                 <li class="nav-item">
@@ -50,18 +50,18 @@ $categorie = $NewConnection->select("categorie", "NOT id_categorie", "1");
         </div>
 
         <!-- Formulaire de devis -->
-        <div class="tab-content">
-            <div class="tab-pane fade show active" id="Quotation">
+        <div class="tab-content serveur-section">
+            <div class="tab-pane fade show active tab-pane-content contactForms border-top-0 rounded-bottom" id="Quotation">
                 <?php if (isset($_POST['AskQuotation']) && $MessageSent) : ?>
                     <h4>Votre demande a bien été envoyé. Vous recevrez votre devis dans les plus brefs délais !</h4>
                 <?php else : ?>
                     <h4 class="titre2">Votre futur voyage</h4>
                     <div class="form-container">
-                        <form class="contactForms" method="post" action="./traitements/user.php">
+                        <form method="post" action="./traitements/user.php">
                             <div class="mb-3">
                                 <label for="arrivalDate" class="form-label soustitre">Quand souhaitez-vous voyager ? </label>
-                                <input type="date" name="arrivalDate" id="" placeholder="Votre date d'arrivée">
-                                <input type="date" name="departureDate" id="" placeholder="Votre date de retour">
+                                <input type="date" class="form-control mt-2" name="arrivalDate" id="" placeholder="Votre date d'arrivée">
+                                <input type="date" class="form-control mt-2" name="departureDate" id="" placeholder="Votre date de retour">
                             </div>
                             <!-- <div class="mb-3">
                         <label for="duree" class="form-label soustitre">Combien de temps souhaitez vous rester ? </label>
@@ -69,8 +69,8 @@ $categorie = $NewConnection->select("categorie", "NOT id_categorie", "1");
                     </div> faire apparaître lors d'un clique sur une check box ? question Connaissez-vous vos dates de voyage ?-->
                             <div class="mb-3">
                                 <label for="adults" class="form-label soustitre">Avec qui voyagez vous ? </label>
-                                <input type="number" name="adults" id="" placeholder="Nombre d'adultes" min="0" required>
-                                <input type="number" name="children" id="" placeholder="Nombre d'enfants" min="0" required>
+                                <input type="number" class="form-control mt-2" name="adults" id="" placeholder="Nombre d'adultes" min="0" required>
+                                <input type="number" class="form-control mt-2" name="children" id="" placeholder="Nombre d'enfants" min="0" required>
                             </div>
 
                             <h4 class="titre2">Le voyage de vos rêves</h4>
@@ -106,7 +106,7 @@ $categorie = $NewConnection->select("categorie", "NOT id_categorie", "1");
                                 } ?>
                             </div>
 
-                            <!-- informations de contact de l'utilisateur -->
+                            <!-- informations de contact de l'utilisateur connecté-->
                             <?php if (isset($_SESSION['CurrentUser'])) :
                                 $nom = $_SESSION['CurrentUserSurname'];
                                 $prenom = $_SESSION['CurrentUserName'];
@@ -152,13 +152,13 @@ $categorie = $NewConnection->select("categorie", "NOT id_categorie", "1");
 
 
             <!-- Formulaire de contact -->
-            <div class="tab-pane fade show" id="Email">
+            <div class="tab-pane fade show tab-pane-content contactForms border-top-0 rounded-bottom" id="Email">
                 <?php if (isset($_POST['SendEmail']) && $MessageSent) : ?>
                     <h4>Merci pour votre message. Nous revenons vers vous dans les plus brefs délais</h4>
                 <?php else : ?>
                     <h4 class="titre2">Envoyez nous un message</h4>
                     <div class="form-container">
-                        <form class="contactForms" method="post" action="./traitements/user.php">
+                        <form method="post" action="./traitements/user.php">
                             <?php if (isset($_SESSION['CurrentUser'])) :
                                 $nom = $_SESSION['CurrentUserSurname'];
                                 $prenom = $_SESSION['CurrentUserName'];

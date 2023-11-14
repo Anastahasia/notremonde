@@ -144,7 +144,7 @@ $circuits = $NewConnection->select_random("circuit", "categorie");
                         <p class="accent">Professionnalisme</p>
                     </div>
                 </div>
-                <button type="button" class="btn btn-success">Contacter</button>
+                <a href="./contact.php" class="btn btn-success">Contacter</a>
                 <p>
                     N’hésitez plus ! Si vous avez des questions...
                 </p>
