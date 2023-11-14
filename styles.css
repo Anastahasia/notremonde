@@ -538,7 +538,7 @@ footer .titre2 {
     height: 13rem;
 }
 
-#Circuit header {
+.presentation {
     padding: 0 2%;
 }
 
@@ -557,7 +557,8 @@ footer .titre2 {
         justify-content: space-between;
     }
 
-    .img-presentation {
+    #Circuit .carousel-item, .img-presentation {
+        height: 100%;
         width: 100%
     }
 
