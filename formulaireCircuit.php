@@ -256,21 +256,21 @@ $AllAccomodation = $NewConnection->select('hebergement')
 
                 });
             });
-  
+    </script>
+    <script>
         $("#rowAdder").click(function() {
-            newRowAdd =        
-            ' <div class="mb-3">'+
-            ' <label class="titre2 etape" for="ordre">étape </label>'+
-            '<input type="num" class="form-control d-inline w-25 titre2" name="ordre" value="0">'+
-            '</div>'+
+            newRowAdd =
+                ' <div class="mb-3">' +
+                ' <label class="titre2 etape" for="ordre">étape </label>' +
+                '<input type="num" class="form-control d-inline w-25 titre2" name="ordre" value="0">' +
+                '</div>' +
 
 
-            '<div class="txt-etape">'+
-            '<p class="accent">jour <input type="num" class="form-control d-inline w-25 titre2" name="jourArrivee" value="1"> à jour <input type="num" class="form-control d-inline w-25 titre2" name="jourDepart" value="1"></p>'+
-            '<p contenteditable="true" name="descriptionEtape">Ajoutez une description</p>'+
-            '</div>'
-            '<button class="btn btn-success" type="submit" name="NewStep">Créer</button>'
-            ;
+                '<div class="txt-etape">' +
+                '<p class="accent">jour <input type="num" class="form-control d-inline w-25 titre2" name="jourArrivee" value="1"> à jour <input type="num" class="form-control d-inline w-25 titre2" name="jourDepart" value="1"></p>' +
+                '<p contenteditable="true" name="descriptionEtape">Ajoutez une description</p>' +
+                '</div>'
+            '<button class="btn btn-success" type="submit" name="NewStep">Créer</button>';
 
             $('#newStep').append(newRowAdd);
         });
