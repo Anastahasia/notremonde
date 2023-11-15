@@ -92,6 +92,7 @@ if (token_verify()) {
         ));
 
         if ($UserID) {
+            mail($_POST['email'], 'Confirmation de votre compte', "Afin de valider votre compte sur notre monde merci de cliquer sur ce lien\n\nhttp://assani-anasthasia-notremonde.sc3nuxz4136.universe.wf/components/confirm.php?id=$UserID&token=$token");
             header("Location: " . "../gestion.php");
             die();
         }else{
