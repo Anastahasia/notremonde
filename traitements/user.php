@@ -20,11 +20,12 @@ if (token_verify()) {
                     // $HashedPassword = password_hash($_POST['mot_de_passe'], PASSWORD_DEFAULT);
                     $HashedPassword = password_hash($mdp, PASSWORD_ARGON2ID, ['memory_cost' => 1 << 17, 'time_cost' => 4, 'threads' => 2]);
 
-                    var_dump($email);
+                    // var_dump($email);
                     $EmailVerify = $NewConnection->select('utilisateur', "email", $email);
 
                     if (empty($EmailVerify)) {
-                        $Success = $NewConnection->insert_user($surname, $name, $num, $email, $HashedPassword); #inserts a new user if the email adress doesn't exist in the DB
+                        $Success = $NewConnection->insert_user($surname, $name, $num, $email, $HashedPassword, $token); #inserts a new user if the email adress doesn't exist in the DB
+                        mail($_POST['email'], 'Confirmation de votre compte', "Afin de valider votre compte sur notre monde merci de cliquer sur ce lien\n\nhttp://assani-anasthasia-notremonde.sc3nuxz4136.universe.wf/components/confirm.php?id=$Succes&token=$token");
                     } else {
                         session_start();
 
@@ -43,35 +44,42 @@ if (token_verify()) {
                 }
 
                 // NOTE: we let fall through from signup to login, so it automatically logs in
-                //break;
+                break;
 
             case 'Me connecter':
 
                 $Condition = $email;
                 $UniqueUser = $NewConnection->select('utilisateur', "email", $Condition);
                 // var_dump($UniqueUser[0]);
+                $ConfirmedUser = $UniqueUser[0]['confirmed_at'];
+                if (!empty($ConfirmedUser)) {
+                    if ($UniqueUser && password_verify($mot_de_passe, $UniqueUser[0]['mot_de_passe'])) {
+                        $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+                        $_SESSION['CurrentUser'] = $UniqueUser[0]['email'];
+                        $_SESSION['CurrentUserSurname'] = $UniqueUser[0]['nom'];
+                        $_SESSION['CurrentUserName'] = $UniqueUser[0]['prenom'];
+                        $_SESSION['CurrentUserPhone'] = $UniqueUser[0]['num'];
+                        $_SESSION['UserRole'] = $UniqueUser[0]['role'];
+                        $_SESSION['UserID'] = $UniqueUser[0]['id_utilisateur'];
+                        if ($_SESSION['UserRole'] == 'admin') {
+                            header("Location: " . '../gestion.php');
+                            die();
+                        }
+                        if ($_SESSION['UserRole'] == 'guest') {
+                            header("Location: " . '../profil.php');
+                            die();
+                        }
+                    } else {
+                        $_SESSION['HasFailedLogin'] = "Votre email ou votre mot de passe est incorrect";
 
-                if ($UniqueUser && password_verify($mot_de_passe, $UniqueUser[0]['mot_de_passe'])) {
-                    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
-                    $_SESSION['CurrentUser'] = $UniqueUser[0]['email'];
-                    $_SESSION['CurrentUserSurname'] = $UniqueUser[0]['nom'];
-                    $_SESSION['CurrentUserName'] = $UniqueUser[0]['prenom'];
-                    $_SESSION['CurrentUserPhone'] = $UniqueUser[0]['num'];
-                    $_SESSION['UserRole'] = $UniqueUser[0]['role'];
-                    $_SESSION['UserID'] = $UniqueUser[0]['id_utilisateur'];
-                    if ($_SESSION['UserRole'] == 'admin') {
-                        header("Location: " . '../gestion.php');
+                        header("Location: " . '../login.php');
                         die();
                     }
-                    if ($_SESSION['UserRole'] == 'guest') {
-                        header("Location: " . '../profil.php');
-                        die();
-                    }
-                } else {
-                    $_SESSION['HasFailedLogin'] = true;
+                }else {
+                    $_SESSION['HasFailedLogin'] = "Votre compte n'est pas confirmé.";
 
-                    header("Location: " . '../login.php');
-                    die();
+                        header("Location: " . '../login.php');
+                        die();
                 }
                 break;
 
@@ -134,8 +142,8 @@ if (token_verify()) {
             mail($to, "Demande de devis", $body);
             $MessageSent = true;
             header("Location: " . '../contact.php');
-        }else{
-            echo'Votre email est invalide veuillez réessayer.';
+        } else {
+            echo 'Votre email est invalide veuillez réessayer.';
         }
     }
 

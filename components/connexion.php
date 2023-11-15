@@ -201,10 +201,10 @@ class MaConnexion
         }
     }
 
-    public function insert_user($surname, $name, $num, $email, $mdp)
+    public function insert_user($surname, $name, $num, $email, $mdp, $token)
     {
         try {
-            $SQLQueryString = "INSERT INTO utilisateur (nom, prenom, num, email, mot_de_passe, role) VALUES (:nom, :prenom, :num, :email, :mot_de_passe, 'guest')";
+            $SQLQueryString = "INSERT INTO utilisateur (nom, prenom, num, email, mot_de_passe, role, confirmation_token) VALUES (:nom, :prenom, :num, :email, :mot_de_passe, 'guest', :token)";
             $query = $this->Connection->prepare($SQLQueryString);
 
             $query->bindParam(':nom', $surname, PDO::PARAM_STR, 40);
@@ -212,6 +212,7 @@ class MaConnexion
             $query->bindParam(':num', $num, PDO::PARAM_STR, 30);
             $query->bindParam(':email', $email, PDO::PARAM_STR, 60);
             $query->bindParam(':mot_de_passe', $mdp, PDO::PARAM_STR);
+            $query->bindParam(':token', $token, PDO::PARAM_STR);
 
             $query->execute();
 

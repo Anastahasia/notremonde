@@ -40,7 +40,7 @@ if (isset($_SESSION['CurrentUser'])) {
                 <h1 class="text-white">Connexion</h1>
                 <?php
                 if (isset($_SESSION['HasFailedLogin']) && $_SESSION['HasFailedLogin']) {
-                    echo '<h4 class="animate__animated animate__shakeX" >Email ou mot de passe incorrect.</h4>';
+                    echo '<h4 class="animate__animated animate__shakeX" >'.$_SESSION['HasFailedLogin'].'</h4>';
 
                     unset($_SESSION['HasFailedLogin']);
                 }
