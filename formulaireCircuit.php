@@ -48,7 +48,7 @@ $AllAccomodation = $NewConnection->select('hebergement')
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 
-    <link rel="icon" href="./images/favicon.png" type="image/x-icon">
+    <link rel="icon" href="./images/notreMonde.png" type="image/x-icon">
 
     <link href="styles.css" rel="stylesheet" />
 </head>
@@ -74,7 +74,7 @@ $AllAccomodation = $NewConnection->select('hebergement')
 
                 echo '
                 <div class="mb-3">
-                    <label class="soustitre" for="Categorie">Choisissez ' . $nom . ' :</label>
+                    <label class="accent" for="Categorie">Choisissez ' . $nom . ' :</label>
                     <select name="' . $Name . '" class="form-select d-inline w-50 paragraphe">'
                     . $Options .
                     '</select>
@@ -82,20 +82,18 @@ $AllAccomodation = $NewConnection->select('hebergement')
             }
 
             foreach ($SelectedCircuit as $Circuit) {
-
-
                 echo '
             <form enctype="multipart/form-data" action="./traitements/gestion.php" method="post" class="presentation pb-0">
                 <div class="img-presentation">';
                 echo '
                     <div class="mb-3">
-                        <label for="photo">Sélectionnez une image :</label>
+                        <label for="photo" class="accent">Sélectionnez une image :</label>
                         <input type="file" class="form-control image-selector" name="photo" accept="image/png, image/jpeg">
                     
                         <img  class="image-preview" src="' . GetImagePath($Circuit['photo']) . '" alt="' . $Circuit['alt'] . '">
                     </div>
                     <div class="mb-3">
-                        <label class="soustitre" for="alt">Description de la photo:</label>
+                        <label class="accent" for="alt">Description de la photo:</label>
                         <input type="text" class="form-control d-inline paragraphe" name="alt" value="' . $Circuit['alt'] . '"> 
                     </div>
                 </div>
@@ -105,43 +103,51 @@ $AllAccomodation = $NewConnection->select('hebergement')
                 GenerateSelector($AllCategories, 'categorie', 'id_categorie', 'une catégorie', $Circuit['categorie']);
                 echo '
                     <div class="mb-3">
-                        <label class="soustitre" for="duree">Durée (en jours):</label>
+                        <label class="accent" for="duree">Durée (en jours):</label>
                         <input type="text" class="form-control d-inline w-25 paragraphe" name="duree" value="' . $Circuit['duree'] . '"> 
                     </div>
                     <div class="mb-3">
-                        <label class="soustitre" for="prix_estimatif">Prix (en euros):</label>
+                        <label class="accent" for="prix_estimatif">Prix (en euros):</label>
                         <input type="text" class="form-control d-inline w-25 paragraphe" name="prix_estimatif" value="' . $Circuit['prix_estimatif'] . '">
                     </div>
-
+                    <div class="label-container">
+                        <label class="accent" class="form-check-label" for="visible">
+                            Rendre visible sur le site
+                        </label>
+                        <input class="form-check-input" type="checkbox" value="1" name="visible" id="flexCheckDefault">
+                    </div>
                     <input type="hidden" name="token" value="' . $_SESSION['csrf_token'] . '">
                 </div>
             </form>';
             }
             ?>
         </header>
+        
         <section class="etape">
-            <h2 class="titre1 pt-2">Circuit</h2>
-            <?php foreach ($SelectedSteps as $Step) {
+            <h2 class="titre1 pt-2">Roadbook</h2>
+            <?php 
+            if ($SelectedSteps) {
+                foreach ($SelectedSteps as $Step) {
                 echo '
-        <form action="./traitements/gestion.php" method="post">
-            <div class="flex-etape">
-                <hr>
-                <div class="mb-3">
-                    <label class="titre2 etape" for="ordre">étape </label>
-                    <input type="num" class="form-control d-inline w-25 titre2" name="ordre" value="' . $Step['ordre'] . '">
+            <form action="./traitements/gestion.php" method="post">
+                <div class="flex-etape">
+                    <hr>
+                    <div class="mb-3">
+                        <label class="titre2 etape" for="ordre">étape </label>
+                        <input type="num" class="form-control d-inline w-25 titre2" name="ordre" value="' . $Step['ordre'] . '">
+                    </div>
+                    <hr>
                 </div>
-                <hr>
-            </div>
-            
-            <div class="txt-etape">
-                <p class="accent">jour <input type="num" class="form-control d-inline w-25 titre2" name="jourArrivee" value="' . $Step['jourArrivee'] . '"> à jour <input type="num" class="form-control d-inline w-25 titre2" name="jourDepart" value="' . $Step['jourDepart'] . '"></p>
-                <p contenteditable="true" name="descriptionEtape">' . $Step['descriptionEtape'] . '</p>';
-                GenerateSelector($AllAccomodation, 'hebergement', 'id_hebergement', 'un hébergement', $Step['hebergement']);
-                echo ' <input type="hidden" name="token" value="' . $_SESSION['csrf_token'] . '">
-                <input type="hidden" name="id_ec" value="' . $Step['id_ec'] . '">
-            </div>
-        </form>';
-            } ?>
+                
+                <div class="txt-etape">
+                    <p class="accent">jour <input type="num" class="form-control d-inline w-25 titre2" name="jourArrivee" value="' . $Step['jourArrivee'] . '"> à jour <input type="num" class="form-control d-inline w-25 titre2" name="jourDepart" value="' . $Step['jourDepart'] . '"></p>
+                    <p contenteditable="true" name="descriptionEtape">' . $Step['descriptionEtape'] . '</p>';
+                    GenerateSelector($AllAccomodation, 'hebergement', 'id_hebergement', 'un hébergement', $Step['hebergement']);
+                    echo ' <input type="hidden" name="token" value="' . $_SESSION['csrf_token'] . '">
+                    <input type="hidden" name="id_ec" value="' . $Step['id_ec'] . '">
+                </div>
+            </form>';
+            }} ?>
             <form id="newStep"></form>
         </section>
         <button id="rowAdder" type="button" class="btn btn-success">
@@ -165,9 +171,9 @@ $AllAccomodation = $NewConnection->select('hebergement')
             return Number(<?php echo $CurrentCircuitID; ?>);
         }
 
-        function GetCurrentStepID() {
-            return Number(<?php echo $Step['id_ec']; ?>);
-        }
+        // function GetCurrentStepID() {
+        //     return Number(<?php #echo $Step['id_ec']; ?>);
+        // }
 
         function GetCurrentCategorieID() {
             return <?php echo '"' . $CurrentCategorieID . '"'; ?>;

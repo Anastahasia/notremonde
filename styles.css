@@ -206,7 +206,7 @@ section {
         justify-items: center;
     }
 
-    .float-login .connected{
+    .float-login .connected {
         justify-items: center;
     }
 
@@ -314,9 +314,10 @@ footer .titre2 {
     width: 95%;
     justify-self: center;
 } */
-.prev-icon{
+.prev-icon {
     color: #000000;
 }
+
 .card-carousel {
     position: relative;
     border: none;
@@ -561,7 +562,8 @@ footer .titre2 {
         justify-content: space-between;
     }
 
-    #Circuit .carousel-item, .img-presentation {
+    #Circuit .carousel-item,
+    .img-presentation {
         height: 100%;
         width: 100%
     }
@@ -811,25 +813,31 @@ left: 45%;
         margin: -1.8em 1.5em 0 0;
     }
 }
+
 .nav-tabs {
     border-color: #B1CF5F;
 }
+
 .nav-tabs .nav-link.active {
     border-top-color: #B1CF5F;
     border-right-color: #B1CF5F;
     border-left-color: #B1CF5F;
 }
+
 .tab-pane-content {
     padding: 0 3%;
     border: solid 1.5px #B1CF5F;
 }
-    /* FORMULAIRE DE MODIFICATION */
-    #FormCircuit .img-presentation{
-        height: 23rem;
-    }
-        #FormCircuit img{
-        width: 100%;
-        }
+
+/* FORMULAIRE DE MODIFICATION */
+#FormCircuit .img-presentation {
+    height: auto;
+}
+
+#FormCircuit img {
+    width: 100%;
+}
+
 /* END GESTION */
 
 /* FORMULAIRE D'INSCRIPTION ET DE CONNEXION */
@@ -884,12 +892,14 @@ left: 45%;
 form.input-group input.form-control {
     border-color: #f8f9fa;
 }
+
 /* FIN FORMULAIRE D'INSCRIPTION */
 
 /* FORMULAIRE DE CONTACT */
-.contactForms{
+.contactForms {
     padding: 2% 3%;
 }
-#Forms{
+
+#Forms {
     padding: 1% 2%;
 }

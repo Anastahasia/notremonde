@@ -25,7 +25,7 @@ $AllUsers = $NewConnection->select("utilisateur");
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title> Gestion | Notre Monde</title>
+    <title> Dashboard | Notre Monde</title>
     <!-- Bootstrap icons-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet" />
     <!-- Core theme CSS (includes Bootstrap)-->
@@ -33,7 +33,7 @@ $AllUsers = $NewConnection->select("utilisateur");
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-    <link rel="icon" href="./images/favicon.png" type="image/x-icon">
+    <link rel="icon" href="./images/notreMonde.png" type="image/x-icon">
 
     <link href="styles.css" rel="stylesheet" />
 </head>

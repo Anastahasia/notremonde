@@ -21,7 +21,7 @@ $categories = $NewConnection->select("categorie");
                     <form method="get" action="../destination.php">
                         <div class="d-grid gap-3 d-sm-flex justify-content-sm-center">
                             <div class="label-container supp">
-                                <select name="destination" class="form-select btn-light px-4" aria-label="Default select example">
+                                <select name="destination" class="form-select btn-light px-4 disabled" aria-label="Default select example">
                                     <option selected>Où ?</option>
                                         <?php 
                                         foreach ($destinations as $Value){
@@ -33,7 +33,7 @@ $categories = $NewConnection->select("categorie");
                             </div>
 
                             <div class="label-container d-grid w-2">
-                                <select name="categorie" class="form-select btn-light px-4" aria-label="Default select example">
+                                <select name="categorie" class="form-select btn-light px-4 disabled" aria-label="Default select example">
                                     <option selected>Catégorie</option>
                                     <?php 
                                         foreach ($categorie as $Value){
@@ -45,7 +45,7 @@ $categories = $NewConnection->select("categorie");
                             </div>
 
                             <div class="label-container supp">
-                                <select class="form-select btn-light px-4" name="prix" aria-label="Default select example">
+                                <select class="form-select btn-light px-4 disabled" name="prix" aria-label="Default select example">
                                     <option selected>Prix</option>
                                     <option min="0" max="100" value="">0 - 100 €</option>
                                     <option value="2">Two</option>
@@ -55,14 +55,14 @@ $categories = $NewConnection->select("categorie");
                             </div>
 
                             <div class="label-container supp">
-                                    <input class="form-check-input" type="checkbox" value="" name="enfant" id="flexCheckDefault">
+                                    <input class="form-check-input disabled" type="checkbox" value="" name="enfant" id="flexCheckDefault">
                                     <label class="accent" class="form-check-label" for="enfant">
                                         Avec enfants (-12ans)
                                     </label>
                             </div>
 
                             <div class="label-container">
-                                <button type="submit" class="btn btn-light">Rechercher</button>
+                                <button type="submit" class="btn btn-light disabled">Rechercher</button>
                             </div>
                         </div>
                     </form>

@@ -27,7 +27,7 @@ $categorie = $NewConnection->select("categorie", "NOT id_categorie", "1");
     <!-- Animated text -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
 
-    <link rel="icon" href="./images/favicon.png" type="image/x-icon">
+    <link rel="icon" href="./images/notreMonde.png" type="image/x-icon">
 
     <link href="./styles.css" rel="stylesheet" />
 </head>
