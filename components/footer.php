@@ -3,36 +3,40 @@
         <div class="img-wrapper">
             <img src="images/notreMondeLogo.png" alt="" class="footer-logo">
         </div>
-        <div class="containerfooter px-3">
-            <h3 class="titre2 phone">À propos</h3>
-            <p class="m-0 text-justify">Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui id facilis soluta incidunt voluptatibus quas alias minima nulla possimus, odit, perferendis provident excepturi sunt distinctio consequuntur sapiente eius blanditiis aspernatur?</p>
-        </div>
-        <div class="container footer-links p-0">
-            <ul>
-                <li class="m-0 accent">
-                    <h3 class="titre2 phone">Menu</h3>
-                </li>
-                <li class="text-white"><a class="accent" href="">Accueil</a></li>
-                <li class="text-white"><a class="accent" href="">Circuit</a></li>
-                <li class="text-white"><a class="accent" href="">Contact</a></li>
-                <li class="text-white"><a class="accent" href="">Se connecter</a></li>
-            </ul>
-            <ul>
-                <li class="m-0 accent phone">
-                    <h3 class="titre2">Liens utiles</h3>
-                </li>
-                <li class="text-white"><a class="accent" href="">Obtenir un devis</a></li>
-                <li class="text-white"><a class="accent" href="">Conditions générales de vente</a></li>
-                <li class="text-white"><a class="accent" href="">Mentions légales</a></li>
-            </ul>
-            <ul class="SocialMedia">
-                <li class="m-0 text-center accent">
-                    <h3 class="titre2">Nos réseaux sociaux</h3>
-                </li>
-                <li class="text-white"><a class="accent" href=""><img src="images/logo-instagram.png" alt=""></a></li>
-                <li class="text-white"><a class="accent" href=""><img src="images/logo-facebook.png" alt=""></a></li>
-                <li class="text-white"><a class="accent" href=""><img src="images/logo-pinterest.png" alt=""></a></li>
-            </ul>
+        <div class="tabletFooter">
+            <div name="aPropos" class="containerfooter px-3">
+                <h3 class="titre2 supp">À propos</h3>
+                <p class="m-0">Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui id facilis soluta incidunt voluptatibus quas alias minima nulla possimus, odit, perferendis provident excepturi sunt distinctio consequuntur sapiente eius blanditiis aspernatur?</p>
+            </div>
+            <div class="container footer-links p-0">
+                <div name="lui">
+                    <ul>
+                        <li class="m-0 accent">
+                            <h3 class="titre2 supp">Menu</h3>
+                        </li>
+                        <li class="text-white"><a class="accent" href="">Accueil</a></li>
+                        <li class="text-white"><a class="accent" href="">Circuit</a></li>
+                        <li class="text-white"><a class="accent" href="">Contact</a></li>
+                        <li class="text-white"><a class="accent" href="">Se connecter</a></li>
+                    </ul>
+                    <ul>
+                        <li class="m-0 accent supp">
+                            <h3 class="titre2">Liens utiles</h3>
+                        </li>
+                        <li class="text-white"><a class="accent" href="">Obtenir un devis</a></li>
+                        <li class="text-white"><a class="accent" href="">Conditions générales de vente</a></li>
+                        <li class="text-white"><a class="accent" href="">Mentions légales</a></li>
+                    </ul>
+                </div>
+                <ul name="SocialMedia" class="SocialMedia">
+                    <li class="m-0 text-center accent supp toi">
+                        <h3 class="titre2">Nos réseaux sociaux</h3>
+                    </li>
+                    <li class="text-white"><a class="accent" href=""><img src="images/logo-instagram.png" alt=""></a></li>
+                    <li class="text-white"><a class="accent" href=""><img src="images/logo-facebook.png" alt=""></a></li>
+                    <li class="text-white"><a class="accent" href=""><img src="images/logo-pinterest.png" alt=""></a></li>
+                </ul>
+            </div>
         </div>
     </footer>
 

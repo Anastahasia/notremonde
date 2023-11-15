@@ -21,7 +21,16 @@ header {
     justify-items: center;
 }
 
+section {
+    padding: 4% 2%;
+    display: grid;
+}
 
+@media (min-width: 768px) {
+    section {
+        padding: 1% 10% 3%;
+    }
+}
 
 .btn-success {
     background-color: #1B512D;
@@ -129,10 +138,7 @@ p,
 
 /* FIN DES FONTS */
 
-section {
-    padding: 4% 2%;
-    display: grid;
-}
+
 
 /* NAVBAR */
 .navbar-brand {
@@ -228,26 +234,67 @@ footer a {
     color: #000000;
 }
 
+footer .titre2 {
+    color: #1B512D;
+}
+
+footer p {
+    text-align: justify;
+}
+
 footer .img-wrapper {
     height: 4rem;
+    text-align: center;
+}
+
+.footer-links div {
+    display: flex;
+    justify-content: space-between;
+    padding: 3% 5% 0;
+}
+
+.footer-links div ul {
+    padding-left: 0;
 }
 
 .footer-links img {
     height: 3rem;
 }
 
+.SocialMedia {
+    display: flex;
+    justify-content: space-evenly;
+}
+
 .SocialMedia li {
     margin: 2% 0;
 }
 
-footer .titre2 {
-    color: #1B512D;
+@media (min-width: 768px) {
+    .tabletFooter {
+        display: flex;
+    }
+
+    .tabletFooter .supp {
+        display: block;
+    }
 }
 
-@media (min-width: 768px) {
-    section {
-        padding: 1% 10% 3%;
-    }
+.containerfooter {
+    flex: 50% 0 0;
+}
+
+.tabletFooter .toi {
+    display: none;
+}
+
+.SocialMedia {
+    position: absolute;
+    left: 33%;
+    gap: 30%;
+}
+
+@media (min-width: 992px) {
 
     /* footer */
     footer {
@@ -267,14 +314,21 @@ footer .titre2 {
         object-fit: scale-down;
     }
 
+    .footer-links div ul {
+        padding-left: 3rem;
+    }
     footer .img-wrapper {
         height: 7rem;
     }
 
-    footer ul:last-child {
+    .SocialMedia {
         text-align: center;
+        display: grid;
+        position: static;
     }
-
+    .tabletFooter .toi {
+        display: block;
+    }
     /* FIN FOOTER */
 }
 
@@ -297,9 +351,9 @@ footer .titre2 {
     box-shadow: 0px 1440px 4px 0px rgba(217, 217, 217, 0.49) inset;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 992px) {
     .supp {
-        display: grid;
+        display: block;
     }
 }
 
