@@ -25,7 +25,11 @@ if (token_verify()) {
 
                     if (empty($EmailVerify)) {
                         $Success = $NewConnection->insert_user($surname, $name, $num, $email, $HashedPassword, $token); #inserts a new user if the email adress doesn't exist in the DB
-                        mail($_POST['email'], 'Confirmation de votre compte', "Afin de valider votre compte sur notre monde merci de cliquer sur ce lien\n\nhttp://assani-anasthasia-notremonde.sc3nuxz4136.universe.wf/components/confirm.php?id=$Succes&token=$token");
+                        mail($_POST['email'], 'Confirmation de votre compte', "Afin de valider votre compte sur notre monde merci de cliquer sur ce lien\n\nhttp://assani-anasthasia-notremonde.sc3nuxz4136.universe.wf/components/confirm.php?id=$Success&token=$token");
+
+                        header("Location: " . '../login.php');
+                        die();
+
                     } else {
                         session_start();
 

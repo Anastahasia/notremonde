@@ -88,6 +88,7 @@ if (token_verify()) {
             'email' => $email,
             'mot_de_passe' => password_hash('test', PASSWORD_DEFAULT),
             'role' => $roles,
+            'confirmation_token'=> $token,
         ));
 
         if ($UserID) {

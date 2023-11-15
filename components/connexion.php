@@ -301,4 +301,4 @@ class MaConnexion
 }
 
 $NewConnection = new MaConnexion("notre_monde", "root", "", "localhost");
-    // var_dump($Result = $NewConnection->select("circuit", "visible", "1"));
+     var_dump($Result = $NewConnection->insert_user("ana", "anna", "035668799", "ana@ana.com", "test", "oeurourhtdf"));
